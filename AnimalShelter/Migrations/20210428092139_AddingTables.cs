@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AnimalShelter.Migrations
 {
-    public partial class AddindDBSchema : Migration
+    public partial class AddingTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,6 +35,19 @@ namespace AnimalShelter.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("Person_PK", x => x.IdPerson);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    IdRole = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("Role_PK", x => x.IdRole);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +192,30 @@ namespace AnimalShelter.Migrations
                         column: x => x.IdVolunteer,
                         principalTable: "Person",
                         principalColumn: "IdPerson",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GrantedRole",
+                columns: table => new
+                {
+                    IdPerson = table.Column<int>(type: "int", nullable: false),
+                    IdRole = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("GrantedRoles_PK", x => new { x.IdPerson, x.IdRole });
+                    table.ForeignKey(
+                        name: "GrantedRole_Person",
+                        column: x => x.IdPerson,
+                        principalTable: "Person",
+                        principalColumn: "IdPerson",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "GrantedRole_Role",
+                        column: x => x.IdRole,
+                        principalTable: "Role",
+                        principalColumn: "IdRole",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -429,6 +466,11 @@ namespace AnimalShelter.Migrations
                 column: "IdStatus");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GrantedRole_IdRole",
+                table: "GrantedRole",
+                column: "IdRole");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PerformedTreatment_IdVisit",
                 table: "PerformedTreatment",
                 column: "IdVisit");
@@ -466,6 +508,9 @@ namespace AnimalShelter.Migrations
                 name: "Director");
 
             migrationBuilder.DropTable(
+                name: "GrantedRole");
+
+            migrationBuilder.DropTable(
                 name: "PerformedTreatment");
 
             migrationBuilder.DropTable(
@@ -482,6 +527,9 @@ namespace AnimalShelter.Migrations
 
             migrationBuilder.DropTable(
                 name: "AdoptionOfficeWorker");
+
+            migrationBuilder.DropTable(
+                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "Treatment");

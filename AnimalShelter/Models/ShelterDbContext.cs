@@ -51,6 +51,8 @@ namespace AnimalShelter.Models
             modelBuilder.ApplyConfiguration(new VetsEfConfiguration());
             modelBuilder.ApplyConfiguration(new VolunteersEfConfiguration());
             modelBuilder.ApplyConfiguration(new AdoptersEfConfiguration());
+            modelBuilder.ApplyConfiguration(new GrantedRolesEfConfiguration());
+            modelBuilder.ApplyConfiguration(new RolesEfConfiguration());
 
             modelBuilder.ApplyConfiguration(new MedicinesEfConfiguration());
             modelBuilder.ApplyConfiguration(new PerformedTreatmentsEfConfiguration());
@@ -59,7 +61,8 @@ namespace AnimalShelter.Models
             modelBuilder.ApplyConfiguration(new TreatmentsEfConfiguration());
             modelBuilder.ApplyConfiguration(new Vet_SpecialtiesEfConfiguration());
             modelBuilder.ApplyConfiguration(new VetVisitsEfConfiguration());
-     
+            
+
         }
     }
 }

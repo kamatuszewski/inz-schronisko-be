@@ -185,6 +185,22 @@ namespace AnimalShelter.Migrations
                     b.ToTable("Employee");
                 });
 
+            modelBuilder.Entity("AnimalShelter.Models.GrantedRole", b =>
+                {
+                    b.Property<int>("IdPerson")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdRole")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdPerson", "IdRole")
+                        .HasName("GrantedRoles_PK");
+
+                    b.HasIndex("IdRole");
+
+                    b.ToTable("GrantedRole");
+                });
+
             modelBuilder.Entity("AnimalShelter.Models.Medicine", b =>
                 {
                     b.Property<int>("IdMedicine")
@@ -272,6 +288,24 @@ namespace AnimalShelter.Migrations
                     b.HasIndex("IdVisit");
 
                     b.ToTable("PrescribedMedicine");
+                });
+
+            modelBuilder.Entity("AnimalShelter.Models.Role", b =>
+                {
+                    b.Property<int>("IdRole")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("IdRole")
+                        .HasName("Role_PK");
+
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("AnimalShelter.Models.Specialty", b =>
@@ -538,6 +572,25 @@ namespace AnimalShelter.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("AnimalShelter.Models.GrantedRole", b =>
+                {
+                    b.HasOne("AnimalShelter.Models.Person", "Person")
+                        .WithMany("GrantedRoles")
+                        .HasForeignKey("IdPerson")
+                        .HasConstraintName("GrantedRole_Person")
+                        .IsRequired();
+
+                    b.HasOne("AnimalShelter.Models.Role", "Role")
+                        .WithMany("GrantedRoles")
+                        .HasForeignKey("IdRole")
+                        .HasConstraintName("GrantedRole_Role")
+                        .IsRequired();
+
+                    b.Navigation("Person");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("AnimalShelter.Models.PerformedTreatment", b =>
                 {
                     b.HasOne("AnimalShelter.Models.Treatment", "Treatment")
@@ -675,7 +728,14 @@ namespace AnimalShelter.Migrations
 
                     b.Navigation("Employees");
 
+                    b.Navigation("GrantedRoles");
+
                     b.Navigation("Volunteers");
+                });
+
+            modelBuilder.Entity("AnimalShelter.Models.Role", b =>
+                {
+                    b.Navigation("GrantedRoles");
                 });
 
             modelBuilder.Entity("AnimalShelter.Models.Specialty", b =>

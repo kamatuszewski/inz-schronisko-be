@@ -7,6 +7,7 @@ namespace AnimalShelter.Models
 {
     public class GrantedRole
     {
+    
         public int IdPerson { get; set; }
         public int IdRole { get; set; }
 

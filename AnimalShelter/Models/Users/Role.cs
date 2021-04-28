@@ -11,6 +11,6 @@ namespace AnimalShelter.Models
         public string Name { get; set; }
 
 
-        public virtual ICollection<GrantedRole> RolesGranted { get; set; }
+        public virtual ICollection<GrantedRole> GrantedRoles { get; set; }
     }
 }
