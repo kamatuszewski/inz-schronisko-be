@@ -13,10 +13,10 @@ namespace AnimalShelter.Configurations
     {
         public void Configure(EntityTypeBuilder<Adopter> builder)
         {
-            builder.HasKey(e => e.IdAdopter).HasName("Adopter_PK");
+            builder.HasKey(e => e.Id).HasName("Adopter_PK");
             builder.Property(e => e.Address).HasMaxLength(255).IsRequired();
             builder.HasOne(d => d.Person).WithMany(p => p.Adopters)
-                .HasForeignKey(d => d.IdAdopter)
+                .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Person_Adopter");
         }

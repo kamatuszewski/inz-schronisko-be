@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Domain.Models
 {
-    public class Adopter
+    public class Adopter:BaseEntity
     {
-
-       [Key]
-        public int IdAdopter { get; set; }
         public string Address { get; set; }
 
 

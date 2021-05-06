@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Domain.Models
 {
-    public class Admin
+    public class Admin:BaseEntity
     {
-        public int IdAdmin { get; set; }
-
-
         public virtual Person Person { get; set; }
     }
 }

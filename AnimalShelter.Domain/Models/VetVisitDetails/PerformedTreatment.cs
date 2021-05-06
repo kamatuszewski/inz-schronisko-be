@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Domain.Models
 {
-    public class PerformedTreatment
+    public class PerformedTreatment:BaseEntity
     {
-        public int IdTreatment { get; set; }
         public int IdVisit { get; set; }
 
         public virtual Treatment Treatment { get; set; }    

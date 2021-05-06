@@ -21,4 +21,8 @@
     <ProjectReference Include="..\AnimalShelter.Domain\AnimalShelter.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
 </Project>

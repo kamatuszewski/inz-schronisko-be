@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Domain.Models
 {
-    public class Person
+    public class Person:BaseEntity
     {
-        
-        public int IdPerson { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PESEL { get; set; }

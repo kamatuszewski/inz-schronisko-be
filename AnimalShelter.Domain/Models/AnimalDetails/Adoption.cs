@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Domain.Models
 {
-    public class Adoption
+    public class Adoption:BaseEntity
     {
-        public int IdAdoption { get; set; }
         public DateTime AdoptionDate { get; set; }
         public string Notes { get; set; }
         public DateTime? ControlDate { get; set; }

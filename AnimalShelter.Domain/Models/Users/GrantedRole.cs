@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Domain.Models
 {
-    public class GrantedRole
+    public class GrantedRole:BaseEntity
     {
     
         public int IdPerson { get; set; }

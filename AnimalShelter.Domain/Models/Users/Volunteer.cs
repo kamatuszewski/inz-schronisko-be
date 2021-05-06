@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Domain.Models
 {
-    public class Volunteer
+    public class Volunteer:BaseEntity
     {
-        public int IdVolunteer { get; set; }
         public DateTime JoiningDate { get; set; }
         public string Attendance { get; set; }
 

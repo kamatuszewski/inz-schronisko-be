@@ -13,7 +13,7 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Adoption> builder)
         {
-            builder.HasKey(e => e.IdAdoption).HasName("Adoption_PK");
+            builder.HasKey(e => e.Id).HasName("Adoption_PK");
             builder.Property(e => e.AdoptionDate).IsRequired();
             builder.Property(e => e.IsItOwnerPickUp).IsRequired();
            
