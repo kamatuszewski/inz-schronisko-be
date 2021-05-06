@@ -13,7 +13,7 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<VetVisit> builder)
         {
-            builder.HasKey(e => e.IdVisit).HasName("VetVisit_PK");
+            builder.HasKey(e => e.Id).HasName("VetVisit_PK");
             builder.Property(e => e.VisitDateTime).IsRequired();
             builder.Property(e => e.Description).IsRequired();
 

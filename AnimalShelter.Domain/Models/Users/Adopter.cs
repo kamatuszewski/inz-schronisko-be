@@ -11,8 +11,6 @@ namespace AnimalShelter.Domain.Models
     public class Adopter:BaseEntity
     {
         public string Address { get; set; }
-
-
         public virtual Person Person { get; set; }
         public virtual ICollection<Adoption> Adoptions { get; set; }
     }

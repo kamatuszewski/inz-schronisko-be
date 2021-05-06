@@ -7,6 +7,7 @@ namespace AnimalShelter.Domain.Models
 {
     public class Vet_Specialty:BaseEntity
     {
+        public int IdVet { get; set; }
         public int IdSpecialty { get; set; }
         public DateTime ObtainingDate { get; set; }
 

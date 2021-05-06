@@ -14,7 +14,7 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Species> builder)
         {
-            builder.HasKey(e => e.IdSpecies).HasName("Species_PK");
+            builder.HasKey(e => e.Id).HasName("Species_PK");
             builder.Property(e => e.Name).HasMaxLength(255).IsRequired();
   
         }

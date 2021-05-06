@@ -7,7 +7,6 @@ namespace AnimalShelter.Domain.Models
 {
     public class Director:BaseEntity
     {
-
         public virtual Person Person { get; set; }
     }
 }

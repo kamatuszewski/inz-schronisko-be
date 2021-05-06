@@ -13,11 +13,11 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasKey(e => e.IdEmployee).HasName("Employee_PK");
+            builder.HasKey(e => e.Id).HasName("Employee_PK");
             builder.Property(e => e.HireDate).IsRequired();
             builder.Property(e => e.Salary).IsRequired();
             builder.HasOne(d => d.Person).WithMany(p => p.Employees)
-                .HasForeignKey(d => d.IdEmployee)
+                .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Person_Emplyee");
         }

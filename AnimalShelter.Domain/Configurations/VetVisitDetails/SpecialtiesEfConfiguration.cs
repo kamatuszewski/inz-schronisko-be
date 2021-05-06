@@ -13,7 +13,7 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Specialty> builder)
         {
-            builder.HasKey(e => e.IdSpecialty).HasName("Specialty_PK");
+            builder.HasKey(e => e.Id).HasName("Specialty_PK");
             builder.Property(e => e.Name).IsRequired();
             builder.Property(e => e.MinSalary).IsRequired();
 

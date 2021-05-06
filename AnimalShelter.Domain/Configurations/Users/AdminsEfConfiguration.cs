@@ -14,9 +14,9 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Admin> builder)
         {
-            builder.HasKey(e => e.IdAdmin).HasName("Admin_PK");
+            builder.HasKey(e => e.Id).HasName("Admin_PK");
             builder.HasOne(d => d.Person).WithMany(p => p.Admins)
-                .HasForeignKey(d => d.IdAdmin)
+                .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Person_Admin");
         }

@@ -12,7 +12,7 @@ namespace AnimalShelter.Domain.Models
         public int IdSpecies { get; set; }
 
 
-        public int AssignedSpecies { get; set; } //to be re-named or removed?
+        public Species AssignedSpecies { get; set; } //to be re-named or removed?
         public virtual Employee Employee { get; set; }
         public virtual ICollection<Adoption> Adoptions { get; set; }
     }

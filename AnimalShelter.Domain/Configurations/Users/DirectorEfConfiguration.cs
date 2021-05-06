@@ -14,7 +14,7 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Director> builder)
         {
-            builder.HasKey(e => e.IdDirector).HasName("Director_PK");
+            builder.HasKey(e => e.Id).HasName("Director_PK");
            
         }
     }

@@ -14,11 +14,11 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Volunteer> builder)
         {
-            builder.HasKey(e => e.IdVolunteer).HasName("Volunteer_PK");
+            builder.HasKey(e => e.Id).HasName("Volunteer_PK");
             builder.Property(e => e.JoiningDate).IsRequired();
             builder.Property(e => e.Attendance).HasMaxLength(255);
             builder.HasOne(d => d.Person).WithMany(p => p.Volunteers)
-                .HasForeignKey(d => d.IdVolunteer)
+                .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Person_Volunteer");
         }

@@ -13,7 +13,7 @@ namespace AnimalShelter.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.HasKey(e => e.IdRole).HasName("Role_PK");
+            builder.HasKey(e => e.Id).HasName("Role_PK");
             builder.Property(e => e.Name).HasMaxLength(255).IsRequired();
 
         }
