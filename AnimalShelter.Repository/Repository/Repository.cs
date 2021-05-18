@@ -1,4 +1,5 @@
 ﻿using AnimalShelter.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +10,57 @@ namespace AnimalShelter.Repository.Repository
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        T IRepository<T>.Get(int Id)
+        public readonly ShelterDbContext _shelterDbContext;
+        private DbSet<T> entities;
+
+        public Repository(ShelterDbContext shelterDbContext)
         {
-            throw new NotImplementedException();
+            _shelterDbContext = shelterDbContext;
+            entities = _shelterDbContext.Set<T>();
         }
 
-        IEnumerable<T> IRepository<T>.GetAll()
+        public T Get(int Id)
         {
-            throw new NotImplementedException();
+            return entities.SingleOrDefault(c => c.Id == Id);
         }
 
-        void IRepository<T>.Insert(T entity)
+        public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return entities.AsEnumerable();
         }
 
-        void IRepository<T>.Remove(T entity)
+        public void Insert(T entity)
         {
-            throw new NotImplementedException();
+            if(entities == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            entities.Add(entity);
+            _shelterDbContext.SaveChanges();
         }
 
-        void IRepository<T>.SaveChanges()
+        public void Remove(T entity)
         {
-            throw new NotImplementedException();
+            if (entities == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            entities.Remove(entity);
         }
 
-        void IRepository<T>.update(T entity)
+        public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _shelterDbContext.SaveChanges();
+        }
+
+        public void Update(T entity)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            entities.Update(entity);
+            _shelterDbContext.SaveChanges();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AnimalShelter.Repository.Repository
 
         T Get(int Id);
         void Insert(T entity);
-        void update(T entity);
+        void Update(T entity);
         void Remove(T entity);
         void SaveChanges();
     }
