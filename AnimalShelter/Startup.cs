@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using AnimalShelter.Repository;
+using AnimalShelter.Repository.Repository;
 
 namespace AnimalShelter
 {
@@ -28,6 +29,8 @@ namespace AnimalShelter
                 options.UseSqlServer(Configuration.GetConnectionString("DbContext"));
 
             });
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
