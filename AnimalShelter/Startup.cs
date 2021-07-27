@@ -1,15 +1,13 @@
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using AnimalShelter.Repository;
-using AnimalShelter.Repository.Repository;
+using AnimalShelter.Application;
+using AnimalShelter.Infrastructure;
 
-namespace AnimalShelter
+namespace AnimalShelter.Presentation
 {
     public class Startup
     {
@@ -23,21 +21,13 @@ namespace AnimalShelter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-       //     services.AddScoped<IPeopleDbService, EfPeopleDbService>();
-            services.AddDbContext<ShelterDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DbContext"));
-
-            });
-
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+            services.AddApplication();
+            services.AddInfrastructure(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnimalShelter", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnimalShelter.Presentation", Version = "v1" });
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,17 +37,14 @@ namespace AnimalShelter
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter v1"));
+                app.UseSwaggerUI(c =>
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter.Presentation v1"));
             }
 
+            app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
