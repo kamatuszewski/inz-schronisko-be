@@ -20,13 +20,6 @@ namespace AnimalShelter.Models
         public virtual ICollection<Adopter> Adopters { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
 
-        public virtual ICollection<Admin> Admins { get; set; }  //to be removed
-        public virtual Director Director { get; set; }  //to be removed
-
-
-
-
-
 
     }
 }

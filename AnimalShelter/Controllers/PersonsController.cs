@@ -34,13 +34,29 @@ namespace AnimalShelter.Controllers
         [HttpGet]
         public IActionResult GetPersons()
         {
-            //code to be added
+     
               return Ok(_personsDbService.GetPersons());
-          //  throw new NotImplementedException();
         }
 
 
-       
+        [HttpGet("{id}")]
+        public IActionResult GetPerson(int id)
+        {
+            var person = _personsDbService.GetPerson(id);
+            if (person is null)
+            {
+                return NotFound();
+            }
+            else
+                return Ok(person);
+        }
+
+
+
+
+
+        //logging data
+
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)

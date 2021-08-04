@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.MappingProfiles
 {
-    public class AnimalMappingProfile : Profile
+    public class AnimalShelterMappingProfile : Profile
     {
-        public AnimalMappingProfile()
+        public AnimalShelterMappingProfile()
         {
             CreateMap<Animal, AnimalResponse>()
                 .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
                 .ForMember(m => m.Status, c => c.MapFrom(s => s.Status.Name));
 
-            //tutaj moge dodac kolejne mapy CreateMap
+            CreateMap<Person, PersonResponse>();
         }
     }
 }

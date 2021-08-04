@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +11,26 @@ namespace AnimalShelter.Services
     public class PersonsDbService : IPersonsDbService
     {
         private readonly ShelterDbContext _context;
-        public PersonsDbService(ShelterDbContext context)
+        private readonly IMapper _mapper;
+
+        public PersonsDbService(ShelterDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
-        public IEnumerable<Person> GetPersons()
+        public IEnumerable<PersonResponse> GetPersons()
         {
-            //jak moge zwrocic response zamiast student? Teraz zwraca mi za duzo danych przez uzycie EF
-            var personResponse = new PersonResponse();
-            return _context.Person.ToList();
+            var persons = _context.Person.ToList();
+            return _mapper.Map<IEnumerable<PersonResponse>>(persons);
         }
 
-        public IPersonsDbService GetPerson(int id)
+        public PersonResponse GetPerson(int id)
         {
-            //code to be added
-            throw new NotImplementedException();
+            var person = _context.Person.Where(a => a.Id == id)
+                .FirstOrDefault();
+            return _mapper.Map<PersonResponse>(person);
         }
     }
 }

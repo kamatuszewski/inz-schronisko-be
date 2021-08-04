@@ -29,9 +29,6 @@ namespace AnimalShelter.Models
         public DbSet<Treatment> Treatment { get; set; }
         public DbSet<Vet_Specialty> Vet_Specialty { get; set; }
         public DbSet<VetVisit> VetVisit { get; set; }
-        public DbSet<Director> Director { get; set; } //to be removed?
-        public DbSet<Admin> Admin { get; set; } //to be removed?
-
 
 
         public ShelterDbContext() { }
@@ -45,9 +42,7 @@ namespace AnimalShelter.Models
             modelBuilder.ApplyConfiguration(new StatusesEfConfiguration());
             
             modelBuilder.ApplyConfiguration(new PeopleEfConfiguration());
-            modelBuilder.ApplyConfiguration(new AdminsEfConfiguration());
             modelBuilder.ApplyConfiguration(new AOWorkersEfConfiguration());
-            modelBuilder.ApplyConfiguration(new DirectorEfConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeesEfConfiguration());
             modelBuilder.ApplyConfiguration(new VetsEfConfiguration());
             modelBuilder.ApplyConfiguration(new VolunteersEfConfiguration());
