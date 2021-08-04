@@ -18,8 +18,8 @@ namespace AnimalShelter.Domain.Entities
         public string Pesel { get; set; }
         public string Sex { get; set; }
         public string ContactInfo { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+        //     public DateTime EntryDate { get; set; }
+        //     public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Admin Admin { get; set; }

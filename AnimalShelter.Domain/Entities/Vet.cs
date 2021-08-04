@@ -15,8 +15,8 @@ namespace AnimalShelter.Domain.Entities
 
         public int Id { get; set; }
         public string Pwznumber { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+        //     public DateTime EntryDate { get; set; }
+        //     public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Employee IdNavigation { get; set; }

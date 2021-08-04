@@ -23,8 +23,8 @@ namespace AnimalShelter.Domain.Entities
         public DateTime? DeathDate { get; set; }
         public int IdStatus { get; set; }
         public int IdSpecies { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+      //  public DateTime EntryDate { get; set; }
+      //  public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Species IdSpeciesNavigation { get; set; }

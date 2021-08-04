@@ -18,8 +18,8 @@ namespace AnimalShelter.Domain.Entities
         public int IdAnimal { get; set; }
         public DateTime VisitDateTime { get; set; }
         public string Description { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+        //     public DateTime EntryDate { get; set; }
+        //     public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Animal IdAnimalNavigation { get; set; }

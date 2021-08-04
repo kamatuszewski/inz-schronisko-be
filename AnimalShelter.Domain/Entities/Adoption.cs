@@ -15,8 +15,8 @@ namespace AnimalShelter.Domain.Entities
         public int IdAnimal { get; set; }
         public int IdAdopter { get; set; }
         public int IdEmployee { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+ //       public DateTime EntryDate { get; set; }
+   //     public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Adopter IdAdopterNavigation { get; set; }

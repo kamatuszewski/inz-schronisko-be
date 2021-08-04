@@ -11,8 +11,8 @@ namespace AnimalShelter.Domain.Entities
         public DateTime HireDate { get; set; }
         public DateTime? QuitDate { get; set; }
         public int Salary { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+   //     public DateTime EntryDate { get; set; }
+   //     public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Person IdNavigation { get; set; }

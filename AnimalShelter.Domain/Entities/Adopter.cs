@@ -14,8 +14,8 @@ namespace AnimalShelter.Domain.Entities
 
         public int Id { get; set; }
         public string Address { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+ //       public DateTime EntryDate { get; set; }
+   //     public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Person IdNavigation { get; set; }

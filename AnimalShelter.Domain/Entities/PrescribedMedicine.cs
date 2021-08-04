@@ -10,8 +10,8 @@ namespace AnimalShelter.Domain.Entities
         public int Id { get; set; }
         public int IdVisit { get; set; }
         public int Amount { get; set; }
-        public DateTime EntryDate { get; set; }
-        public DateTime UpdateTime { get; set; }
+        //     public DateTime EntryDate { get; set; }
+        //     public DateTime UpdateTime { get; set; }
         public bool IsActive { get; set; }
 
         public virtual Medicine IdNavigation { get; set; }
