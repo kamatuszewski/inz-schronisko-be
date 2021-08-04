@@ -1,4 +1,5 @@
 ﻿
+using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -11,10 +12,10 @@ namespace AnimalShelter.Services
 {
     public interface IPersonsDbService
     {
-        public IPersonsDbService GetPerson(int id);
+        public PersonResponse GetPerson(int id);
         //--- to be added
 
-        public IEnumerable<Person> GetPersons();
+        public IEnumerable<PersonResponse> GetPersons();
     }
 }
 

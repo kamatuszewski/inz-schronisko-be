@@ -11,11 +11,9 @@ namespace AnimalShelter.Models
 
         public int Id { get; set; }
 
-        public DateTime EntryDate { get; set; }
-
-        public DateTime UpdateTime { get; set; }
-
-        public bool IsActive { get; set; }
+    //    public DateTime EntryDate { get; set; }
+    //    public DateTime UpdateTime { get; set; }
+    //    public bool IsActive { get; set; }
 
     }
 }

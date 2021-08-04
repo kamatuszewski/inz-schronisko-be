@@ -32,7 +32,10 @@ namespace AnimalShelter.Services
 
         public IEnumerable<AnimalResponse> GetAnimals()
         {
-            var animals = _context.Animal.ToList();
+            var animals = _context.Animal
+                .Include(req => req.Species)
+                .Include(req => req.Status)
+                .ToList();
              return _mapper.Map<IEnumerable<AnimalResponse>>(animals);
         }
     }
