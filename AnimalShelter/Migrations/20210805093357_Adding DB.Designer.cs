@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalShelter_WebAPI.Migrations
 {
     [DbContext(typeof(ShelterDbContext))]
-    [Migration("20210805091826_Adding DB")]
+    [Migration("20210805093357_Adding DB")]
     partial class AddingDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,9 +219,6 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ContactInfo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -241,6 +238,12 @@ namespace AnimalShelter_WebAPI.Migrations
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id")
                         .HasName("Person_PK");

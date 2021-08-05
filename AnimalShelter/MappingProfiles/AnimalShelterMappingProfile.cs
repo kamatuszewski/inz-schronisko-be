@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,12 @@ namespace AnimalShelter.MappingProfiles
     {
         public AnimalShelterMappingProfile()
         {
-            CreateMap<Animal, AnimalResponse>()
+            CreateMap<Animal, GeneralAnimalResponse>()
                 .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
                 .ForMember(m => m.Status, c => c.MapFrom(s => s.Status.Name));
 
             CreateMap<Person, PersonResponse>();
+            CreateMap<CreatePersonRequest, Person>();
         }
     }
 }

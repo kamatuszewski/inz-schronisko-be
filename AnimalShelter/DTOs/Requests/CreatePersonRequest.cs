@@ -12,6 +12,7 @@ namespace AnimalShelter_WebAPI.DTOs.Requests
         public string LastName { get; set; }
         public string PESEL { get; set; }
         public string Sex { get; set; }
-        public string ContactInfo { get; set; }
+        public string phoneNumber { get; set; }
+        public string email { get; set; }
     }
 }
