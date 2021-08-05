@@ -29,6 +29,8 @@ namespace AnimalShelter.Models
         public DbSet<Treatment> Treatment { get; set; }
         public DbSet<Vet_Specialty> Vet_Specialty { get; set; }
         public DbSet<VetVisit> VetVisit { get; set; }
+        public DbSet<GrantedRole> GrantedRole { get; set; }
+        public DbSet<Role> Role { get; set; }
 
 
 
