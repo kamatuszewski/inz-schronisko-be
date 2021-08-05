@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AnimalShelter.Repository.Migrations
+namespace AnimalShelter_WebAPI.Migrations
 {
-    public partial class DBfirstRun : Migration
+    public partial class AddingDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,20 +11,20 @@ namespace AnimalShelter.Repository.Migrations
                 name: "Medicine",
                 columns: table => new
                 {
-                    IdMedicine = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Medicine_PK", x => x.IdMedicine);
+                    table.PrimaryKey("Medicine_PK", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Person",
                 columns: table => new
                 {
-                    IdPerson = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
@@ -34,125 +34,91 @@ namespace AnimalShelter.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Person_PK", x => x.IdPerson);
+                    table.PrimaryKey("Person_PK", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
-                    IdRole = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Role_PK", x => x.IdRole);
+                    table.PrimaryKey("Role_PK", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Specialty",
                 columns: table => new
                 {
-                    IdSpecialty = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MinSalary = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Specialty_PK", x => x.IdSpecialty);
+                    table.PrimaryKey("Specialty_PK", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Species",
                 columns: table => new
                 {
-                    IdSpecies = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Species_PK", x => x.IdSpecies);
+                    table.PrimaryKey("Species_PK", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Status",
                 columns: table => new
                 {
-                    IdStatus = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Status_PK", x => x.IdStatus);
+                    table.PrimaryKey("Status_PK", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Treatment",
                 columns: table => new
                 {
-                    IdTreatment = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Treatment_PK", x => x.IdTreatment);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Admin",
-                columns: table => new
-                {
-                    IdAdmin = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("Admin_PK", x => x.IdAdmin);
-                    table.ForeignKey(
-                        name: "Person_Admin",
-                        column: x => x.IdAdmin,
-                        principalTable: "Person",
-                        principalColumn: "IdPerson",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("Treatment_PK", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Adopter",
                 columns: table => new
                 {
-                    IdAdopter = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Adopter_PK", x => x.IdAdopter);
+                    table.PrimaryKey("Adopter_PK", x => x.Id);
                     table.ForeignKey(
                         name: "Person_Adopter",
-                        column: x => x.IdAdopter,
+                        column: x => x.Id,
                         principalTable: "Person",
-                        principalColumn: "IdPerson",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Director",
-                columns: table => new
-                {
-                    IdDirector = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("Director_PK", x => x.IdDirector);
-                    table.ForeignKey(
-                        name: "Person_Director",
-                        column: x => x.IdDirector,
-                        principalTable: "Person",
-                        principalColumn: "IdPerson",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -160,19 +126,19 @@ namespace AnimalShelter.Repository.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    IdEmployee = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     QuitDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Salary = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Employee_PK", x => x.IdEmployee);
+                    table.PrimaryKey("Employee_PK", x => x.Id);
                     table.ForeignKey(
                         name: "Person_Emplyee",
-                        column: x => x.IdEmployee,
+                        column: x => x.Id,
                         principalTable: "Person",
-                        principalColumn: "IdPerson",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -180,18 +146,18 @@ namespace AnimalShelter.Repository.Migrations
                 name: "Volunteer",
                 columns: table => new
                 {
-                    IdVolunteer = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Attendance = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Volunteer_PK", x => x.IdVolunteer);
+                    table.PrimaryKey("Volunteer_PK", x => x.Id);
                     table.ForeignKey(
                         name: "Person_Volunteer",
-                        column: x => x.IdVolunteer,
+                        column: x => x.Id,
                         principalTable: "Person",
-                        principalColumn: "IdPerson",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -200,7 +166,8 @@ namespace AnimalShelter.Repository.Migrations
                 columns: table => new
                 {
                     IdPerson = table.Column<int>(type: "int", nullable: false),
-                    IdRole = table.Column<int>(type: "int", nullable: false)
+                    IdRole = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -209,13 +176,13 @@ namespace AnimalShelter.Repository.Migrations
                         name: "GrantedRole_Person",
                         column: x => x.IdPerson,
                         principalTable: "Person",
-                        principalColumn: "IdPerson",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "GrantedRole_Role",
                         column: x => x.IdRole,
                         principalTable: "Role",
-                        principalColumn: "IdRole",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -223,11 +190,10 @@ namespace AnimalShelter.Repository.Migrations
                 name: "Animal",
                 columns: table => new
                 {
-                    IdAnimal = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ShelterNumber = table.Column<int>(type: "int", nullable: false),
                     ChipNumber = table.Column<int>(type: "int", nullable: false),
-                    BirthYear = table.Column<int>(type: "int", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FoundDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FoundPlace = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -237,18 +203,18 @@ namespace AnimalShelter.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Animal_PK", x => x.IdAnimal);
+                    table.PrimaryKey("Animal_PK", x => x.Id);
                     table.ForeignKey(
                         name: "Animal_Species",
                         column: x => x.IdSpecies,
                         principalTable: "Species",
-                        principalColumn: "IdSpecies",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "Animal_Status",
                         column: x => x.IdStatus,
                         principalTable: "Status",
-                        principalColumn: "IdStatus",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -258,8 +224,7 @@ namespace AnimalShelter.Repository.Migrations
                 {
                     IdEmployee = table.Column<int>(type: "int", nullable: false),
                     IdSpecies = table.Column<int>(type: "int", nullable: false),
-                    AssignedSpecies = table.Column<int>(type: "int", nullable: false),
-                    SpeciesIdSpecies = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -268,13 +233,13 @@ namespace AnimalShelter.Repository.Migrations
                         name: "Employee_AOWorker",
                         column: x => x.IdEmployee,
                         principalTable: "Employee",
-                        principalColumn: "IdEmployee",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AdoptionOfficeWorker_Species_SpeciesIdSpecies",
-                        column: x => x.SpeciesIdSpecies,
+                        name: "Employee_Species",
+                        column: x => x.IdSpecies,
                         principalTable: "Species",
-                        principalColumn: "IdSpecies",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -282,17 +247,17 @@ namespace AnimalShelter.Repository.Migrations
                 name: "Vet",
                 columns: table => new
                 {
-                    IdVet = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     PWZNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Vet_PK", x => x.IdVet);
+                    table.PrimaryKey("Vet_PK", x => x.Id);
                     table.ForeignKey(
                         name: "Employee_Vet",
-                        column: x => x.IdVet,
+                        column: x => x.Id,
                         principalTable: "Employee",
-                        principalColumn: "IdEmployee",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -300,7 +265,7 @@ namespace AnimalShelter.Repository.Migrations
                 name: "Adoption",
                 columns: table => new
                 {
-                    IdAdoption = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AdoptionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -312,18 +277,18 @@ namespace AnimalShelter.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("Adoption_PK", x => x.IdAdoption);
+                    table.PrimaryKey("Adoption_PK", x => x.Id);
                     table.ForeignKey(
                         name: "Adoption_Adopter",
                         column: x => x.IdAdopter,
                         principalTable: "Adopter",
-                        principalColumn: "IdAdopter",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "Adoption_Animal",
                         column: x => x.IdAnimal,
                         principalTable: "Animal",
-                        principalColumn: "IdAnimal",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "Adoption_AOWorkerr",
@@ -339,7 +304,8 @@ namespace AnimalShelter.Repository.Migrations
                 {
                     IdVet = table.Column<int>(type: "int", nullable: false),
                     IdSpecialty = table.Column<int>(type: "int", nullable: false),
-                    ObtainingDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ObtainingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -348,13 +314,13 @@ namespace AnimalShelter.Repository.Migrations
                         name: "Vet_Specialty_Specialty",
                         column: x => x.IdSpecialty,
                         principalTable: "Specialty",
-                        principalColumn: "IdSpecialty",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "Vet_Specialty_Vet",
                         column: x => x.IdVet,
                         principalTable: "Vet",
-                        principalColumn: "IdVet",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -362,7 +328,7 @@ namespace AnimalShelter.Repository.Migrations
                 name: "VetVisit",
                 columns: table => new
                 {
-                    IdVisit = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdVet = table.Column<int>(type: "int", nullable: false),
                     IdAnimal = table.Column<int>(type: "int", nullable: false),
@@ -371,18 +337,18 @@ namespace AnimalShelter.Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("VetVisit_PK", x => x.IdVisit);
+                    table.PrimaryKey("VetVisit_PK", x => x.Id);
                     table.ForeignKey(
                         name: "VetVisit_Animal",
                         column: x => x.IdAnimal,
                         principalTable: "Animal",
-                        principalColumn: "IdAnimal",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "VetVisit_Vet",
                         column: x => x.IdVet,
                         principalTable: "Vet",
-                        principalColumn: "IdVet",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -390,23 +356,23 @@ namespace AnimalShelter.Repository.Migrations
                 name: "PerformedTreatment",
                 columns: table => new
                 {
-                    IdTreatment = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     IdVisit = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PerformedTreatment_PK", x => new { x.IdTreatment, x.IdVisit });
+                    table.PrimaryKey("PerformedTreatment_PK", x => new { x.Id, x.IdVisit });
                     table.ForeignKey(
                         name: "PerformedTreatment_Treatment",
-                        column: x => x.IdTreatment,
+                        column: x => x.Id,
                         principalTable: "Treatment",
-                        principalColumn: "IdTreatment",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "PerformedTreatment_Visit",
                         column: x => x.IdVisit,
                         principalTable: "VetVisit",
-                        principalColumn: "IdVisit",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -414,24 +380,24 @@ namespace AnimalShelter.Repository.Migrations
                 name: "PrescribedMedicine",
                 columns: table => new
                 {
-                    IdMedicine = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     IdVisit = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PrescribedMedicine_PK", x => new { x.IdMedicine, x.IdVisit });
+                    table.PrimaryKey("PrescribedMedicine_PK", x => new { x.Id, x.IdVisit });
                     table.ForeignKey(
                         name: "PrescribedMedicine_Medicine",
-                        column: x => x.IdMedicine,
+                        column: x => x.Id,
                         principalTable: "Medicine",
-                        principalColumn: "IdMedicine",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "PrescribedMedicine_Visit",
                         column: x => x.IdVisit,
                         principalTable: "VetVisit",
-                        principalColumn: "IdVisit",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -451,9 +417,9 @@ namespace AnimalShelter.Repository.Migrations
                 column: "IdEmployee");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdoptionOfficeWorker_SpeciesIdSpecies",
+                name: "IX_AdoptionOfficeWorker_IdSpecies",
                 table: "AdoptionOfficeWorker",
-                column: "SpeciesIdSpecies");
+                column: "IdSpecies");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Animal_IdSpecies",
@@ -499,13 +465,7 @@ namespace AnimalShelter.Repository.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Admin");
-
-            migrationBuilder.DropTable(
                 name: "Adoption");
-
-            migrationBuilder.DropTable(
-                name: "Director");
 
             migrationBuilder.DropTable(
                 name: "GrantedRole");

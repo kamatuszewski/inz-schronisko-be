@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,23 @@ namespace AnimalShelter.MappingProfiles
     {
         public AnimalShelterMappingProfile()
         {
-            CreateMap<Animal, AnimalResponse>()
+            CreateMap<Animal, GeneralAnimalResponse>()
                 .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
                 .ForMember(m => m.Status, c => c.MapFrom(s => s.Status.Name));
 
             CreateMap<Person, PersonResponse>();
 
+            CreateMap<CreatePersonRequest, Person>();
 
-            //tutaj moge dodac kolejne mapy CreateMap
+            CreateMap<CreateAdopterRequest, Adopter>()
+                .ForMember(m => m.Person, c => c.MapFrom(dto => new Person() 
+                { FirstName = dto.FirstName, LastName = dto.LastName, PESEL = dto.PESEL, Sex = dto.Sex, ContactInfo = dto.ContactInfo}));
+
+            // czy front moze mi zwracac numerek?
+            //     CreateMap<CreateAnimalRequest, Animal>()
+            //       .ForMember(m => m.Species.Name, c => c.MapFrom(s => s.Species));
+
+
         }
     }
 }

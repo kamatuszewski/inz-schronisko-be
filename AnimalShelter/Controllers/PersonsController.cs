@@ -1,6 +1,7 @@
 ﻿using AnimalShelter.DTOs;
 using AnimalShelter.Models;
 using AnimalShelter.Services;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +18,8 @@ using System.Threading.Tasks;
 namespace AnimalShelter.Controllers
 {
 
-  //  [Authorize]
-    [Route("api/persons")]
+    //  [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
     public class PersonsController : ControllerBase
     {
@@ -34,13 +35,44 @@ namespace AnimalShelter.Controllers
         [HttpGet]
         public IActionResult GetPersons()
         {
-            //code to be added
               return Ok(_personsDbService.GetPersons());
-          //  throw new NotImplementedException();
+         
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetPerson(int id)
+        {
+            var person = _personsDbService.GetPerson(id);
+            if (person is null)
+            {
+                return NotFound();
+            }
+            else
+                return Ok(person);
         }
 
 
-       
+        [HttpPost]
+        public IActionResult CreatePerson([FromBody] CreatePersonRequest createPersonRequest)
+        {
+            
+            var person = _personsDbService.CreatePerson(createPersonRequest);
+            return Created($"/api/person/{person.Id}", null);
+
+        }
+
+        [Route("adopters")]
+        [HttpPost]
+        public IActionResult CreateAdopter([FromBody] CreateAdopterRequest createAdopterRequest)
+        {
+
+            var adopter = _personsDbService.CreateAdopter(createAdopterRequest);
+            return Created($"/api/person/adopter/{adopter.Id}", null);
+
+        }
+
+
+
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)

@@ -19,10 +19,7 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.PESEL).HasMaxLength(11).IsRequired();
             builder.Property(e => e.Sex).HasMaxLength(36).IsRequired();
 
-            builder.HasOne(d => d.Director).WithOne(p => p.Person)
-              .HasForeignKey<Director>(d => d.Id)
-              .OnDelete(DeleteBehavior.ClientSetNull)
-              .HasConstraintName("Person_Director");
+           
         }
     }
 }

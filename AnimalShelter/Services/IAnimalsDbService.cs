@@ -9,9 +9,9 @@ namespace AnimalShelter.Services
 {
     public interface IAnimalsDbService
     {
-        public AnimalResponse GetAnimal(int shelterNumber);
+        public GeneralAnimalResponse GetAnimal(int shelterNumber);
         //--- to be added
 
-        public IEnumerable<AnimalResponse> GetAnimals();
+        public IEnumerable<GeneralAnimalResponse> GetAnimals();
     }
 }

@@ -5,20 +5,19 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.DTOs.Responses
 {
-    public class AnimalResponse
+    public class GeneralAnimalResponse
     {
-        public int ShelterNumber { get; set; }
+        public int Id { get; set; }
         public int ChipNumber { get; set; }
-        public int BirthYear { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Sex { get; set; }
         public DateTime FoundDate { get; set; }
         public string FoundPlace { get; set; }
         public DateTime? DeathDate { get; set; }
 
-       // public int IdStatus { get; set; }
-        public string Status { get; set; } //do przerobienia z IdStatus
+  
+        public string Status { get; set; } 
 
-        // public int IdSpecies { get; set; }
-        public string Species { get; set; } //do przerobienia z IdSpecies
+        public string Species { get; set; } 
     }
 }

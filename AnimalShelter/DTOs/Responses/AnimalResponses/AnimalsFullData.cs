@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimalShelter_WebAPI.DTOs.Requests
+namespace AnimalShelter_WebAPI.DTOs.Responses.AnimalResponses
 {
-    public class CreateAnimalRequest
+    public class AnimalsFullData
     {
-        public int ShelterNumber { get; set; }
+        public int Id { get; set; }
         public int ChipNumber { get; set; }
-        public int BirthYear { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Sex { get; set; }
         public DateTime FoundDate { get; set; }
         public string FoundPlace { get; set; }
+        public DateTime? DeathDate { get; set; }
 
-        public string Species { get; set; }
-        public string Status { get; set; }
+        public int StatusId { get; set; }
+        public int SpeciesId { get; set; }
     }
 }

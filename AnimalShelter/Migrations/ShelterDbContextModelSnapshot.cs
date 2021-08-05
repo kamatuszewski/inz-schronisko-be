@@ -101,8 +101,8 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BirthYear")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ChipNumber")
                         .HasColumnType("int");
@@ -126,9 +126,6 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ShelterNumber")
-                        .HasColumnType("int");
 
                     b.HasKey("Id")
                         .HasName("Animal_PK");

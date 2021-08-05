@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,24 @@ namespace AnimalShelter.Services
             var person = _context.Person.Where(a => a.Id == Id)
                .FirstOrDefault();
             return _mapper.Map<PersonResponse>(person);
+        }
+
+        public Person CreatePerson(CreatePersonRequest createPersonRequest)
+        {
+            var person = _mapper.Map<Person>(createPersonRequest);
+            _context.Person.Add(person);
+            _context.SaveChanges();
+
+            return person;
+        }
+
+        public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest)
+        {
+            var adopter = _mapper.Map<Adopter>(createAdopterRequest);
+            _context.Adopter.Add(adopter);
+            _context.SaveChanges();
+
+            return adopter;
         }
     }
 }
