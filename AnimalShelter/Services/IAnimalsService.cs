@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Services
 {
-    public interface IAnimalsDbService
+    public interface IAnimalsService
     {
         public GeneralAnimalResponse GetAnimal(int shelterNumber);
         //--- to be added

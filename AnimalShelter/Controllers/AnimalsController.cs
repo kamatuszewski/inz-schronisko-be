@@ -18,8 +18,8 @@ namespace AnimalShelter.Controllers
     {
 
         public IConfiguration _configuration;
-        private readonly IAnimalsDbService _animalsDbService;
-        public AnimalsController(IAnimalsDbService animalsDbService, IConfiguration configuration)
+        private readonly IAnimalsService _animalsDbService;
+        public AnimalsController(IAnimalsService animalsDbService, IConfiguration configuration)
         {
             _configuration = configuration;
             _animalsDbService = animalsDbService;

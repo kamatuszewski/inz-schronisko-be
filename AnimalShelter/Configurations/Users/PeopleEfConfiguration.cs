@@ -14,6 +14,8 @@ namespace AnimalShelter.Configurations
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.HasKey(e => e.Id).HasName("Person_PK");
+            builder.Property(e => e.EmailAddress).HasMaxLength(255).IsRequired();
+            builder.Property(e => e.Password).HasMaxLength(255);
             builder.Property(e => e.FirstName).HasMaxLength(255).IsRequired();
             builder.Property(e => e.LastName).HasMaxLength(255).IsRequired();
             builder.Property(e => e.PESEL).HasMaxLength(11).IsRequired();

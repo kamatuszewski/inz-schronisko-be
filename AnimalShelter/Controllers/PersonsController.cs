@@ -24,8 +24,8 @@ namespace AnimalShelter.Controllers
     public class PersonsController : ControllerBase
     {
         public IConfiguration _configuration;
-        private readonly IPersonsDbService _personsDbService;
-        public PersonsController(IPersonsDbService personsDbService, IConfiguration configuration)
+        private readonly IPersonsService _personsDbService;
+        public PersonsController(IPersonsService personsDbService, IConfiguration configuration)
         {
             _configuration = configuration;
             _personsDbService = personsDbService;
@@ -51,13 +51,12 @@ namespace AnimalShelter.Controllers
                 return Ok(person);
         }
 
-
-        [HttpPost]
-        public IActionResult CreatePerson([FromBody] CreatePersonRequest createPersonRequest)
+        
+        [HttpPost("register")]
+        public IActionResult CreatePerson([FromBody] RegisterPersonRequest createPersonRequest)
         {
-            
-            var person = _personsDbService.CreatePerson(createPersonRequest);
-            return Created($"/api/person/{person.Id}", null);
+            _personsDbService.RegisterPerson(createPersonRequest);
+            return Ok();
 
         }
 
@@ -65,27 +64,26 @@ namespace AnimalShelter.Controllers
         [HttpPost]
         public IActionResult CreateAdopter([FromBody] CreateAdopterRequest createAdopterRequest)
         {
-
-            var adopter = _personsDbService.CreateAdopter(createAdopterRequest);
-            return Created($"/api/person/adopter/{adopter.Id}", null);
+            _personsDbService.CreateAdopter(createAdopterRequest);
+            return Ok();
 
         }
 
 
 
-        [AllowAnonymous]
+       /* [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)
         {
 
          //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
 
-            /*
+            *//*
             if (s == null)
             {
                 return NotFound("Zly login lub haslo");
             }
-            */
+            *//*
 
             //nie kumaaaam, czemu to jest na sztywno, skad mma wiedziec ile rol etc.
             var userclaim = new[]
@@ -118,6 +116,6 @@ namespace AnimalShelter.Controllers
                 accessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 refreshToken
             });
-        }
+        }*/
     }
 }

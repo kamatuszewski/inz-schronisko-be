@@ -34,27 +34,25 @@ namespace AnimalShelter
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(opt =>
-            {
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero,
-                    ValidIssuer = "https://localhost:5001",
-                    ValidAudience = "https://localhost:5001",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
-                };
-            });
+            /*            services.AddAuthentication(opt =>
+                        {
+                            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                        }).AddJwtBearer(opt =>
+                        {
+                            opt.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuer = true,
+                                ValidateAudience = true,
+                                ValidateLifetime = true,
+                                ClockSkew = TimeSpan.Zero,
+                                ValidIssuer = "https://localhost:5001",
+                                ValidAudience = "https://localhost:5001",
+                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
+                            };
+                        });*/
 
-            services.AddScoped<IAnimalsDbService, AnimalsDbService>();
-            services.AddScoped<IPersonsDbService, PersonsDbService>();
-            services.AddAutoMapper(this.GetType().Assembly);
+
             services.AddDbContext<ShelterDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DbContext"));
@@ -62,6 +60,11 @@ namespace AnimalShelter
             });
 
             services.AddScoped<ShelterSeeder>();
+
+            services.AddScoped<IAnimalsService, AnimalsService>();
+            services.AddScoped<IPersonsService, PersonsService>();
+            services.AddAutoMapper(this.GetType().Assembly);
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

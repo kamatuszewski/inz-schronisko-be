@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Services
 {
-    public interface IPersonsDbService
+    public interface IPersonsService
     {
 
         public PersonResponse GetPerson(int id);
         public IEnumerable<PersonResponse> GetPersons();
-        public Person CreatePerson(CreatePersonRequest createPersonRequest);
+        public void RegisterPerson(RegisterPersonRequest registerPersonRequest);
         public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest);
     }
 }

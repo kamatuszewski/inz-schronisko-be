@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Services
 {
-    public class AnimalsDbService : IAnimalsDbService
+    public class AnimalsService : IAnimalsService
     {
         private readonly ShelterDbContext _context;
         private readonly IMapper _mapper;
-        public AnimalsDbService(ShelterDbContext context, IMapper mapper)
+        public AnimalsService(ShelterDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

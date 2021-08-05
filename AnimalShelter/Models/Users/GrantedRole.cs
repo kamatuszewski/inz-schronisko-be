@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Models
 {
-    public class GrantedRole:BaseEntity
+    public class GrantedRole
     {
     
         public int IdPerson { get; set; }
         public int IdRole { get; set; }
 
-        public virtual Person Person { get; set; }    
-        public virtual Role Role { get; set; }    
+        public virtual Person Person { get; set; }
+        public virtual Role Role { get; set; }
     }
 }
 
