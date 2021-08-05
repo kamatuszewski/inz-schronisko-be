@@ -14,9 +14,8 @@ namespace AnimalShelter.Configurations
         public void Configure(EntityTypeBuilder<Animal> builder)
         {
             builder.HasKey(e => e.Id).HasName("Animal_PK");
-            builder.Property(e => e.ShelterNumber).IsRequired();
             builder.Property(e => e.ChipNumber).IsRequired();
-            builder.Property(e => e.BirthYear).IsRequired();
+            builder.Property(e => e.BirthDate).IsRequired();
             builder.Property(e => e.Sex).IsRequired();
             builder.Property(e => e.FoundDate).IsRequired();
             builder.Property(e => e.FoundPlace).IsRequired();

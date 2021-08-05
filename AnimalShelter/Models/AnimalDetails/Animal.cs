@@ -7,9 +7,9 @@ namespace AnimalShelter.Models
 {
     public class Animal:BaseEntity
     {
-        public int ShelterNumber { get; set; }
+
         public int ChipNumber { get; set; }
-        public int BirthYear { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Sex { get; set; }
         public DateTime FoundDate { get; set; }
         public string FoundPlace { get; set; }

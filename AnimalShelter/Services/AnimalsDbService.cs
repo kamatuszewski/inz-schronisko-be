@@ -20,23 +20,23 @@ namespace AnimalShelter.Services
         }
 
 
-        public AnimalResponse GetAnimal(int shelterNumber)
+        public GeneralAnimalResponse GetAnimal(int id)
         {
-            var animal = _context.Animal.Where(a => a.ShelterNumber == shelterNumber)
+            var animal = _context.Animal.Where(a => a.Id == id)
                 .Include(req => req.Species)
                 .Include(req => req.Status)
                 .FirstOrDefault();
-            return _mapper.Map<AnimalResponse>(animal);
+            return _mapper.Map<GeneralAnimalResponse>(animal);
               
         }
 
-        public IEnumerable<AnimalResponse> GetAnimals()
+        public IEnumerable<GeneralAnimalResponse> GetAnimals()
         {
             var animals = _context.Animal
                 .Include(req => req.Species)
                 .Include(req => req.Status)
                 .ToList();
-             return _mapper.Map<IEnumerable<AnimalResponse>>(animals);
+             return _mapper.Map<IEnumerable<GeneralAnimalResponse>>(animals);
         }
     }
 }

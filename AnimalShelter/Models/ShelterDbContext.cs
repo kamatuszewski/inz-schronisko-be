@@ -31,6 +31,7 @@ namespace AnimalShelter.Models
         public DbSet<VetVisit> VetVisit { get; set; }
 
 
+
         public ShelterDbContext() { }
         public ShelterDbContext(DbContextOptions options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
