@@ -32,7 +32,7 @@ namespace AnimalShelter_WebAPI.Migrations
                     Sex = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,8 +168,7 @@ namespace AnimalShelter_WebAPI.Migrations
                 columns: table => new
                 {
                     IdPerson = table.Column<int>(type: "int", nullable: false),
-                    IdRole = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    IdRole = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

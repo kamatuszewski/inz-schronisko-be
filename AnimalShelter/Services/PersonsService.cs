@@ -2,6 +2,7 @@
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,12 @@ namespace AnimalShelter.Services
 
         private readonly ShelterDbContext _context;
         private readonly IMapper _mapper;
-        public PersonsService(ShelterDbContext context, IMapper mapper)
+        private readonly IPasswordHasher<Person> _passwordHasher;
+        public PersonsService(ShelterDbContext context, IMapper mapper, IPasswordHasher<Person> passwordHasher)
         {
             _context = context;
             _mapper = mapper;
+            _passwordHasher = passwordHasher;
         }
 
 
@@ -63,13 +66,15 @@ namespace AnimalShelter.Services
             var newPerson = new Person()
             {
                 EmailAddress = registerPersonRequest.EmailAddress,
-                Password = registerPersonRequest.Password,
                 FirstName = registerPersonRequest.FirstName,
                 LastName = registerPersonRequest.LastName,
                 PESEL = registerPersonRequest.PESEL,
                 Sex = registerPersonRequest.Sex
                 //GrantedRoles = new GrantedRole { IdPerson = Id, IdRole = registerPersonRequest.IdRole}
             };
+
+            var hashedPassword = _passwordHasher.HashPassword(newPerson, registerPersonRequest.Password);
+            newPerson.Password = hashedPassword;
 
             _context.Person.Add(newPerson);
             _context.SaveChanges();
