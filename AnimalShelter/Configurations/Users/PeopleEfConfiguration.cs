@@ -20,8 +20,8 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.LastName).HasMaxLength(255).IsRequired();
             builder.Property(e => e.PESEL).HasMaxLength(11).IsRequired();
             builder.Property(e => e.Sex).HasMaxLength(36).IsRequired();
-
-  
+            builder.Property(e => e.Address).HasMaxLength(255);
+            builder.Property(e => e.PhoneNumber).HasMaxLength(9);
         }
     }
 }

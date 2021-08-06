@@ -19,10 +19,6 @@ namespace AnimalShelter.Configurations
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Employee_AOWorker");
 
-            builder.HasOne(d => d.AssignedSpecies).WithMany(p => p.AdoptionOfficeWorkers)
-                .HasForeignKey(d => d.IdSpecies)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Employee_Species");
         }
     }
 }

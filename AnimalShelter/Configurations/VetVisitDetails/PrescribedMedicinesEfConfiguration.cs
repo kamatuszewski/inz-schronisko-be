@@ -12,11 +12,11 @@ namespace AnimalShelter.Configurations
     {
         public void Configure(EntityTypeBuilder<PrescribedMedicine> builder)
         {
-            builder.HasKey(e => new { e.Id, e.IdVisit }).HasName("PrescribedMedicine_PK");
+            builder.HasKey(e => new { e.IdMedicine, e.IdVisit }).HasName("PrescribedMedicine_PK");
             builder.Property(e => e.Amount).IsRequired();
 
             builder.HasOne(d => d.Medicine).WithMany(p => p.PrescribedMedicines)
-                .HasForeignKey(d => d.Id)
+                .HasForeignKey(d => d.IdMedicine)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PrescribedMedicine_Medicine");
             builder.HasOne(d => d.VetVisit).WithMany(p => p.PrescribedMedicines)
