@@ -72,51 +72,15 @@ namespace AnimalShelter.Controllers
 
 
 
-       /* [AllowAnonymous]
+
+
+        [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public IActionResult Login([FromBody] LoginRequest request)
         {
+            string token = _personsDbService.GenerateJwt(request);
 
-         //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
-
-            *//*
-            if (s == null)
-            {
-                return NotFound("Zly login lub haslo");
-            }
-            *//*
-
-            //nie kumaaaam, czemu to jest na sztywno, skad mma wiedziec ile rol etc.
-            var userclaim = new[]
-                {
-                new Claim(ClaimTypes.Name, "mj"),
-                new Claim(ClaimTypes.Role, "user1"),
-                new Claim(ClaimTypes.Role, "admin"),
-                };
-
-
-
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
-            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken token = new JwtSecurityToken
-            (
-                issuer: "http://localhost:5001",
-                audience: "http://localhost:5001",
-                claims: userclaim,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds
-            );
-
-            var refreshToken = Guid.NewGuid();
-            //  s.refToken = refreshToken.ToString();
-          //  _studentDbService.setToken(s, refreshToken);
-
-            return Ok(new
-            {
-                accessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                refreshToken
-            });
-        }*/
+            return Ok();
+        }
     }
 }

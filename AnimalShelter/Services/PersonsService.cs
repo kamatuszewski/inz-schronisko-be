@@ -1,4 +1,5 @@
-﻿using AnimalShelter.DTOs.Responses;
+﻿using AnimalShelter.DTOs;
+using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
@@ -89,6 +90,60 @@ namespace AnimalShelter.Services
             _context.GrantedRole.Add(newGrantedRole);
             _context.SaveChanges();
 
+        }
+
+        public string GenerateJwt(LoginRequest request)
+        {
+            throw new NotImplementedException();
+
+            var person = _context.Person.FirstOrDefault(p => p.EmailAddress == request.EmailAddress);
+
+            if (person is null)
+            {
+                //throw new BadRequestException("Nieprawidłowy login lub haslo");
+            }
+
+
+/*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
+
+
+            if (s == null)
+            {
+                return NotFound("Zly login lub haslo");
+            }
+
+
+            //nie kumaaaam, czemu to jest na sztywno, skad mma wiedziec ile rol etc.
+            var userclaim = new[]
+                {
+                new Claim(ClaimTypes.Name, "mj"),
+                new Claim(ClaimTypes.Role, "user1"),
+                new Claim(ClaimTypes.Role, "admin"),
+                };
+
+
+
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            JwtSecurityToken token = new JwtSecurityToken
+            (
+                issuer: "http://localhost:5001",
+                audience: "http://localhost:5001",
+                claims: userclaim,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds
+            );
+
+            var refreshToken = Guid.NewGuid();
+            //  s.refToken = refreshToken.ToString();
+            //  _studentDbService.setToken(s, refreshToken);
+
+            return Ok(new
+            {
+                accessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                refreshToken
+            });*/
         }
     }
 }

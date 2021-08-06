@@ -2,6 +2,7 @@ using AnimalShelter.Models;
 using AnimalShelter.Services;
 using AnimalShelter_WebAPI;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.Middleware;
 using AnimalShelter_WebAPI.Models.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -39,23 +40,27 @@ namespace AnimalShelter
         public void ConfigureServices(IServiceCollection services)
         {
 
-            /*            services.AddAuthentication(opt =>
-                        {
-                            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                        }).AddJwtBearer(opt =>
-                        {
-                            opt.TokenValidationParameters = new TokenValidationParameters
-                            {
-                                ValidateIssuer = true,
-                                ValidateAudience = true,
-                                ValidateLifetime = true,
-                                ClockSkew = TimeSpan.Zero,
-                                ValidIssuer = "https://localhost:5001",
-                                ValidAudience = "https://localhost:5001",
-                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
-                            };
-                        });*/
+            var authenticationSettings = new AuthenticationSettings();
+            Configuration.GetSection("Authentication").Bind(authenticationSettings);
+
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = "Bearer";
+                option.DefaultScheme = "Bearer";
+                option.DefaultChallengeScheme = "Bearer";
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = authenticationSettings.JwtIssuer,
+                    ValidAudience = authenticationSettings.JwtIssuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.SecretKey)),
+                };
+            });
+
+
 
             services.AddControllers().AddFluentValidation();
 
@@ -69,6 +74,7 @@ namespace AnimalShelter
 
             services.AddScoped<IAnimalsService, AnimalsService>();
             services.AddScoped<IPersonsService, PersonsService>();
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IPasswordHasher<Person>, PasswordHasher<Person>>();
             services.AddScoped<IValidator<RegisterPersonRequest>, RegisterPersonRequestValidator>();
@@ -92,12 +98,11 @@ namespace AnimalShelter
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter v1"));
             }
 
+            app.UseAuthentication();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
