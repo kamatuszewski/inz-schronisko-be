@@ -15,8 +15,6 @@ namespace AnimalShelter_WebAPI.DTOs.Requests
         public string PESEL { get; set; }
         public string Sex { get; set; }
         public string EmailAddress { get; set; }
-        
-        [MinLength(6)]
         public string Password { get; set; }
         public int IdRole { get; set; } = 1;
     }

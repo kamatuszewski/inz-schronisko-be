@@ -1,6 +1,10 @@
 using AnimalShelter.Models;
 using AnimalShelter.Services;
 using AnimalShelter_WebAPI;
+using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.Models.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,6 +57,7 @@ namespace AnimalShelter
                             };
                         });*/
 
+            services.AddControllers().AddFluentValidation();
 
             services.AddDbContext<ShelterDbContext>(options =>
             {
@@ -66,9 +71,9 @@ namespace AnimalShelter
             services.AddScoped<IPersonsService, PersonsService>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IPasswordHasher<Person>, PasswordHasher<Person>>();
+            services.AddScoped<IValidator<RegisterPersonRequest>, RegisterPersonRequestValidator>();
 
-
-            services.AddControllers();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AnimalShelter", Version = "v1" });
