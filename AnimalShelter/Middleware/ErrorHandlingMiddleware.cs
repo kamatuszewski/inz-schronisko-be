@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AnimalShelter_WebAPI.Exceptions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,17 @@ namespace AnimalShelter_WebAPI.Middleware
             {
                 await next.Invoke(context);
             }
-            catch(Exception e)
+            catch (BadRequestException badRequestException)
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(badRequestException.Message);
+            }
+            catch (Exception e)
             {
                 context.Response.StatusCode = 500;
                 context.Response.WriteAsync("Coś poszło nie tak");
             }
+
         }
     }
 }

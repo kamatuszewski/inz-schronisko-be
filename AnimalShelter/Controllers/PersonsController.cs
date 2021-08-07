@@ -80,7 +80,7 @@ namespace AnimalShelter.Controllers
         {
             string token = _personsDbService.GenerateJwt(request);
 
-            return Ok();
+            return Ok(token);
         }
     }
 }

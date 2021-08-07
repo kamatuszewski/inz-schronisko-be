@@ -8,7 +8,7 @@ namespace AnimalShelter_WebAPI
 {
     public class AuthenticationSettings
     {
-        public string SecretKey { get; set; }
+        public string JwtKey { get; set; }
         public int JwtExpireHours { get; set; }
         public string JwtIssuer { get; set; }
     }

@@ -1,12 +1,19 @@
 ﻿using AnimalShelter.DTOs;
 using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AnimalShelter.Services
@@ -18,11 +25,13 @@ namespace AnimalShelter.Services
         private readonly ShelterDbContext _context;
         private readonly IMapper _mapper;
         private readonly IPasswordHasher<Person> _passwordHasher;
-        public PersonsService(ShelterDbContext context, IMapper mapper, IPasswordHasher<Person> passwordHasher)
+        private readonly AuthenticationSettings _authenticationSettings;
+        public PersonsService(ShelterDbContext context, IMapper mapper, IPasswordHasher<Person> passwordHasher, AuthenticationSettings authenticationSettings)
         {
             _context = context;
             _mapper = mapper;
             _passwordHasher = passwordHasher;
+            _authenticationSettings = authenticationSettings;
         }
 
 
@@ -94,15 +103,45 @@ namespace AnimalShelter.Services
 
         public string GenerateJwt(LoginRequest request)
         {
-            throw new NotImplementedException();
 
-            var person = _context.Person.FirstOrDefault(p => p.EmailAddress == request.EmailAddress);
+            var person = _context.Person
+                .Include(p => p.GrantedRoles)
+                .FirstOrDefault(p => p.EmailAddress == request.EmailAddress);
 
             if (person is null)
             {
-                //throw new BadRequestException("Nieprawidłowy login lub haslo");
+                throw new BadRequestException("Nieprawidłowy login lub haslo");
             }
 
+            var result = _passwordHasher.VerifyHashedPassword(person, person.Password, request.Password);
+
+            if (result == PasswordVerificationResult.Failed)
+            {
+                throw new BadRequestException("Nieprawidłowy login lub haslo");
+            }
+
+            var roles = person.GrantedRoles;
+            Console.WriteLine(roles);
+
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, person.Id.ToString()),
+                new Claim(ClaimTypes.Name, $"{person.FirstName} {person.LastName}"),
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddHours(_authenticationSettings.JwtExpireHours);
+
+            var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer,
+                _authenticationSettings.JwtIssuer,
+                claims,
+                expires: expires,
+                signingCredentials: cred
+                );
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            return tokenHandler.WriteToken(token);
 
 /*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
 
