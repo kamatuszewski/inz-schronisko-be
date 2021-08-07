@@ -21,8 +21,8 @@ namespace AnimalShelter.Models
         public string FoundPlace { get; set; }
         public DateTime? DeathDate { get; set; }
 
-        public int IdStatus { get; set; }
-        public int IdSpecies { get; set; }
+        public int StatusId { get; set; }
+        public int SpeciesId { get; set; }
 
         public virtual Species Species { get; set; }
         public virtual Status Status { get; set; }

@@ -22,12 +22,12 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.FoundPlace).IsRequired();
 
             builder.HasOne(d => d.Species).WithMany(p => p.Animals)
-                .HasForeignKey(d => d.IdSpecies)
+                .HasForeignKey(d => d.SpeciesId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Animal_Species");
 
             builder.HasOne(d => d.Status).WithMany(p => p.Animals)
-                .HasForeignKey(d => d.IdStatus)
+                .HasForeignKey(d => d.StatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Animal_Status");
         }
