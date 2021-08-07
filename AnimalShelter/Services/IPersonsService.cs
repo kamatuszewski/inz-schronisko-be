@@ -1,4 +1,5 @@
 ﻿
+using AnimalShelter.DTOs;
 using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Requests;
@@ -18,6 +19,7 @@ namespace AnimalShelter.Services
         public IEnumerable<PersonResponse> GetPersons();
         public void RegisterPerson(RegisterPersonRequest registerPersonRequest);
         public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest);
+        string GenerateJwt(LoginRequest request);
     }
 }
 

@@ -165,9 +165,6 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("IdRole")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.HasKey("IdPerson", "IdRole")
                         .HasName("GrantedRoles_PK");
 
@@ -238,7 +235,6 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 

@@ -7,7 +7,7 @@ namespace AnimalShelter.DTOs
 {
     public class LoginRequest
     {
-        public string Login { get; set; }
+        public string EmailAddress { get; set; }
         public string Password { get; set; }
     }
 }
