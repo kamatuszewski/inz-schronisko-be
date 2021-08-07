@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,10 @@ namespace AnimalShelter.Services
     public interface IAnimalsService
     {
         public GeneralAnimalResponse GetAnimal(int shelterNumber);
-        //--- to be added
+
+        public bool RemoveAnimal(int id);
 
         public IEnumerable<GeneralAnimalResponse> GetAnimals();
+        public Animal CreateAnimal(CreateAnimalRequest createAnimalRequest);
     }
 }

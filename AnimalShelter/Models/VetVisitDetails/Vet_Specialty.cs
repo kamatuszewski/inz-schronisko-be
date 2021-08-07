@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Models
 {
-    public class Vet_Specialty:BaseEntity
+    public class Vet_Specialty
     {
         public int IdVet { get; set; }
         public int IdSpecialty { get; set; }

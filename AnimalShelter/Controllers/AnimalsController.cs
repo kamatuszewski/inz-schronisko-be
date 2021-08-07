@@ -1,5 +1,6 @@
 ﻿
 using AnimalShelter.Services;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,11 +37,29 @@ namespace AnimalShelter.Controllers
         {
             var animal = _animalsDbService.GetAnimal(Id);
             if (animal is null)
-            {
                 return NotFound();
-            }
             else 
                 return Ok(animal);
+        }
+
+
+    
+        [HttpPost]
+        public IActionResult CreateAnimal([FromHeader] CreateAnimalRequest createAnimalRequest)
+        {
+            _animalsDbService.CreateAnimal(createAnimalRequest);
+            return Ok();
+
+        }
+
+        [HttpDelete("{Id}")]
+        public IActionResult RemoveAnimal(int id)
+        {
+            var isDeleted = _animalsDbService.RemoveAnimal(id);
+            if (isDeleted)
+                return Ok();
+            else
+                return NotFound();
         }
     }
 }

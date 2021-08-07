@@ -9,7 +9,6 @@ namespace AnimalShelter.Models
     {
 
         public int IdEmployee { get; set; }
-        public int IdSpecies { get; set; }
 
 
         public Species AssignedSpecies { get; set; } //to be re-named or removed?

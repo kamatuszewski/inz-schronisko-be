@@ -1,20 +1,25 @@
-﻿using AnimalShelter.Models;
-using AnimalShelter_WebAPI.DTOs.Responses.AnimalResponses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimalShelter_WebAPI.DTOs.Responses
+namespace AnimalShelter_WebAPI.DTOs.Responses.AnimalResponses
 {
     public class DetailedAnimalResponse
     {
-        public AnimalsFullData data { get; set; }
-   
-        public virtual ICollection<VetVisit> VetVisits { get; set; }
-        public virtual ICollection<Adoption> Adoptions { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int ChipNumber { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Sex { get; set; }
+        public DateTime FoundDate { get; set; }
+        public string FoundPlace { get; set; }
+        public DateTime? DeathDate { get; set; }
 
-
+        //  public int StatusId { get; set; }
+        // public int SpeciesId { get; set; }
+        public string Status { get; set; }
+        public string Species { get; set; }
     }
 }

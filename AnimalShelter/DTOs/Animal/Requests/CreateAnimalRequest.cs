@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,23 @@ namespace AnimalShelter_WebAPI.DTOs.Requests
 {
     public class CreateAnimalRequest
     {
-        public int ShelterNumber { get; set; }
+        [FromHeader]
+        public string Name { get; set; }
+        [FromHeader]
         public int ChipNumber { get; set; }
-        public int BirthYear { get; set; }
+        [FromHeader]
+        public DateTime BirthDate { get; set; }
+        [FromHeader]
         public string Sex { get; set; }
+        [FromHeader]
         public DateTime FoundDate { get; set; }
+        [FromHeader]
         public string FoundPlace { get; set; }
 
-        public string Species { get; set; }
-        public string Status { get; set; }
+
+        [FromHeader]
+        public int IdSpecies { get; set; }
+        [FromHeader]
+        public int IdStatus { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalShelter_WebAPI.Migrations
 {
     [DbContext(typeof(ShelterDbContext))]
-    [Migration("20210806092116_init")]
-    partial class init
+    [Migration("20210806075311_update2")]
+    partial class update2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,11 +25,6 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id")
                         .HasName("Adopter_PK");
@@ -82,16 +77,16 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("IdEmployee")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
+                    b.Property<int?>("AssignedSpeciesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdSpecies")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("IdEmployee")
                         .HasName("AOWorker_PK");
 
-                    b.HasIndex("IdSpecies");
+                    b.HasIndex("AssignedSpeciesId");
 
                     b.ToTable("AdoptionOfficeWorker");
                 });
@@ -113,17 +108,23 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FoundDate")
+                        .HasMaxLength(255)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FoundPlace")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("IdSpecies")
                         .HasColumnType("int");
 
                     b.Property<int>("IdStatus")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Sex")
                         .IsRequired()
@@ -195,13 +196,13 @@ namespace AnimalShelter_WebAPI.Migrations
 
             modelBuilder.Entity("AnimalShelter.Models.PerformedTreatment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdTreatment")
                         .HasColumnType("int");
 
                     b.Property<int>("IdVisit")
                         .HasColumnType("int");
 
-                    b.HasKey("Id", "IdVisit")
+                    b.HasKey("IdTreatment", "IdVisit")
                         .HasName("PerformedTreatment_PK");
 
                     b.HasIndex("IdVisit");
@@ -215,6 +216,10 @@ namespace AnimalShelter_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
@@ -241,7 +246,8 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Sex")
                         .IsRequired()
@@ -256,7 +262,7 @@ namespace AnimalShelter_WebAPI.Migrations
 
             modelBuilder.Entity("AnimalShelter.Models.PrescribedMedicine", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdMedicine")
                         .HasColumnType("int");
 
                     b.Property<int>("IdVisit")
@@ -265,7 +271,7 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.HasKey("Id", "IdVisit")
+                    b.HasKey("IdMedicine", "IdVisit")
                         .HasName("PrescribedMedicine_PK");
 
                     b.HasIndex("IdVisit");
@@ -303,7 +309,8 @@ namespace AnimalShelter_WebAPI.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id")
                         .HasName("Specialty_PK");
@@ -421,9 +428,6 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("IdSpecialty")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ObtainingDate")
                         .HasColumnType("datetime2");
 
@@ -493,16 +497,14 @@ namespace AnimalShelter_WebAPI.Migrations
 
             modelBuilder.Entity("AnimalShelter.Models.AdoptionOfficeWorker", b =>
                 {
+                    b.HasOne("AnimalShelter.Models.Species", "AssignedSpecies")
+                        .WithMany("AdoptionOfficeWorkers")
+                        .HasForeignKey("AssignedSpeciesId");
+
                     b.HasOne("AnimalShelter.Models.Employee", "Employee")
                         .WithMany("AdoptionOfficeWorkers")
                         .HasForeignKey("IdEmployee")
                         .HasConstraintName("Employee_AOWorker")
-                        .IsRequired();
-
-                    b.HasOne("AnimalShelter.Models.Species", "AssignedSpecies")
-                        .WithMany("AdoptionOfficeWorkers")
-                        .HasForeignKey("IdSpecies")
-                        .HasConstraintName("Employee_Species")
                         .IsRequired();
 
                     b.Navigation("AssignedSpecies");
@@ -563,7 +565,7 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     b.HasOne("AnimalShelter.Models.Treatment", "Treatment")
                         .WithMany("PerformedTreatments")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("IdTreatment")
                         .HasConstraintName("PerformedTreatment_Treatment")
                         .IsRequired();
 
@@ -582,7 +584,7 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     b.HasOne("AnimalShelter.Models.Medicine", "Medicine")
                         .WithMany("PrescribedMedicines")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("IdMedicine")
                         .HasConstraintName("PrescribedMedicine_Medicine")
                         .IsRequired();
 
