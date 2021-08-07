@@ -111,11 +111,7 @@ namespace AnimalShelter.Controllers
             //  s.refToken = refreshToken.ToString();
           //  _studentDbService.setToken(s, refreshToken);
 
-            return Ok(new
-            {
-                accessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                refreshToken
-            });
-        }*/
+            return Ok(token);
+        }
     }
 }
