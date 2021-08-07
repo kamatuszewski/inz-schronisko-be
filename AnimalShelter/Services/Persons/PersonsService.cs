@@ -61,6 +61,9 @@ namespace AnimalShelter.Services
 
 
 
+       //Adopter usunięty - to będzie po prostu osoba
+/*
+
         public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest)
         {
             var adopter = _mapper.Map<Adopter>(createAdopterRequest);
@@ -69,7 +72,7 @@ namespace AnimalShelter.Services
 
             return adopter;
         }
-
+*/
 
         public void RegisterPerson(RegisterPersonRequest registerPersonRequest)
         {
@@ -91,8 +94,8 @@ namespace AnimalShelter.Services
 
             var newGrantedRole = new GrantedRole()
             {
-                IdPerson = newPerson.Id,
-                IdRole = registerPersonRequest.IdRole
+                PersonId = newPerson.Id,
+                RoleId = registerPersonRequest.RoleId
             };
 
             

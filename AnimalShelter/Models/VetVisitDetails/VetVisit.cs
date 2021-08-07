@@ -10,8 +10,8 @@ namespace AnimalShelter.Models
 {
     public class VetVisit:BaseEntity
     {
-        public int IdVet { get; set; }
-        public int IdAnimal { get; set; }
+        public int VetId { get; set; }
+        public int AnimalId { get; set; }
         public DateTime VisitDateTime { get; set; }
         public string Description { get; set; }
 

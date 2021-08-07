@@ -7,8 +7,8 @@ namespace AnimalShelter.Models
 {
     public class PrescribedMedicine
     {
-        public int IdVisit { get; set; }
-        public int IdMedicine { get; set; }
+        public int VisitId { get; set; }
+        public int MedicineId { get; set; }
         public int Amount { get; set; }
 
         public virtual Medicine Medicine { get; set; }    

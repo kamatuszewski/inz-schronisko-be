@@ -13,13 +13,13 @@ namespace AnimalShelter.Configurations
     {
         public void Configure(EntityTypeBuilder<GrantedRole> builder)
         {
-            builder.HasKey(e => new {e.IdPerson, e.IdRole}).HasName("GrantedRoles_PK");
+            builder.HasKey(e => new {e.PersonId, e.RoleId}).HasName("GrantedRoles_PK");
             builder.HasOne(d => d.Person).WithMany(p => p.GrantedRoles)
-                .HasForeignKey(d => d.IdPerson)
+                .HasForeignKey(d => d.PersonId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("GrantedRole_Person");
             builder.HasOne(d => d.Role).WithMany(p => p.GrantedRoles)
-               .HasForeignKey(d => d.IdRole)
+               .HasForeignKey(d => d.RoleId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("GrantedRole_Role");
         }

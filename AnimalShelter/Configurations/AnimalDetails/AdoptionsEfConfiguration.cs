@@ -19,17 +19,17 @@ namespace AnimalShelter.Configurations
            
 
             builder.HasOne(d => d.Animal).WithMany(p => p.Adoptions)
-                .HasForeignKey(d => d.IdAnimal)
+                .HasForeignKey(d => d.AnimalId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Adoption_Animal");
 
             builder.HasOne(d => d.Adopter).WithMany(p => p.Adoptions)
-                .HasForeignKey(d => d.IdAdopter)
+                .HasForeignKey(d => d.AdopterId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Adoption_Adopter");
 
             builder.HasOne(d => d.AdoptionOfficeWorker).WithMany(p => p.Adoptions)
-               .HasForeignKey(d => d.IdEmployee)
+               .HasForeignKey(d => d.EmployeeId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("Adoption_AOWorkerr");
         }

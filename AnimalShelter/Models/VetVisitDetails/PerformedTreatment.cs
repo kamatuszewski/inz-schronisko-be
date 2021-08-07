@@ -7,8 +7,8 @@ namespace AnimalShelter.Models
 {
     public class PerformedTreatment
     {
-        public int IdVisit { get; set; }
-        public int IdTreatment { get; set; }
+        public int VisitId { get; set; }
+        public int TreatmentId { get; set; }
 
         public virtual Treatment Treatment { get; set; }    
         public virtual VetVisit VetVisit { get; set; }    

@@ -24,8 +24,8 @@ namespace AnimalShelter_WebAPI.DTOs.Requests
 
 
         [FromHeader]
-        public int IdSpecies { get; set; }
+        public int SpeciesId { get; set; }
         [FromHeader]
-        public int IdStatus { get; set; }
+        public int StatusId { get; set; }
     }
 }

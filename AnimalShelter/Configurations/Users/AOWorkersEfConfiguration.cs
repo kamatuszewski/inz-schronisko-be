@@ -13,9 +13,9 @@ namespace AnimalShelter.Configurations
     {
         public void Configure(EntityTypeBuilder<AdoptionOfficeWorker> builder)
         {
-            builder.HasKey(e => e.IdEmployee).HasName("AOWorker_PK");
+            builder.HasKey(e => e.Id).HasName("AOWorker_PK");
             builder.HasOne(d => d.Employee).WithMany(p => p.AdoptionOfficeWorkers)
-                .HasForeignKey(d => d.IdEmployee)
+                .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Employee_AOWorker");
 

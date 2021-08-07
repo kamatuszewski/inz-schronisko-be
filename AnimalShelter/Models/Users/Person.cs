@@ -22,7 +22,8 @@ namespace AnimalShelter.Models
 
         public virtual ICollection<GrantedRole> GrantedRoles { get; set; }
         public virtual ICollection<Volunteer> Volunteers { get; set; }
-        public virtual ICollection<Adopter> Adopters { get; set; }
+        public virtual ICollection<Adoption> Adoptions { get; set; }
+       // public virtual ICollection<Adopter> Adopters { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
 
 

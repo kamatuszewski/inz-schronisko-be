@@ -18,11 +18,11 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.Description).IsRequired();
 
             builder.HasOne(d => d.Vet).WithMany(p => p.VetVisits)
-                .HasForeignKey(d => d.IdVet)
+                .HasForeignKey(d => d.VetId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("VetVisit_Vet");
             builder.HasOne(d => d.Animal).WithMany(p => p.VetVisits)
-               .HasForeignKey(d => d.IdAnimal)
+               .HasForeignKey(d => d.AnimalId)
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("VetVisit_Animal");
         }

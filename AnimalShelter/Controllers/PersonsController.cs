@@ -61,6 +61,7 @@ namespace AnimalShelter.Controllers
 
         }
 
+        /*
         [Route("adopters")]
         [HttpPost]
         public IActionResult CreateAdopter([FromBody] CreateAdopterRequest createAdopterRequest)
@@ -69,6 +70,8 @@ namespace AnimalShelter.Controllers
             return Ok();
 
         }
+
+        */
 
 
 
