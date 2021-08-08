@@ -114,12 +114,6 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("IdSpecies")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdStatus")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -128,12 +122,18 @@ namespace AnimalShelter_WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SpeciesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id")
                         .HasName("Animal_PK");
 
-                    b.HasIndex("IdSpecies");
+                    b.HasIndex("SpeciesId");
 
-                    b.HasIndex("IdStatus");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Animal");
                 });
@@ -341,9 +341,6 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -514,13 +511,13 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     b.HasOne("AnimalShelter.Models.Species", "Species")
                         .WithMany("Animals")
-                        .HasForeignKey("IdSpecies")
+                        .HasForeignKey("SpeciesId")
                         .HasConstraintName("Animal_Species")
                         .IsRequired();
 
                     b.HasOne("AnimalShelter.Models.Status", "Status")
                         .WithMany("Animals")
-                        .HasForeignKey("IdStatus")
+                        .HasForeignKey("StatusId")
                         .HasConstraintName("Animal_Status")
                         .IsRequired();
 

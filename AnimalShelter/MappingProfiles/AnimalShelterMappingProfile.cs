@@ -3,6 +3,7 @@ using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Adoption.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.DTOs.Responses.AnimalResponses;
+using AnimalShelter_WebAPI.DTOs.Role;
 using AnimalShelter_WebAPI.DTOs.VetVisit.Responses;
 using AutoMapper;
 using System;
@@ -30,13 +31,10 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<Person, EmployeeResponse>();
 
             CreateMap<Adoption, AdoptionResponse>();
-
-
             CreateMap<VetVisit, GeneralVetVisitResponse>();
-
-
             CreateMap<CreatePersonRequest, Person>();
             CreateMap<CreateAnimalRequest, Animal>();
+            CreateMap<AddRoleToPersonRequest, GrantedRole>();
         }
     }
 }

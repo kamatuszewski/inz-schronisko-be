@@ -53,15 +53,15 @@ namespace AnimalShelter_WebAPI
             {
                 new Role()
                 {
-                    Name = "Wolontariusz"
+                    Name = "Volunteer"
                 },
                 new Role()
                 {
-                    Name = "Pracownik"
+                    Name = "Employee"
                 },
                 new Role()
                 {
-                    Name = "Dyrektor"
+                    Name = "Director"
                 },
                  new Role()
                 {

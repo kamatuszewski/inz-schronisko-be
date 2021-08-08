@@ -127,6 +127,7 @@ namespace AnimalShelter.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, person.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{person.FirstName} {person.LastName}"),
+                
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));

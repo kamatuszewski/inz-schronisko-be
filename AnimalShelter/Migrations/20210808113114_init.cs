@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AnimalShelter_WebAPI.Migrations
 {
-    public partial class update : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace AnimalShelter_WebAPI.Migrations
                     PESEL = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     Sex = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
                     EmailAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
@@ -86,8 +86,7 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,21 +199,21 @@ namespace AnimalShelter_WebAPI.Migrations
                     FoundDate = table.Column<DateTime>(type: "datetime2", maxLength: 255, nullable: false),
                     FoundPlace = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     DeathDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IdStatus = table.Column<int>(type: "int", nullable: false),
-                    IdSpecies = table.Column<int>(type: "int", nullable: false)
+                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    SpeciesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("Animal_PK", x => x.Id);
                     table.ForeignKey(
                         name: "Animal_Species",
-                        column: x => x.IdSpecies,
+                        column: x => x.SpeciesId,
                         principalTable: "Species",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "Animal_Status",
-                        column: x => x.IdStatus,
+                        column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -423,14 +422,14 @@ namespace AnimalShelter_WebAPI.Migrations
                 column: "AssignedSpeciesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Animal_IdSpecies",
+                name: "IX_Animal_SpeciesId",
                 table: "Animal",
-                column: "IdSpecies");
+                column: "SpeciesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Animal_IdStatus",
+                name: "IX_Animal_StatusId",
                 table: "Animal",
-                column: "IdStatus");
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GrantedRole_IdRole",
