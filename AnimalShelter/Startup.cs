@@ -5,6 +5,8 @@ using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Middleware;
 using AnimalShelter_WebAPI.Models.Validators;
 using AnimalShelter_WebAPI.Seeders;
+using AnimalShelter_WebAPI.Services.Animals;
+using AnimalShelter_WebAPI.Services.VetVisitsDetails;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -78,6 +80,9 @@ namespace AnimalShelter
 
             services.AddScoped<IAnimalsService, AnimalsService>();
             services.AddScoped<IPersonsService, PersonsService>();
+            services.AddScoped<IMedicinesService, MedicinesService>();
+            services.AddScoped<ITreatmentsService, TreatmentsService>();
+            services.AddScoped<IVetVisitsService, VetVisitsService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IPasswordHasher<Person>, PasswordHasher<Person>>();

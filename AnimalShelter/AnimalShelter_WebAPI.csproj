@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTOs\Adopter\**" />
+    <Content Remove="DTOs\Adopter\**" />
+    <EmbeddedResource Remove="DTOs\Adopter\**" />
+    <None Remove="DTOs\Adopter\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
@@ -29,9 +36,7 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Adoption\Responses\" />
-    <Folder Include="DTOs\VetVisit\Requests\" />
-    <Folder Include="DTOs\Adopter\Responses\" />
-    <Folder Include="DTOs\VetVisit\Responses\" />
+    <Folder Include="DTOs\VetVisitDetails\VetVisits\Responses\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

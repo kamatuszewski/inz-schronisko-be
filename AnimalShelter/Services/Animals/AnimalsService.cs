@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AnimalShelter.Services
+namespace AnimalShelter_WebAPI.Services.Animals
 {
     public class AnimalsService : IAnimalsService
     {

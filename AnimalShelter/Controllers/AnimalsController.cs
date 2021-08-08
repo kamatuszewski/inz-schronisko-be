@@ -1,6 +1,7 @@
 ﻿
 using AnimalShelter.Services;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.Services.Animals;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,10 @@ namespace AnimalShelter.Controllers
     public class AnimalsController : ControllerBase
     {
 
-        public IConfiguration _configuration;
+     //   public IConfiguration _configuration;
         private readonly IAnimalsService _animalsDbService;
-        public AnimalsController(IAnimalsService animalsDbService, IConfiguration configuration)
+        public AnimalsController(IAnimalsService animalsDbService /*,  IConfiguration configuration */)
         {
-            _configuration = configuration;
             _animalsDbService = animalsDbService;
         }
 

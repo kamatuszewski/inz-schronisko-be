@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AnimalShelter.Services
+namespace AnimalShelter_WebAPI.Services.Animals
 {
     public interface IAnimalsService
     {
+        public IEnumerable<GeneralAnimalResponse> GetAnimals();
         public FullDataAnimalResponse GetAnimal(int shelterNumber);
         public bool RemoveAnimal(int id);
-        public IEnumerable<GeneralAnimalResponse> GetAnimals();
         public Animal CreateAnimal(CreateAnimalRequest createAnimalRequest);
 
         public IEnumerable<StatusesResponse> GetStatuses();
