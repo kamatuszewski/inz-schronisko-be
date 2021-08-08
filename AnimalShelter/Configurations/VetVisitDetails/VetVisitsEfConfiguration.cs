@@ -14,7 +14,7 @@ namespace AnimalShelter.Configurations
         public void Configure(EntityTypeBuilder<VetVisit> builder)
         {
             builder.HasKey(e => e.Id).HasName("VetVisit_PK");
-            builder.Property(e => e.VisitDateTime).IsRequired();
+            builder.Property(e => e.VisitDate).IsRequired();
             builder.Property(e => e.Description).IsRequired();
 
             builder.HasOne(d => d.Vet).WithMany(p => p.VetVisits)
@@ -23,7 +23,7 @@ namespace AnimalShelter.Configurations
                 .HasConstraintName("VetVisit_Vet");
             builder.HasOne(d => d.Animal).WithMany(p => p.VetVisits)
                .HasForeignKey(d => d.AnimalId)
-               .OnDelete(DeleteBehavior.ClientSetNull)
+               .OnDelete(DeleteBehavior.Cascade)
                .HasConstraintName("VetVisit_Animal");
         }
     }

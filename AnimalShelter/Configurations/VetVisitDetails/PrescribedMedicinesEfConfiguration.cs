@@ -21,7 +21,7 @@ namespace AnimalShelter.Configurations
                 .HasConstraintName("PrescribedMedicine_Medicine");
             builder.HasOne(d => d.VetVisit).WithMany(p => p.PrescribedMedicines)
                .HasForeignKey(d => d.VisitId)
-               .OnDelete(DeleteBehavior.ClientSetNull)
+               .OnDelete(DeleteBehavior.Cascade)
                .HasConstraintName("PrescribedMedicine_Visit");
         }
     }

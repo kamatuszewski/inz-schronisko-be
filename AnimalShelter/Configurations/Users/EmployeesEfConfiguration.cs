@@ -18,7 +18,7 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.Salary).IsRequired();
             builder.HasOne(d => d.Person).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Person_Emplyee");
         }
     }

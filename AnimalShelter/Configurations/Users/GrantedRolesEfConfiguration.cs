@@ -16,11 +16,11 @@ namespace AnimalShelter.Configurations
             builder.HasKey(e => new {e.PersonId, e.RoleId}).HasName("GrantedRoles_PK");
             builder.HasOne(d => d.Person).WithMany(p => p.GrantedRoles)
                 .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("GrantedRole_Person");
             builder.HasOne(d => d.Role).WithMany(p => p.GrantedRoles)
                .HasForeignKey(d => d.RoleId)
-               .OnDelete(DeleteBehavior.ClientSetNull)
+               .OnDelete(DeleteBehavior.Cascade)
                .HasConstraintName("GrantedRole_Role");
         }
     }

@@ -42,8 +42,6 @@ namespace AnimalShelter.Controllers
                 return Ok(animal);
         }
 
-
-    
         [HttpPost]
         public IActionResult CreateAnimal([FromHeader] CreateAnimalRequest createAnimalRequest)
         {
@@ -53,13 +51,27 @@ namespace AnimalShelter.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public IActionResult RemoveAnimal(int id)
+        public IActionResult RemoveAnimal(int Id)
         {
-            var isDeleted = _animalsDbService.RemoveAnimal(id);
+            var isDeleted = _animalsDbService.RemoveAnimal(Id);
             if (isDeleted)
                 return Ok();
             else
                 return NotFound();
+        }
+
+        [Route("Statuses")]
+        [HttpGet]
+        public IActionResult GestStatuses()
+        {
+            return Ok(_animalsDbService.GetStatuses());
+        }
+
+        [Route("Species")]
+        [HttpGet]
+        public IActionResult GetSpecies()
+        {
+            return Ok(_animalsDbService.GetSpecies());
         }
     }
 }

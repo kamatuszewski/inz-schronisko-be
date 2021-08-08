@@ -388,7 +388,7 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("VetId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("VisitDateTime")
+                    b.Property<DateTime>("VisitDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id")
@@ -450,6 +450,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("Adoptions")
                         .HasForeignKey("AnimalId")
                         .HasConstraintName("Adoption_Animal")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AnimalShelter.Models.AdoptionOfficeWorker", "AdoptionOfficeWorker")
@@ -477,6 +478,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("AdoptionOfficeWorkers")
                         .HasForeignKey("Id")
                         .HasConstraintName("Employee_AOWorker")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AssignedSpecies");
@@ -509,6 +511,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("Employees")
                         .HasForeignKey("Id")
                         .HasConstraintName("Person_Emplyee")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
@@ -520,12 +523,14 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("GrantedRoles")
                         .HasForeignKey("PersonId")
                         .HasConstraintName("GrantedRole_Person")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AnimalShelter.Models.Role", "Role")
                         .WithMany("GrantedRoles")
                         .HasForeignKey("RoleId")
                         .HasConstraintName("GrantedRole_Role")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
@@ -545,6 +550,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("PerformedTreatments")
                         .HasForeignKey("VisitId")
                         .HasConstraintName("PerformedTreatment_Visit")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Treatment");
@@ -564,6 +570,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("PrescribedMedicines")
                         .HasForeignKey("VisitId")
                         .HasConstraintName("PrescribedMedicine_Visit")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Medicine");
@@ -577,6 +584,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("Vets")
                         .HasForeignKey("Id")
                         .HasConstraintName("Employee_Vet")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -588,6 +596,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("VetVisits")
                         .HasForeignKey("AnimalId")
                         .HasConstraintName("VetVisit_Animal")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AnimalShelter.Models.Vet", "Vet")
@@ -607,12 +616,14 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("Vet_Specialties")
                         .HasForeignKey("SpecialtyId")
                         .HasConstraintName("Vet_Specialty_Specialty")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AnimalShelter.Models.Vet", "Vet")
                         .WithMany("Vet_Specialties")
                         .HasForeignKey("VetId")
                         .HasConstraintName("Vet_Specialty_Vet")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Specialty");
@@ -626,6 +637,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .WithMany("Volunteers")
                         .HasForeignKey("Id")
                         .HasConstraintName("Person_Volunteer")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");

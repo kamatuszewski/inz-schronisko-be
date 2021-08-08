@@ -20,7 +20,7 @@ namespace AnimalShelter.Configurations
 
             builder.HasOne(d => d.Animal).WithMany(p => p.Adoptions)
                 .HasForeignKey(d => d.AnimalId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Adoption_Animal");
 
             builder.HasOne(d => d.Adopter).WithMany(p => p.Adoptions)

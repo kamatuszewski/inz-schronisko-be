@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace AnimalShelter_WebAPI.DTOs.Adoption.Responses
+namespace AnimalShelter_WebAPI.DTOs.Animal.Responses
 {
     public class AdoptionResponse
     {

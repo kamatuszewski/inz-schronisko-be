@@ -12,7 +12,7 @@ namespace AnimalShelter.Models
     {
         public int VetId { get; set; }
         public int AnimalId { get; set; }
-        public DateTime VisitDateTime { get; set; }
+        public DateTime VisitDate { get; set; }
         public string Description { get; set; }
 
 

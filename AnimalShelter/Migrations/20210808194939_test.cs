@@ -123,7 +123,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.Id,
                         principalTable: "Person",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -142,7 +142,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.Id,
                         principalTable: "Person",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,13 +160,13 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "GrantedRole_Role",
                         column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,7 +217,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.Id,
                         principalTable: "Employee",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AdoptionOfficeWorker_Species_AssignedSpeciesId",
                         column: x => x.AssignedSpeciesId,
@@ -241,7 +241,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.Id,
                         principalTable: "Employee",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -272,7 +272,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.AnimalId,
                         principalTable: "Animal",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "Adoption_AOWorkerr",
                         column: x => x.EmployeeId,
@@ -297,13 +297,13 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.SpecialtyId,
                         principalTable: "Specialty",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "Vet_Specialty_Vet",
                         column: x => x.VetId,
                         principalTable: "Vet",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -314,7 +314,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VetId = table.Column<int>(type: "int", nullable: false),
                     AnimalId = table.Column<int>(type: "int", nullable: false),
-                    VisitDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VisitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -325,7 +325,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.AnimalId,
                         principalTable: "Animal",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "VetVisit_Vet",
                         column: x => x.VetId,
@@ -355,7 +355,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.VisitId,
                         principalTable: "VetVisit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -380,7 +380,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         column: x => x.VisitId,
                         principalTable: "VetVisit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

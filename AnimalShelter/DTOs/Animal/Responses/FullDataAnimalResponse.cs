@@ -1,6 +1,4 @@
 ﻿using AnimalShelter.Models;
-using AnimalShelter_WebAPI.DTOs.Adoption.Responses;
-using AnimalShelter_WebAPI.DTOs.VetVisit.Responses;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

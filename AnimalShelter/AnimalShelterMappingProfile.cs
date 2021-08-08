@@ -1,9 +1,7 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
-using AnimalShelter_WebAPI.DTOs.Adoption.Responses;
 using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
-using AnimalShelter_WebAPI.DTOs.VetVisit.Responses;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -30,6 +28,8 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.VetVisitResponses, c => c.MapFrom(s => s.VetVisits))
                 .ForMember(m => m.AdoptionResponses, c => c.MapFrom(s => s.Adoptions));
 
+            CreateMap<Species, SpeciesResponse>();
+            CreateMap<Status, StatusesResponse>();
 
             //GeneralVetVisitResponse mappings
 

@@ -12,10 +12,11 @@ namespace AnimalShelter.Services
     public interface IAnimalsService
     {
         public FullDataAnimalResponse GetAnimal(int shelterNumber);
-
         public bool RemoveAnimal(int id);
-
         public IEnumerable<GeneralAnimalResponse> GetAnimals();
         public Animal CreateAnimal(CreateAnimalRequest createAnimalRequest);
+
+        public IEnumerable<StatusesResponse> GetStatuses();
+        public IEnumerable<SpeciesResponse> GetSpecies();
     }
 }

@@ -28,8 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\Adoption\Responses\" />
     <Folder Include="DTOs\VetVisit\Requests\" />
     <Folder Include="DTOs\Adopter\Responses\" />
+    <Folder Include="DTOs\VetVisit\Responses\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
