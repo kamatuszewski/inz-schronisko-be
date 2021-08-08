@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,17 @@ namespace AnimalShelter.Services
         }
 
 
-        public GeneralAnimalResponse GetAnimal(int id)
+        public FullDataAnimalResponse GetAnimal(int id)
         {
             var animal = _context.Animal.Where(a => a.Id == id)
                 .Include(req => req.Species)
                 .Include(req => req.Status)
+                .Include(req => req.Adoptions).ThenInclude(ad => ad.Adopter)
+                .Include(req => req.Adoptions).ThenInclude(ad => ad.AdoptionOfficeWorker).ThenInclude(aow => aow.Employee).ThenInclude(emp => emp.Person)
+                .Include(req => req.VetVisits)
                 .FirstOrDefault();
-            return _mapper.Map<GeneralAnimalResponse>(animal);
+
+            return _mapper.Map<FullDataAnimalResponse>(animal);
               
         }
 

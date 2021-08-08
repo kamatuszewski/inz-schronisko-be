@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnimalShelter_WebAPI.DTOs.Responses.AnimalResponses
+namespace AnimalShelter_WebAPI.DTOs.Animal.Responses
 {
     public class DetailedAnimalResponse
     {

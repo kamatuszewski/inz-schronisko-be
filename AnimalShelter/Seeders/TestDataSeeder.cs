@@ -29,8 +29,7 @@ namespace AnimalShelter_WebAPI.Seeders
                 }
 
              
-                
-                if (!_dbContext.Person.Any())
+               if (!_dbContext.Person.Any())
                 {
                     var persons = GetPersons();
                     _dbContext.Person.AddRange(persons);
