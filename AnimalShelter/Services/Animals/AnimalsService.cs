@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AnimalShelter.Services
+namespace AnimalShelter_WebAPI.Services.Animals
 {
     public class AnimalsService : IAnimalsService
     {
@@ -20,18 +21,6 @@ namespace AnimalShelter.Services
             _mapper = mapper;
         }
 
-
-        public GeneralAnimalResponse GetAnimal(int id)
-        {
-            var animal = _context.Animal.Where(a => a.Id == id)
-                .Include(req => req.Species)
-                .Include(req => req.Status)
-                .FirstOrDefault();
-            return _mapper.Map<GeneralAnimalResponse>(animal);
-              
-        }
-
-
         public IEnumerable<GeneralAnimalResponse> GetAnimals()
         {
             var animals = _context.Animal
@@ -41,29 +30,50 @@ namespace AnimalShelter.Services
              return _mapper.Map<IEnumerable<GeneralAnimalResponse>>(animals);
         }
 
+        public FullDataAnimalResponse GetAnimal(int id)
+        {
+            var animal = _context.Animal.Where(a => a.Id == id)
+                .Include(req => req.Species)
+                .Include(req => req.Status)
+                .Include(req => req.Adoptions).ThenInclude(ad => ad.Adopter)
+                .Include(req => req.Adoptions).ThenInclude(ad => ad.AdoptionOfficeWorker).ThenInclude(aow => aow.Employee).ThenInclude(emp => emp.Person)
+                .Include(req => req.VetVisits)
+                .FirstOrDefault();
+            return _mapper.Map<FullDataAnimalResponse>(animal);
+        }
+
         public Animal CreateAnimal(CreateAnimalRequest createAnimalRequest)
         {
-           
-                var animal = _mapper.Map<Animal>(createAnimalRequest);
-                _context.Animal.Add(animal);
-                _context.SaveChanges();
-
-                return animal;
-            
+            var animal = _mapper.Map<Animal>(createAnimalRequest);
+            _context.Animal.Add(animal);
+            _context.SaveChanges();
+            return animal;
         }
 
         public bool RemoveAnimal(int id)
         {
             var animal = _context.Animal.Where(a => a.Id == id)
                .FirstOrDefault();
-
             if (animal is null) return false;
 
             _context.Animal.Remove(animal);
             _context.SaveChanges();
 
             return true;
+        }
 
+        public IEnumerable<StatusesResponse> GetStatuses()
+        {
+            var statuses = _context.Status
+                .ToList();
+            return _mapper.Map<IEnumerable<StatusesResponse>>(statuses);
+        }
+
+        public IEnumerable<SpeciesResponse> GetSpecies()
+        {
+            var species = _context.Species
+                .ToList();
+            return _mapper.Map<IEnumerable<SpeciesResponse>>(species);
         }
     }
 }

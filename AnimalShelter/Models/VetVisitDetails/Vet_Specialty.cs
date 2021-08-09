@@ -7,8 +7,8 @@ namespace AnimalShelter.Models
 {
     public class Vet_Specialty
     {
-        public int IdVet { get; set; }
-        public int IdSpecialty { get; set; }
+        public int VetId { get; set; }
+        public int SpecialtyId { get; set; }
         public DateTime ObtainingDate { get; set; }
 
         public virtual Vet Vet { get; set; }    

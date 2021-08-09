@@ -13,13 +13,13 @@ namespace AnimalShelter.Models
         public Boolean IsItOwnerPickUp { get; set; }
 
 
-        public int IdAnimal { get; set; }
-        public int IdAdopter { get; set; }
-        public int IdEmployee { get; set; }
+        public int AnimalId { get; set; }
+        public int AdopterId { get; set; }
+        public int EmployeeId { get; set; }
 
 
         public virtual Animal Animal { get; set; }
-        public virtual Adopter Adopter { get; set; }
+        public virtual Person Adopter { get; set; }
         public virtual AdoptionOfficeWorker AdoptionOfficeWorker { get; set; }
     }
 }

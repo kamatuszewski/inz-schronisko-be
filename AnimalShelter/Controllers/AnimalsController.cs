@@ -1,6 +1,7 @@
 ﻿
 using AnimalShelter.Services;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.Services.Animals;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,10 @@ namespace AnimalShelter.Controllers
     public class AnimalsController : ControllerBase
     {
 
-        public IConfiguration _configuration;
+     //   public IConfiguration _configuration;
         private readonly IAnimalsService _animalsDbService;
-        public AnimalsController(IAnimalsService animalsDbService, IConfiguration configuration)
+        public AnimalsController(IAnimalsService animalsDbService /*,  IConfiguration configuration */)
         {
-            _configuration = configuration;
             _animalsDbService = animalsDbService;
         }
 
@@ -42,8 +42,6 @@ namespace AnimalShelter.Controllers
                 return Ok(animal);
         }
 
-
-    
         [HttpPost]
         public IActionResult CreateAnimal([FromHeader] CreateAnimalRequest createAnimalRequest)
         {
@@ -53,13 +51,27 @@ namespace AnimalShelter.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public IActionResult RemoveAnimal(int id)
+        public IActionResult RemoveAnimal(int Id)
         {
-            var isDeleted = _animalsDbService.RemoveAnimal(id);
+            var isDeleted = _animalsDbService.RemoveAnimal(Id);
             if (isDeleted)
                 return Ok();
             else
                 return NotFound();
+        }
+
+        [Route("Statuses")]
+        [HttpGet]
+        public IActionResult GestStatuses()
+        {
+            return Ok(_animalsDbService.GetStatuses());
+        }
+
+        [Route("Species")]
+        [HttpGet]
+        public IActionResult GetSpecies()
+        {
+            return Ok(_animalsDbService.GetSpecies());
         }
     }
 }

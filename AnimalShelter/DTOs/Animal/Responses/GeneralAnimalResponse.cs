@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AnimalShelter.DTOs.Responses
+
+namespace AnimalShelter_WebAPI.DTOs.Animal.Responses
 {
     public class GeneralAnimalResponse
     {

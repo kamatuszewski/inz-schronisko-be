@@ -84,7 +84,7 @@ namespace AnimalShelter_WebAPI
                 },
                 new Status()
                 {
-                    Name = "FOR ADOPTION"
+                    Name = "FOR_ADOPTION"
                 },
                 new Status()
                 {

@@ -15,7 +15,7 @@ namespace AnimalShelter.Configurations
         {
             builder.HasKey(e => e.Id).HasName("Specialty_PK");
             builder.Property(e => e.Name).IsRequired();
-            builder.Property(e => e.MinSalary).IsRequired();
+      //      builder.Property(e => e.MinSalary).IsRequired();
 
         }
     }

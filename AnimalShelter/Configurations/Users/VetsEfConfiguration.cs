@@ -17,7 +17,7 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.PWZNumber).IsRequired();
             builder.HasOne(d => d.Employee).WithMany(p => p.Vets)
                 .HasForeignKey(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Employee_Vet");
         }
     }

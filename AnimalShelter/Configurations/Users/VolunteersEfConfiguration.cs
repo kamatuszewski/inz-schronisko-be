@@ -19,7 +19,7 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.Attendance).HasMaxLength(255);
             builder.HasOne(d => d.Person).WithMany(p => p.Volunteers)
                 .HasForeignKey(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Person_Volunteer");
         }
     }

@@ -16,6 +16,6 @@ namespace AnimalShelter_WebAPI.DTOs.Requests
         public string Sex { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }
-        public int IdRole { get; set; } = 1;
+        public int RoleId { get; set; } = 1;
     }
 }

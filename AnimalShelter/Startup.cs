@@ -4,6 +4,9 @@ using AnimalShelter_WebAPI;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Middleware;
 using AnimalShelter_WebAPI.Models.Validators;
+using AnimalShelter_WebAPI.Seeders;
+using AnimalShelter_WebAPI.Services.Animals;
+using AnimalShelter_WebAPI.Services.VetVisitsDetails;
 using AnimalShelter_WebAPI.Services.Roles;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -74,9 +77,13 @@ namespace AnimalShelter
             });
 
             services.AddScoped<ShelterSeeder>();
+            services.AddScoped<TestDataSeeder>(); //test data only
 
             services.AddScoped<IAnimalsService, AnimalsService>();
             services.AddScoped<IPersonsService, PersonsService>();
+            services.AddScoped<IMedicinesService, MedicinesService>();
+            services.AddScoped<ITreatmentsService, TreatmentsService>();
+            services.AddScoped<IVetVisitsService, VetVisitsService>();
             services.AddScoped<IRolesService, RolesService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
@@ -91,12 +98,14 @@ namespace AnimalShelter
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ShelterSeeder seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ShelterSeeder seeder, TestDataSeeder testDataSeeder)
         {
-            seeder.Seed();
+            seeder.Seed();  //pernament system data - roles, species, statuses
+           
 
             if (env.IsDevelopment())
             {
+                testDataSeeder.SeedTestData();  //data added for testing purposes
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter v1"));
