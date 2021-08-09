@@ -15,6 +15,8 @@ namespace AnimalShelter.Models
 
         public virtual Person Person { get; set; }
         public virtual ICollection<Vet> Vets { get; set; }
-        public virtual ICollection<AdoptionOfficeWorker> AdoptionOfficeWorkers { get; set; }
+        public virtual ICollection<Adoption> Adoptions { get; set; }
+
+        //   public virtual ICollection<AdoptionOfficeWorker> AdoptionOfficeWorkers { get; set; }
     }
 }

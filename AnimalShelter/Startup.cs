@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnimalShelter_WebAPI.Services;
 
 namespace AnimalShelter
 {
@@ -85,6 +86,7 @@ namespace AnimalShelter
             services.AddScoped<ITreatmentsService, TreatmentsService>();
             services.AddScoped<IVetVisitsService, VetVisitsService>();
             services.AddScoped<IRolesService, RolesService>();
+            services.AddScoped<IVetsService, VetsService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IPasswordHasher<Person>, PasswordHasher<Person>>();

@@ -17,7 +17,7 @@ namespace AnimalShelter.Models
         public DbSet<Volunteer> Volunteer { get; set; }
       //  public DbSet<Adopter> Adopter { get; set; }
         public DbSet<Vet> Vet { get; set; }
-        public DbSet<AdoptionOfficeWorker> AdoptionOfficeWorker { get; set; }
+   //     public DbSet<AdoptionOfficeWorker> AdoptionOfficeWorker { get; set; }
         public DbSet<Animal> Animal { get; set; }
         public DbSet<Adoption> Adoption { get; set; }
         public DbSet<Species> Species { get; set; }
@@ -45,7 +45,7 @@ namespace AnimalShelter.Models
             modelBuilder.ApplyConfiguration(new StatusesEfConfiguration());
             
             modelBuilder.ApplyConfiguration(new PeopleEfConfiguration());
-            modelBuilder.ApplyConfiguration(new AOWorkersEfConfiguration());
+       //     modelBuilder.ApplyConfiguration(new AOWorkersEfConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeesEfConfiguration());
             modelBuilder.ApplyConfiguration(new VetsEfConfiguration());
             modelBuilder.ApplyConfiguration(new VolunteersEfConfiguration());

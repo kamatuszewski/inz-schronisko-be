@@ -10,6 +10,6 @@ namespace AnimalShelter.Models
         public string Name { get; set; }
 
         public virtual ICollection<Animal> Animals { get; set; }
-        public virtual ICollection<AdoptionOfficeWorker> AdoptionOfficeWorkers { get; set; }
+     //   public virtual ICollection<AdoptionOfficeWorker> AdoptionOfficeWorkers { get; set; }
     }
 }

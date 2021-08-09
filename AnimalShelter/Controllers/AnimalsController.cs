@@ -19,9 +19,8 @@ namespace AnimalShelter.Controllers
     public class AnimalsController : ControllerBase
     {
 
-     //   public IConfiguration _configuration;
         private readonly IAnimalsService _animalsDbService;
-        public AnimalsController(IAnimalsService animalsDbService /*,  IConfiguration configuration */)
+        public AnimalsController(IAnimalsService animalsDbService)
         {
             _animalsDbService = animalsDbService;
         }
@@ -53,11 +52,8 @@ namespace AnimalShelter.Controllers
         [HttpDelete("{Id}")]
         public IActionResult RemoveAnimal(int Id)
         {
-            var isDeleted = _animalsDbService.RemoveAnimal(Id);
-            if (isDeleted)
-                return Ok();
-            else
-                return NotFound();
+            _animalsDbService.RemoveAnimal(Id);
+            return Accepted();
         }
 
         [Route("Statuses")]

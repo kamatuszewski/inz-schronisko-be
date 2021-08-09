@@ -2,6 +2,7 @@
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,7 +37,9 @@ namespace AnimalShelter_WebAPI.Services.Animals
                 .Include(req => req.Species)
                 .Include(req => req.Status)
                 .Include(req => req.Adoptions).ThenInclude(ad => ad.Adopter)
-                .Include(req => req.Adoptions).ThenInclude(ad => ad.AdoptionOfficeWorker).ThenInclude(aow => aow.Employee).ThenInclude(emp => emp.Person)
+                .Include(req => req.Adoptions)
+                        //.ThenInclude(ad => ad.AdoptionOfficeWorker)
+                          .ThenInclude(e => e.Employee).ThenInclude(emp => emp.Person)
                 .Include(req => req.VetVisits)
                 .FirstOrDefault();
             return _mapper.Map<FullDataAnimalResponse>(animal);
@@ -50,16 +53,15 @@ namespace AnimalShelter_WebAPI.Services.Animals
             return animal;
         }
 
-        public bool RemoveAnimal(int id)
+        public void RemoveAnimal(int id)
         {
             var animal = _context.Animal.Where(a => a.Id == id)
                .FirstOrDefault();
-            if (animal is null) return false;
+            if (animal is null) throw new NotFoundException("Animal not found");
 
             _context.Animal.Remove(animal);
             _context.SaveChanges();
 
-            return true;
         }
 
         public IEnumerable<StatusesResponse> GetStatuses()

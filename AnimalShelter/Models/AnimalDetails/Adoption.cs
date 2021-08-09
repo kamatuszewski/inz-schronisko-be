@@ -9,7 +9,7 @@ namespace AnimalShelter.Models
     {
         public DateTime AdoptionDate { get; set; }
         public string Notes { get; set; }
-        public DateTime? ControlDate { get; set; }
+      
         public Boolean IsItOwnerPickUp { get; set; }
 
 
@@ -20,6 +20,8 @@ namespace AnimalShelter.Models
 
         public virtual Animal Animal { get; set; }
         public virtual Person Adopter { get; set; }
-        public virtual AdoptionOfficeWorker AdoptionOfficeWorker { get; set; }
+        public virtual Employee Employee { get; set; }
+
+        //  public virtual AdoptionOfficeWorker AdoptionOfficeWorker { get; set; }
     }
 }

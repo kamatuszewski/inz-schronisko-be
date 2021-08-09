@@ -45,13 +45,13 @@ namespace AnimalShelter_WebAPI.Seeders
                 }
 
 
-                if (!_dbContext.AdoptionOfficeWorker.Any())
+          /*      if (!_dbContext.AdoptionOfficeWorker.Any())
                 {
                     var aoWorkers = GetAOWorker();
                     _dbContext.AdoptionOfficeWorker.AddRange(aoWorkers);
                     _dbContext.SaveChanges();
                 }
-
+          */
                 if (!_dbContext.Adoption.Any())
                 {
                     var adoptions = GetAdoptions();
@@ -190,7 +190,7 @@ namespace AnimalShelter_WebAPI.Seeders
             return employees;
         }
 
-
+        /*
         private IEnumerable<AdoptionOfficeWorker> GetAOWorker()
         {
             var aoWorkers = new List<AdoptionOfficeWorker>()
@@ -203,6 +203,7 @@ namespace AnimalShelter_WebAPI.Seeders
             };
             return aoWorkers;
         }
+        */
 
         private IEnumerable<Adoption> GetAdoptions()
         {

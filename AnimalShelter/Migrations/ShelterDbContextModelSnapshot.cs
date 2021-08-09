@@ -35,9 +35,6 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("AnimalId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ControlDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
@@ -57,22 +54,6 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Adoption");
-                });
-
-            modelBuilder.Entity("AnimalShelter.Models.AdoptionOfficeWorker", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssignedSpeciesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("AOWorker_PK");
-
-                    b.HasIndex("AssignedSpeciesId");
-
-                    b.ToTable("AdoptionOfficeWorker");
                 });
 
             modelBuilder.Entity("AnimalShelter.Models.Animal", b =>
@@ -288,9 +269,6 @@ namespace AnimalShelter_WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MinSalary")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -453,35 +431,15 @@ namespace AnimalShelter_WebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AnimalShelter.Models.AdoptionOfficeWorker", "AdoptionOfficeWorker")
+                    b.HasOne("AnimalShelter.Models.Employee", "Employee")
                         .WithMany("Adoptions")
                         .HasForeignKey("EmployeeId")
-                        .HasConstraintName("Adoption_AOWorkerr")
+                        .HasConstraintName("Adoption_Employee")
                         .IsRequired();
 
                     b.Navigation("Adopter");
 
-                    b.Navigation("AdoptionOfficeWorker");
-
                     b.Navigation("Animal");
-                });
-
-            modelBuilder.Entity("AnimalShelter.Models.AdoptionOfficeWorker", b =>
-                {
-                    b.HasOne("AnimalShelter.Models.Species", "AssignedSpecies")
-                        .WithMany("AdoptionOfficeWorkers")
-                        .HasForeignKey("AssignedSpeciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AnimalShelter.Models.Employee", "Employee")
-                        .WithMany("AdoptionOfficeWorkers")
-                        .HasForeignKey("Id")
-                        .HasConstraintName("Employee_AOWorker")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssignedSpecies");
 
                     b.Navigation("Employee");
                 });
@@ -643,11 +601,6 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("AnimalShelter.Models.AdoptionOfficeWorker", b =>
-                {
-                    b.Navigation("Adoptions");
-                });
-
             modelBuilder.Entity("AnimalShelter.Models.Animal", b =>
                 {
                     b.Navigation("Adoptions");
@@ -657,7 +610,7 @@ namespace AnimalShelter_WebAPI.Migrations
 
             modelBuilder.Entity("AnimalShelter.Models.Employee", b =>
                 {
-                    b.Navigation("AdoptionOfficeWorkers");
+                    b.Navigation("Adoptions");
 
                     b.Navigation("Vets");
                 });
@@ -690,8 +643,6 @@ namespace AnimalShelter_WebAPI.Migrations
 
             modelBuilder.Entity("AnimalShelter.Models.Species", b =>
                 {
-                    b.Navigation("AdoptionOfficeWorkers");
-
                     b.Navigation("Animals");
                 });
 

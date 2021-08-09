@@ -12,8 +12,8 @@ namespace AnimalShelter_WebAPI.Services.Animals
     public interface IAnimalsService
     {
         public IEnumerable<GeneralAnimalResponse> GetAnimals();
-        public FullDataAnimalResponse GetAnimal(int shelterNumber);
-        public bool RemoveAnimal(int id);
+        public FullDataAnimalResponse GetAnimal(int id);
+        public void RemoveAnimal(int id);
         public Animal CreateAnimal(CreateAnimalRequest createAnimalRequest);
 
         public IEnumerable<StatusesResponse> GetStatuses();
