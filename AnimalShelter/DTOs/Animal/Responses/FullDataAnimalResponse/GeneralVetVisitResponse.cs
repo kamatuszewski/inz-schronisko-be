@@ -8,7 +8,7 @@ namespace AnimalShelter_WebAPI.DTOs.Animal.Responses
 {
     public class GeneralVetVisitResponse
     {
-         public int Id { get; set; }
+        public int Id { get; set; }
         public DateTime VisitDateTime { get; set; }
         public string Description { get; set; }
     }
