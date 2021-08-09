@@ -56,6 +56,12 @@ namespace AnimalShelter.MappingProfiles
 
             CreateMap<CreatePersonRequest, Person>();
             CreateMap<CreateAnimalRequest, Animal>();
+
+            //People mapping
+            CreateMap<RegisterPersonRequest, Volunteer>();
+            CreateMap<RegisterPersonRequest, Employee>();
+            CreateMap<RegisterPersonRequest, Vet>();
+            
         }
     }
 }

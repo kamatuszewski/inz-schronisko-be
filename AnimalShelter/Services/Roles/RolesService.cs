@@ -33,13 +33,13 @@ namespace AnimalShelter_WebAPI.Services.Roles
                 throw new BadRequestException("Person not found");
             }
 
-            var role = _context.Role.FirstOrDefault(r => r.Id == request.IdRole);
+            var role = _context.Role.FirstOrDefault(r => r.Id == request.RoleId);
             if (role is null)
             {
                 throw new BadRequestException("Role not found");
             }
 
-            var grantetRoleExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == request.IdRole);
+            var grantetRoleExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == request.RoleId);
             if (grantetRoleExists is not null)
             {
                 throw new BadRequestException("User with that role is already exist");

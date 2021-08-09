@@ -67,6 +67,10 @@ namespace AnimalShelter_WebAPI
                 {
                     Name = "Admin"
                 },
+                 new Role()
+                 {
+                     Name = "Vet"
+                 }
             };
 
             return roles;

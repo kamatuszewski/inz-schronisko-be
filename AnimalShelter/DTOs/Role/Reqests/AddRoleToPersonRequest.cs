@@ -10,6 +10,6 @@ namespace AnimalShelter_WebAPI.DTOs.Role
     public class AddRoleToPersonRequest
     {
         [Required]
-        public int IdRole { get; set; }
+        public int RoleId { get; set; }
     }
 }

@@ -20,6 +20,10 @@ namespace AnimalShelter_WebAPI.Models.Validators
 
             RuleFor(x => x.Password).MinimumLength(6);
 
+            RuleFor(x => x.RoleId)
+                .NotEmpty();
+
+
             RuleFor(x => x.EmailAddress)
                 .Custom((value, context) =>
                 {
@@ -27,7 +31,7 @@ namespace AnimalShelter_WebAPI.Models.Validators
 
                     if (emailInUse)
                     {
-                        context.AddFailure("EmailAddress", "Ten adres email został już zarejestrowany.");
+                        context.AddFailure("EmailAddress", "EMAIL_IN_USE");
                     }
                 });
         }

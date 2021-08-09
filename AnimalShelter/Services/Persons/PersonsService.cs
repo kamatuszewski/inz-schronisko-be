@@ -83,25 +83,61 @@ namespace AnimalShelter.Services
                 LastName = registerPersonRequest.LastName,
                 PESEL = registerPersonRequest.PESEL,
                 Sex = registerPersonRequest.Sex
-                //GrantedRoles = new GrantedRole { IdPerson = Id, IdRole = registerPersonRequest.IdRole}
             };
 
             var hashedPassword = _passwordHasher.HashPassword(newPerson, registerPersonRequest.Password);
             newPerson.Password = hashedPassword;
 
+            //adding person 
             _context.Person.Add(newPerson);
             _context.SaveChanges();
 
+            //adding roles to newly created person
             var newGrantedRole = new GrantedRole()
             {
                 PersonId = newPerson.Id,
                 RoleId = registerPersonRequest.RoleId
             };
 
-
             _context.GrantedRole.Add(newGrantedRole);
             _context.SaveChanges();
 
+            CreateEntitiesBasedOnPersonRoles(newPerson, newGrantedRole, registerPersonRequest);
+
+        }
+
+        private void CreateEntitiesBasedOnPersonRoles(Person newPerson, GrantedRole newGrantedRole, RegisterPersonRequest registerPersonRequest)
+        {
+            switch (newGrantedRole.RoleId)
+            {
+                case 1: //Volunteer
+                    var newVolunteer = _mapper.Map<Volunteer>(registerPersonRequest);
+                    newVolunteer.Id = newPerson.Id;
+                    _context.Volunteer.Add(newVolunteer);
+                    _context.SaveChanges();
+                    break;
+                case 5: //Vet
+                    var newEmp = _mapper.Map<Employee>(registerPersonRequest);
+                    newEmp.Id = newPerson.Id;
+                    _context.Employee.Add(newEmp);
+
+                    var newVet = _mapper.Map<Vet>(registerPersonRequest);
+                    newVet.Id = newPerson.Id;
+                    _context.Vet.Add(newVet);
+
+                    _context.SaveChanges();
+                    break;
+                case 2: //Emp
+                    var newEmpl = _mapper.Map<Employee>(registerPersonRequest);
+                    newEmpl.Id = newPerson.Id;
+                    _context.Employee.Add(newEmpl);
+
+                    _context.SaveChanges();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public string GenerateJwt(LoginRequest request)
@@ -134,7 +170,7 @@ namespace AnimalShelter.Services
             };
 
 
-            
+          
             //adding clams for Roles 
                 foreach (var role in person.GrantedRoles)
             {
