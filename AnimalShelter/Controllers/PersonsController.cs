@@ -52,7 +52,8 @@ namespace AnimalShelter.Controllers
                 return Ok(person);
         }
 
-        
+
+
         [HttpPost("register")]
         public IActionResult CreatePerson([FromBody] RegisterPersonRequest createPersonRequest)
         {
