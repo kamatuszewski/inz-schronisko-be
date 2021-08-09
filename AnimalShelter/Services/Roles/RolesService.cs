@@ -24,9 +24,9 @@ namespace AnimalShelter_WebAPI.Services.Roles
             _context = context;
             _mapper = mapper;
         }
-        public void AddRoleToPerson(int personId, AddRoleToPersonRequest request)
+        public void AddRoleToPerson(int PersonId, AddRoleToPersonRequest request)
         {
-            var person = _context.Person.FirstOrDefault(p => p.Id == personId);
+            var person = _context.Person.FirstOrDefault(p => p.Id == PersonId);
 
             if (person is null)
             {
@@ -39,14 +39,14 @@ namespace AnimalShelter_WebAPI.Services.Roles
                 throw new BadRequestException("Role not found");
             }
 
-            var grantetRoleExists = _context.GrantedRole.FirstOrDefault(gr => gr.IdPerson == personId && gr.IdRole == request.IdRole);
+            var grantetRoleExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == request.IdRole);
             if (grantetRoleExists is not null)
             {
                 throw new BadRequestException("User with that role is already exist");
             }
 
             var grantedRoleEntity = _mapper.Map<GrantedRole>(request);
-            grantedRoleEntity.IdPerson = personId;
+            grantedRoleEntity.PersonId = PersonId;
 
             _context.GrantedRole.Add(grantedRoleEntity);
             _context.SaveChanges();

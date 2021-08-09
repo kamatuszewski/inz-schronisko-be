@@ -140,7 +140,7 @@ namespace AnimalShelter.Services
             {
                 var roleName = _context.GrantedRole
                 .Include(p => p.Role)
-                .FirstOrDefault( p => p.IdRole == role.IdRole);
+                .FirstOrDefault( p => p.RoleId == role.RoleId);
 
                 claims.Add(new Claim(ClaimTypes.Role, roleName.Role.Name));
             }
