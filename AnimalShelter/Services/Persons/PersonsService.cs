@@ -38,8 +38,8 @@ namespace AnimalShelter.Services
 
         public IEnumerable<PersonResponse> GetPersons()
         {
-           var person = _context.Person.ToList();
-           return _mapper.Map<IEnumerable<PersonResponse>>(person);
+            var person = _context.Person.ToList();
+            return _mapper.Map<IEnumerable<PersonResponse>>(person);
         }
 
         public PersonResponse GetPerson(int Id)
@@ -95,7 +95,7 @@ namespace AnimalShelter.Services
                 IdRole = registerPersonRequest.IdRole
             };
 
-            
+
             _context.GrantedRole.Add(newGrantedRole);
             _context.SaveChanges();
 
@@ -126,10 +126,23 @@ namespace AnimalShelter.Services
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, person.Id.ToString()),
-                new Claim(ClaimTypes.Name, $"{person.FirstName} {person.LastName}"),
-                
+                new Claim("FirstName", $"{person.FirstName}"),
+                new Claim("LastName", $"{person.LastName}")
             };
 
+
+            
+            //adding clams for Roles 
+                foreach (var role in person.GrantedRoles)
+            {
+                var roleName = _context.GrantedRole
+                .Include(p => p.Role)
+                .FirstOrDefault( p => p.IdRole == role.IdRole);
+
+                claims.Add(new Claim(ClaimTypes.Role, roleName.Role.Name));
+            }
+              
+        
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddHours(_authenticationSettings.JwtExpireHours);
