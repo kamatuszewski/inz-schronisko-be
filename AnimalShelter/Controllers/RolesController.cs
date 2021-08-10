@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    [Route("api/{personId}/role")]
+    [Route("api/persons/{personId}/role")]
     [ApiController]
     
     public class RolesController: ControllerBase

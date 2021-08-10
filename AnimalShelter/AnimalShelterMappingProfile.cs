@@ -2,6 +2,7 @@
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.DTOs.Role;
 using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
 using AutoMapper;
 using System;
@@ -56,6 +57,17 @@ namespace AnimalShelter.MappingProfiles
 
             CreateMap<CreatePersonRequest, Person>();
             CreateMap<CreateAnimalRequest, Animal>();
+
+            //People mapping
+            CreateMap<RegisterPersonRequest, Volunteer>();
+            CreateMap<RegisterPersonRequest, Employee>();
+            CreateMap<RegisterPersonRequest, Vet>();
+
+            CreateMap<AddRoleToPersonRequest, Volunteer>();
+            CreateMap<AddRoleToPersonRequest, Employee>();
+            CreateMap<AddRoleToPersonRequest, Vet>();
+
+            CreateMap<AddRoleToPersonRequest, GrantedRole>();
         }
     }
 }
