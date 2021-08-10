@@ -82,7 +82,7 @@ namespace AnimalShelter.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            string token = _personsDbService.GenerateJwt(request);
+            var token = _personsDbService.GenerateJwt(request);
 
             return Ok(token);
         }

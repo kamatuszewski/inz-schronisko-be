@@ -2,6 +2,7 @@
 using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI;
+using AnimalShelter_WebAPI.DTOs.Person.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
@@ -143,7 +144,7 @@ namespace AnimalShelter.Services
             }
         }
 
-        public string GenerateJwt(LoginRequest request)
+        public TokenResponse GenerateJwt(LoginRequest request)
         {
 
             var person = _context.Person
@@ -197,7 +198,9 @@ namespace AnimalShelter.Services
                 );
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            return tokenHandler.WriteToken(token);
+
+
+            return new TokenResponse { AccesToken = tokenHandler.WriteToken(token), TokenType = "Bearer"};
 
 /*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
 
