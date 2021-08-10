@@ -119,7 +119,7 @@ namespace AnimalShelter_WebAPI.Seeders
                     Sex = "F",
                     Address = "Warszawska 7/11, Warszawa",
                     PhoneNumber = "111111111",
-                    EmailAddress = "m@op.pl"
+                    EmailAddress = "m@op.pl",
                 },
 
                 new Person()
@@ -177,14 +177,16 @@ namespace AnimalShelter_WebAPI.Seeders
                 {
                    Id = 1,
                    HireDate = new DateTime(2010, 10, 10, 0, 0, 0),
-                   Salary = 5000
+                   Salary = 5000,
+                   IsRoleActive = true
                 },
 
                 new Employee()
                 {
                    Id = 2,
                    HireDate = new DateTime(2015, 10, 10, 0, 0, 0),
-                   Salary = 3000
+                   Salary = 3000,
+                   IsRoleActive = true
                 }
             };
             return employees;

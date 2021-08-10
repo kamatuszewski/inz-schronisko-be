@@ -12,9 +12,11 @@ namespace AnimalShelter.Models
         public DateTime HireDate { get; set; }
         public DateTime? QuitDate { get; set; }
         public int Salary { get; set; }
+        public bool IsRoleActive { get; set; } = true;
 
         public virtual Person Person { get; set; }
         public virtual ICollection<Vet> Vets { get; set; }
         public virtual ICollection<AdoptionOfficeWorker> AdoptionOfficeWorkers { get; set; }
+
     }
 }

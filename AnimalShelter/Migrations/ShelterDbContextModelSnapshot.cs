@@ -132,6 +132,9 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsRoleActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("QuitDate")
                         .HasColumnType("datetime2");
 
@@ -358,6 +361,9 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PWZNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -425,6 +431,9 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<string>("Attendance")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("JoiningDate")
                         .HasColumnType("datetime2");

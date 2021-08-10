@@ -82,7 +82,9 @@ namespace AnimalShelter.Services
                 FirstName = registerPersonRequest.FirstName,
                 LastName = registerPersonRequest.LastName,
                 PESEL = registerPersonRequest.PESEL,
-                Sex = registerPersonRequest.Sex
+                Sex = registerPersonRequest.Sex,
+                PhoneNumber = registerPersonRequest.PhoneNumber,
+                Address = registerPersonRequest.Address
             };
 
             var hashedPassword = _passwordHasher.HashPassword(newPerson, registerPersonRequest.Password);
@@ -119,6 +121,7 @@ namespace AnimalShelter.Services
                 case 5: //Vet
                     var newEmp = _mapper.Map<Employee>(registerPersonRequest);
                     newEmp.Id = newPerson.Id;
+                    newEmp.IsRoleActive = false;
                     _context.Employee.Add(newEmp);
 
                     var newVet = _mapper.Map<Vet>(registerPersonRequest);
@@ -149,14 +152,14 @@ namespace AnimalShelter.Services
 
             if (person is null)
             {
-                throw new BadRequestException("Nieprawidłowy login lub haslo");
+                throw new BadRequestException("Login or password incorrect.");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(person, person.Password, request.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new BadRequestException("Nieprawidłowy login lub haslo");
+                throw new BadRequestException("Login or password incorrect.");
             }
 
             var roles = person.GrantedRoles;
