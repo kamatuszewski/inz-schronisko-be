@@ -7,7 +7,7 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Responses
 {
     public class TokenResponse
     {
-        public string AccesToken { get; set; }
+        public string AccessToken { get; set; }
         public string TokenType { get; set; }
     }
 }
