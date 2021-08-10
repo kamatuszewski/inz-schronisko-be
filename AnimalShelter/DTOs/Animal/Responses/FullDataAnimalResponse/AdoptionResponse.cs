@@ -11,7 +11,8 @@ namespace AnimalShelter_WebAPI.DTOs.Animal.Responses
     {
         public int Id { get; set; }
         public DateTime AdoptionDate { get; set; }
-        public DateTime? ControlDate { get; set; }
+        public bool IsOwnerPickup { get; set;}
+
         [JsonPropertyName("employee")]
         public EmployeeResponse EmployeeResponse { get; set; }
         [JsonPropertyName("adopter")]

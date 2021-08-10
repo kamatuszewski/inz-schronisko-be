@@ -10,7 +10,7 @@ namespace AnimalShelter.Models
         public DateTime AdoptionDate { get; set; }
         public string Notes { get; set; }
       
-        public Boolean IsItOwnerPickUp { get; set; }
+        public Boolean IsOwnerPickUp { get; set; }
 
 
         public int AnimalId { get; set; }

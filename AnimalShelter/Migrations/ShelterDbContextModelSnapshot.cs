@@ -38,7 +38,7 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsItOwnerPickUp")
+                    b.Property<bool>("IsOwnerPickUp")
                         .HasColumnType("bit");
 
                     b.Property<string>("Notes")

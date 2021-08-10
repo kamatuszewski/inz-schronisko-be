@@ -227,7 +227,7 @@ namespace AnimalShelter_WebAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AdoptionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsItOwnerPickUp = table.Column<bool>(type: "bit", nullable: false),
+                    IsOwnerPickUp = table.Column<bool>(type: "bit", nullable: false),
                     AnimalId = table.Column<int>(type: "int", nullable: false),
                     AdopterId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false)

@@ -15,7 +15,7 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Vet.Responses
         public string Sex { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string PWZnumber { get; set; }
+        public string PwzNumber { get; set; }
         public IEnumerable<ObtainedSpecialtyResponse> specialtyResponses { get; set; }
     }
 }

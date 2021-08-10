@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalShelter_WebAPI.Migrations
 {
     [DbContext(typeof(ShelterDbContext))]
-    [Migration("20210809231734_test")]
+    [Migration("20210810004614_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace AnimalShelter_WebAPI.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsItOwnerPickUp")
+                    b.Property<bool>("IsOwnerPickUp")
                         .HasColumnType("bit");
 
                     b.Property<string>("Notes")

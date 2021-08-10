@@ -15,7 +15,7 @@ namespace AnimalShelter.Configurations
         {
             builder.HasKey(e => e.Id).HasName("Adoption_PK");
             builder.Property(e => e.AdoptionDate).IsRequired();
-            builder.Property(e => e.IsItOwnerPickUp).IsRequired();
+            builder.Property(e => e.IsOwnerPickUp).IsRequired();
            
 
             builder.HasOne(d => d.Animal).WithMany(p => p.Adoptions)
