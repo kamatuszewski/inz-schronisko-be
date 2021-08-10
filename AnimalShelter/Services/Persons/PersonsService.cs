@@ -208,7 +208,7 @@ namespace AnimalShelter.Services
             var tokenHandler = new JwtSecurityTokenHandler();
 
 
-            return new TokenResponse { AccesToken = tokenHandler.WriteToken(token), TokenType = "Bearer"};
+            return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer"};
 
 /*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
 
