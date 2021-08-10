@@ -325,6 +325,12 @@ namespace AnimalShelter_WebAPI.Seeders
                    SpecialtyId = 1,
                    ObtainingDate = new DateTime(1998, 01, 10, 0, 0, 0)
                 },
+                 new Vet_Specialty()
+                {
+                   VetId = 7,
+                   SpecialtyId = 2,
+                   ObtainingDate = new DateTime(1999, 01, 10, 0, 0, 0)
+                },
 
             };
             return vetSpecs;

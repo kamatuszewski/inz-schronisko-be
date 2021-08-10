@@ -15,7 +15,7 @@ namespace AnimalShelter.DTOs.Responses
         public string PESEL { get; set; }
         public string Sex { get; set; }
         public string PhoneNumber { get; set; }
-        public string Email { get; set; }
+        public string emailAddress { get; set; }
 
     }
 }

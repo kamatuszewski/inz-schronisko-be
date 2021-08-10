@@ -19,5 +19,6 @@ namespace AnimalShelter_WebAPI.Services
        
         public IEnumerable<SpecialtyResponse> GetSpecialties();
         public Specialty CreateSpecialty(CreateSpecialtyRequest createSpecialtyRequest);
+
     }
 }

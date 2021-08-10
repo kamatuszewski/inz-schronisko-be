@@ -21,16 +21,13 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<Animal, GeneralAnimalResponse>()
                 .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
                 .ForMember(m => m.Status, c => c.MapFrom(s => s.Status.Name));
-
             CreateMap<Animal, DetailedAnimalResponse>()
                .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
                .ForMember(m => m.Status, c => c.MapFrom(s => s.Status.Name));
-
             CreateMap<Animal, FullDataAnimalResponse>()
                 .ForMember(m => m.DetailedAnimalResponse, c => c.MapFrom(s => s))
                 .ForMember(m => m.VetVisitResponses, c => c.MapFrom(s => s.VetVisits))
                 .ForMember(m => m.AdoptionResponses, c => c.MapFrom(s => s.Adoptions));
-
             CreateMap<Species, SpeciesResponse>();
             CreateMap<Status, StatusesResponse>();
 
@@ -43,7 +40,6 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<Person, AdopterResponse>();
             CreateMap<Person, PersonResponse>();
             CreateMap<Employee, EmployeeResponse>()
-             //   .ForMember(m => m.Id, c => c.MapFrom(a => a.Id))
                 .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Person.FirstName))
                 .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Person.LastName));
 
@@ -58,18 +54,30 @@ namespace AnimalShelter.MappingProfiles
 
             //Vet mappings
             CreateMap<Specialty, SpecialtyResponse>();
-            CreateMap<Specialty, ObtainedSpecialtyResponse>();
+            CreateMap<Vet_Specialty, SpecialtyResponse>()
+                .ForMember(m => m.Name, c => c.MapFrom(e => e.Specialty.Name))
+                .ForMember(m => m.Id, c => c.MapFrom(emp => emp.Specialty.Id));
+            CreateMap<Vet_Specialty, ObtainedSpecialtyResponse>()
+                .ForMember(m => m.Name, c => c.MapFrom(e => e.Specialty.Name))
+                .ForMember(m => m.Id, c => c.MapFrom(emp => emp.Specialty.Id));
             CreateMap<Vet, GeneralVetResponse>()
-            //    .ForMember(m => m.Id, c => c.MapFrom(a => a.Id))
                 .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Employee.Person.FirstName))
-                .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Employee.Person.LastName));
+                .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Employee.Person.LastName))
+                .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Employee.Person.Sex))
+                .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
             CreateMap<Vet, DetailedVetResponse>()
             //    .ForMember(m => m.Id, c => c.MapFrom(a => a.Id))
                 .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Employee.Person.FirstName))
-                .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Employee.Person.LastName));
+                .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Employee.Person.LastName))
+                .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Employee.Person.Sex))
+                .ForMember(m => m.PESEL, c => c.MapFrom(emp => emp.Employee.Person.PESEL))
+                .ForMember(m => m.PhoneNumber, c => c.MapFrom(emp => emp.Employee.Person.PhoneNumber))
+                .ForMember(m => m.Email, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
+                .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
+
+            
+
             CreateMap<CreateSpecialtyRequest, Specialty>();
-
-
             CreateMap<CreatePersonRequest, Person>();
             CreateMap<CreateAnimalRequest, Animal>();
         }
