@@ -259,14 +259,16 @@ namespace AnimalShelter_WebAPI.Seeders
                 {
                    Id = 6,
                    HireDate = new DateTime(2010, 10, 10, 0, 0, 0),
-                   Salary = 5000
+                   Salary = 5000,
+                   IsRoleActive = true
                 },
 
                 new Employee()
                 {
                    Id = 7,
                    HireDate = new DateTime(2015, 10, 10, 0, 0, 0),
-                   Salary = 3000
+                   Salary = 3000,
+                   IsRoleActive = true
                 }
             };
             return employees;
