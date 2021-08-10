@@ -10,6 +10,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -177,23 +178,27 @@ namespace AnimalShelter.Services
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, person.Id.ToString()),
-                new Claim("FirstName", $"{person.FirstName}"),
-                new Claim("LastName", $"{person.LastName}")
+                new Claim("firstName", $"{person.FirstName}"),
+                new Claim("lastName", $"{person.LastName}"),
+                new Claim("id", $"{person.Id}"),
             };
 
 
-          
+            IList<string> rolesArray = new List<string>();
             //adding clams for Roles 
                 foreach (var role in person.GrantedRoles)
             {
-                var roleName = _context.GrantedRole
+                var grantedRole = _context.GrantedRole
                 .Include(p => p.Role)
                 .FirstOrDefault( p => p.RoleId == role.RoleId);
+                rolesArray.Add(grantedRole.Role.Name);
 
-                claims.Add(new Claim(ClaimTypes.Role, roleName.Role.Name));
+                claims.Add(new Claim(ClaimTypes.Role, grantedRole.Role.Name));
             }
-              
-        
+            string rolesJson = JsonConvert.SerializeObject(rolesArray);
+            claims.Add(new Claim("roles", rolesJson, JsonClaimValueTypes.JsonArray));
+
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddHours(_authenticationSettings.JwtExpireHours);
