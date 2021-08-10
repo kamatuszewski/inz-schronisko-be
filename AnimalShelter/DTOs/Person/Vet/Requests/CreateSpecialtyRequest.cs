@@ -10,7 +10,7 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Vet.Requests
 {
     public class CreateSpecialtyRequest
     {
-        [FromHeader]
+        
         [Required]
         public string Name { get; set; }
     }

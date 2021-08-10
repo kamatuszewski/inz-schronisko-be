@@ -3,6 +3,7 @@ using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.DTOs.Role.Responses;
 using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -49,6 +50,13 @@ namespace AnimalShelter.Services
             return _mapper.Map<PersonResponse>(person);
         }
 
+        public IEnumerable<RoleResponse> GetRoles()
+        {
+            var roles = _context.Role
+               .ToList();
+            return _mapper.Map<IEnumerable<RoleResponse>>(roles);
+        }
+
         //// ta metoa jest raczej do wyrzucenia - CreatePerson = RegisterUser moim zdaniem 
         //public Person CreatePerson(CreatePersonRequest createPersonRequest)
         //{
@@ -61,18 +69,18 @@ namespace AnimalShelter.Services
 
 
 
-       //Adopter usunięty - to będzie po prostu osoba
-/*
+        //Adopter usunięty - to będzie po prostu osoba
+        /*
 
-        public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest)
-        {
-            var adopter = _mapper.Map<Adopter>(createAdopterRequest);
-            _context.Adopter.Add(adopter);
-            _context.SaveChanges();
+                public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest)
+                {
+                    var adopter = _mapper.Map<Adopter>(createAdopterRequest);
+                    _context.Adopter.Add(adopter);
+                    _context.SaveChanges();
 
-            return adopter;
-        }
-*/
+                    return adopter;
+                }
+        */
 
         public void RegisterPerson(RegisterPersonRequest registerPersonRequest)
         {
@@ -200,6 +208,8 @@ namespace AnimalShelter.Services
                 accessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 refreshToken
             });*/
+
+
         }
     }
 }

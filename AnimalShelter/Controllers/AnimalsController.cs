@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace AnimalShelter.Controllers
 {
    // [Authorize]
-    [Route("api/[controller]")] //rownoznaczne z ("api/animals")
+    [Route("api/[controller]")]
     [ApiController]
     public class AnimalsController : ControllerBase
     {

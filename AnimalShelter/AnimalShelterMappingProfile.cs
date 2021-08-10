@@ -4,6 +4,7 @@ using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Person.Vet.Requests;
 using AnimalShelter_WebAPI.DTOs.Person.Vet.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.DTOs.Role.Responses;
 using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
 using AutoMapper;
 using System;
@@ -30,7 +31,7 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.AdoptionResponses, c => c.MapFrom(s => s.Adoptions));
             CreateMap<Species, SpeciesResponse>();
             CreateMap<Status, StatusesResponse>();
-
+            CreateMap<CreateAnimalRequest, Animal>();
 
             //FullDataAnimal mappings
             CreateMap<VetVisit, GeneralVetVisitResponse>();
@@ -66,7 +67,6 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Employee.Person.Sex))
                 .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
             CreateMap<Vet, DetailedVetResponse>()
-            //    .ForMember(m => m.Id, c => c.MapFrom(a => a.Id))
                 .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Employee.Person.FirstName))
                 .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Employee.Person.LastName))
                 .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Employee.Person.Sex))
@@ -74,12 +74,11 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.PhoneNumber, c => c.MapFrom(emp => emp.Employee.Person.PhoneNumber))
                 .ForMember(m => m.Email, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
                 .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
-
-            
-
             CreateMap<CreateSpecialtyRequest, Specialty>();
-            CreateMap<CreatePersonRequest, Person>();
-            CreateMap<CreateAnimalRequest, Animal>();
+
+            //Persons mappings
+            CreateMap<Role, RoleResponse>();
+            
         }
     }
 }

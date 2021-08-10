@@ -52,7 +52,12 @@ namespace AnimalShelter.Controllers
                 return Ok(person);
         }
 
-
+        [Route("roles")]
+        [HttpGet]
+        public IActionResult GetRoles()
+        {
+            return Ok(_personsDbService.GetRoles());
+        }
 
         [HttpPost("register")]
         public IActionResult CreatePerson([FromBody] RegisterPersonRequest createPersonRequest)

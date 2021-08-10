@@ -38,14 +38,14 @@ namespace AnimalShelter_WebAPI.Controllers
 
         [Route("Specialties")]
         [HttpGet]
-        public IActionResult GestStatuses()
+        public IActionResult GetSpecialties()
         {
             return Ok(_vetsDbService.GetSpecialties());
         }
 
         [Route("Specialties")]
         [HttpPost]
-        public IActionResult CreateSpecialty([FromHeader] CreateSpecialtyRequest createSpecialtyRequest)
+        public IActionResult CreateSpecialty([FromBody] CreateSpecialtyRequest createSpecialtyRequest)
         {
             _vetsDbService.CreateSpecialty(createSpecialtyRequest);
             return Ok();
