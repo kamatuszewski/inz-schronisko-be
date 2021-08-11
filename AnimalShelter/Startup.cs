@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using AnimalShelter_WebAPI.Services;
 using AnimalShelter_WebAPI.Services.Persons.Volunteers;
 using AnimalShelter_WebAPI.Services.Persons.Employees;
+using AnimalShelter_WebAPI.Services.Adoptions;
 
 namespace AnimalShelter
 {
@@ -92,6 +93,7 @@ namespace AnimalShelter
             services.AddScoped<IVetsService, VetsService>();
             services.AddScoped<IVolunteersService, VolunteersService>();
             services.AddScoped<IEmployeesService, EmployeesService>();
+            services.AddScoped<IAdoptionsService, AdoptionsService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IPasswordHasher<Person>, PasswordHasher<Person>>();
