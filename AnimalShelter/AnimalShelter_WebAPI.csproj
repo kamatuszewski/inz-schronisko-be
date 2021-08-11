@@ -36,6 +36,8 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Adoption\Responses\" />
+    <Folder Include="DTOs\Person\Employee\Requests\" />
+    <Folder Include="DTOs\Person\Volunteer\Requests\" />
     <Folder Include="DTOs\VetVisitDetails\VetVisits\Responses\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

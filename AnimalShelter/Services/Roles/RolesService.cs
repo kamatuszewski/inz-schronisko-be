@@ -95,18 +95,19 @@ namespace AnimalShelter_WebAPI.Services.Roles
                     var volunteerToSoftDelete = new Volunteer()
                     {
                         Id = grantedRoleToRemove.PersonId,
-                        IsActive = false
+                        IsRoleActive = false
                     };
                     
                     _context.Volunteer.Update(volunteerToSoftDelete);
                     _context.SaveChanges();
                     break;
                 case 5: //Vet
-
+                //    string oldPWZnumber = _context.Person.FirstOrDefault(x => x.Id == Pero).FirstOrDefault(x => x.Id == grantedRoleToRemove.PersonId).PWZNumber;
                     var vetToSoftDelete = new Vet
                     {
                         Id = grantedRoleToRemove.PersonId,
-                        IsActive = false
+                   //     PWZNumber = oldPWZnumber,
+                        IsRoleActive = false
                     };
 
                     _context.Vet.Update(vetToSoftDelete);

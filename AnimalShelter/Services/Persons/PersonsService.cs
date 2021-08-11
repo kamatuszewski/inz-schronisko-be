@@ -41,13 +41,16 @@ namespace AnimalShelter.Services
 
         public IEnumerable<PersonResponse> GetPersons()
         {
-            var person = _context.Person.ToList();
-            return _mapper.Map<IEnumerable<PersonResponse>>(person);
+            var persons = _context.Person
+                 .Include(req => req.GrantedRoles).ThenInclude(req => req.Role)
+                 .ToList();
+            return _mapper.Map<IEnumerable<PersonResponse>>(persons);
         }
 
         public PersonResponse GetPerson(int Id)
         {
             var person = _context.Person.Where(a => a.Id == Id)
+                .Include(req => req.GrantedRoles).ThenInclude(req => req.Role)
                .FirstOrDefault();
             return _mapper.Map<PersonResponse>(person);
         }
@@ -153,6 +156,7 @@ namespace AnimalShelter.Services
             }
         }
 
+        //login
         public TokenResponse GenerateJwt(LoginRequest request)
         {
 

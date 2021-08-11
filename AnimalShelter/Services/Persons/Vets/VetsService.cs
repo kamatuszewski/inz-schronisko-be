@@ -27,6 +27,7 @@ namespace AnimalShelter_WebAPI.Services
             var vets = _context.Vet
                 .Include(req => req.Employee).ThenInclude(req => req.Person)
                 .Include(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
+                .Where(x => x.IsRoleActive == true)
                 .ToList();
             return _mapper.Map<IEnumerable<GeneralVetResponse>>(vets);
         }

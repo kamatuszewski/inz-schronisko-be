@@ -11,7 +11,7 @@ namespace AnimalShelter.Models
     {
         public DateTime JoiningDate { get; set; }
         public string Attendance { get; set; }
-        public bool IsActive { get; set; } = true;
+        public bool IsRoleActive { get; set; } = true;
 
 
         public virtual Person Person { get; set; }
