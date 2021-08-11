@@ -133,7 +133,7 @@ namespace AnimalShelter_WebAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Attendance = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsRoleActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -209,7 +209,7 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     PWZNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsRoleActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

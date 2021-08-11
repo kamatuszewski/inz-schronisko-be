@@ -8,7 +8,7 @@ namespace AnimalShelter.Models
     public class Vet:BaseEntity
     {
         public string PWZNumber { get; set; }
-        public bool IsActive { get; set; } = true;
+        public bool IsRoleActive { get; set; } = true;
 
         public virtual Employee Employee { get; set; }
         public virtual ICollection<Vet_Specialty> Vet_Specialties { get; set; }

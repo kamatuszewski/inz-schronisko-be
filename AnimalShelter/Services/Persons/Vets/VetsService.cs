@@ -27,6 +27,7 @@ namespace AnimalShelter_WebAPI.Services
             var vets = _context.Vet
                 .Include(req => req.Employee).ThenInclude(req => req.Person)
                 .Include(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
+                .Where(x => x.IsRoleActive == true)
                 .ToList();
             return _mapper.Map<IEnumerable<GeneralVetResponse>>(vets);
         }
@@ -40,19 +41,48 @@ namespace AnimalShelter_WebAPI.Services
             return _mapper.Map<DetailedVetResponse>(vet);
         }
 
-
-        public void RemoveSpecialty(int id)
+        public void AddSpecialtyToVet(int VetId, AddSpecialtyToVetRequest addSpecialtyToVetRequest)
         {
-            var specialty = _context.Specialty.Where(a => a.Id == id)
-               .FirstOrDefault();
-            if (specialty is null) throw new NotFoundException("SPECIALTY_NOT_FOUND");
+            var vet = _context.Vet.FirstOrDefault(p => p.Id == VetId);
+            if (vet is null)
+                throw new BadRequestException("VET_NOT_EXISTS");
 
-            _context.Specialty.Remove(specialty);
+            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == addSpecialtyToVetRequest.SpecialtyId);
+            if (specialty is null)
+                throw new BadRequestException("SPECIALTY_NOT_EXISTS");
+
+            var existingMatchCheck = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == addSpecialtyToVetRequest.SpecialtyId);
+            if (existingMatchCheck is not null)
+                throw new BadRequestException("ALREADY_GRANTED");
+
+            var vet_specialty = _mapper.Map<Vet_Specialty>(addSpecialtyToVetRequest);
+            vet_specialty.VetId = VetId;
+
+            _context.Vet_Specialty.Add(vet_specialty);
             _context.SaveChanges();
+
         }
 
-  
+        public void RemoveSpecialtyFromVet(int VetId, RemoveSpecialtyFromVetRequest removeSpecialtyFromVetRequest)
+        {
+            var vet = _context.Vet.FirstOrDefault(p => p.Id == VetId);
+            if (vet is null)
+                throw new BadRequestException("VET_NOT_EXISTS");
 
+            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == removeSpecialtyFromVetRequest.SpecialtyId);
+            if (specialty is null)
+                throw new BadRequestException("SPECIALTY_NOT_EXISTS");
+
+            var vet_spec = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == removeSpecialtyFromVetRequest.SpecialtyId);
+            if (vet_spec is null)
+                throw new BadRequestException("NOT_GRANTED");
+
+            _context.Vet_Specialty.Remove(vet_spec);
+            _context.SaveChanges();
+
+        }
+
+        //specialties details
         public IEnumerable<SpecialtyResponse> GetSpecialties()
         {
             var specialties = _context.Specialty
@@ -68,26 +98,16 @@ namespace AnimalShelter_WebAPI.Services
             return specialty;
         }
 
-        public void AddSpecialtyToVet(int VetId, AddSpecialtyToVetRequest addSpecialtyToVetRequest)
+        public void RemoveSpecialty(int id)
         {
-            var vet = _context.Vet.FirstOrDefault(p => p.Id == VetId);
-            if (vet is null)
-                throw new BadRequestException("VET_NOT_EXISTS");
+            var specialty = _context.Specialty.Where(a => a.Id == id)
+               .FirstOrDefault();
+            if (specialty is null) throw new NotFoundException("SPECIALTY_NOT_FOUND");
 
-            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == addSpecialtyToVetRequest.SpecialtyId);
-            if (specialty is null)
-                throw new BadRequestException("SPECIALTY_NOT_EXISTS");
-
-            var existingSpecialtyCheck = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == addSpecialtyToVetRequest.SpecialtyId);
-            if (existingSpecialtyCheck is not null)
-                throw new BadRequestException("ALREADY_GRANTED");
-
-            var vet_specialty = _mapper.Map<Vet_Specialty>(addSpecialtyToVetRequest);
-            vet_specialty.VetId = VetId;
-
-            _context.Vet_Specialty.Add(vet_specialty);
+            _context.Specialty.Remove(specialty);
             _context.SaveChanges();
-
         }
+
+
     }
 }

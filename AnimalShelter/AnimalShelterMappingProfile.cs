@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AnimalShelter_WebAPI.DTOs.Role.Requests;
+using AnimalShelter_WebAPI.DTOs.Person;
+using AnimalShelter_WebAPI.DTOs.Person.Employee.Responses;
 
 namespace AnimalShelter.MappingProfiles
 {
@@ -41,7 +43,6 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.AdopterResponse, c => c.MapFrom(s => s.Adopter))
                 .ForMember(m => m.EmployeeResponse, c => c.MapFrom(ad => ad.Employee));
             CreateMap<Person, AdopterResponse>();
-            CreateMap<Person, PersonResponse>();
             CreateMap<Employee, EmployeeResponse>()
                 .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Person.FirstName))
                 .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Person.LastName));
@@ -54,6 +55,25 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<CreateMedicineRequest, Medicine>();
             CreateMap<CreateTreatmentRequest, Treatment>();
             CreateMap<CreateVetVisitRequest, VetVisit>();
+
+            //Employee mappings
+            CreateMap<Employee, GeneralEmployeeResponse>()
+               .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Person.FirstName))
+               .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Person.LastName))
+               .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Person.Sex))
+               .ForMember(m => m.roleResponses, c => c.MapFrom(p => p.Person.GrantedRoles));
+            CreateMap<Employee, DetailedEmployeeResponse>()
+                .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Person.FirstName))
+                .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Person.LastName))
+                .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Person.Sex))
+                .ForMember(m => m.PESEL, c => c.MapFrom(emp => emp.Person.PESEL))
+                .ForMember(m => m.PhoneNumber, c => c.MapFrom(emp => emp.Person.PhoneNumber))
+                .ForMember(m => m.HireDate, c => c.MapFrom(emp => emp.HireDate))
+                .ForMember(m => m.QuitDate, c => c.MapFrom(emp => emp.QuitDate))
+                .ForMember(m => m.Salary, c => c.MapFrom(emp => emp.Salary))
+                .ForMember(m => m.EmailAddress, c => c.MapFrom(emp => emp.Person.EmailAddress))
+                .ForMember(m => m.roleResponses, c => c.MapFrom(p => p.Person.GrantedRoles)); ;
+          //      .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
 
             //Vet mappings
             CreateMap<Specialty, SpecialtyResponse>();
@@ -74,10 +94,28 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Employee.Person.Sex))
                 .ForMember(m => m.PESEL, c => c.MapFrom(emp => emp.Employee.Person.PESEL))
                 .ForMember(m => m.PhoneNumber, c => c.MapFrom(emp => emp.Employee.Person.PhoneNumber))
-                .ForMember(m => m.Email, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
+                .ForMember(m => m.HireDate, c => c.MapFrom(emp => emp.Employee.HireDate))
+                .ForMember(m => m.QuitDate, c => c.MapFrom(emp => emp.Employee.QuitDate))
+                .ForMember(m => m.Salary, c => c.MapFrom(emp => emp.Employee.Salary))
+                .ForMember(m => m.EmailAddress, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
                 .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
             CreateMap<CreateSpecialtyRequest, Specialty>();
             CreateMap<AddSpecialtyToVetRequest, Vet_Specialty>();
+
+            //Volunteer mappings
+            CreateMap<Volunteer, GeneralVolunteerResponse>()
+                .ForMember(m => m.FirstName, c => c.MapFrom(v => v.Person.FirstName))
+                .ForMember(m => m.LastName, c => c.MapFrom(v => v.Person.LastName))
+                .ForMember(m => m.Sex, c => c.MapFrom(v => v.Person.Sex));
+
+            CreateMap<Volunteer, DetailedVolunteerResponse>()
+                .ForMember(m => m.FirstName, c => c.MapFrom(v => v.Person.FirstName))
+                .ForMember(m => m.LastName, c => c.MapFrom(v => v.Person.LastName))
+                .ForMember(m => m.Sex, c => c.MapFrom(v => v.Person.Sex))
+                .ForMember(m => m.PESEL, c => c.MapFrom(v => v.Person.PESEL))
+                .ForMember(m => m.PhoneNumber, c => c.MapFrom(v => v.Person.PhoneNumber))
+                .ForMember(m => m.EmailAddress, c => c.MapFrom(v => v.Person.EmailAddress));
+              
 
 
             //Token mapping
@@ -92,6 +130,11 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<RegisterPersonRequest, Vet>();
 
             //Roles
+            CreateMap<Person, PersonResponse>()
+               .ForMember(m => m.Roles, c => c.MapFrom(s => s.GrantedRoles));
+            CreateMap<GrantedRole, RoleResponse>()
+                .ForMember(m => m.Id, c => c.MapFrom(r => r.RoleId))
+                .ForMember(m => m.Name, c => c.MapFrom(r => r.Role.Name));
             CreateMap<AddRoleToPersonRequest, Volunteer>();
             CreateMap<AddRoleToPersonRequest, Employee>();
             CreateMap<AddRoleToPersonRequest, Vet>();

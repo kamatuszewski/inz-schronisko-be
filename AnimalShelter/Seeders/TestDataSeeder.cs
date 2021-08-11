@@ -49,6 +49,13 @@ namespace AnimalShelter_WebAPI.Seeders
                     _dbContext.SaveChanges();
                 }
 
+                if (!_dbContext.GrantedRole.Any())
+                {
+                    var grantedRole = GetGrantedRoles();
+                    _dbContext.GrantedRole.AddRange(grantedRole);
+                    _dbContext.SaveChanges();
+                }
+
                 if (!_dbContext.Specialty.Any())
                 {
                     var specialties = GetSpecialties();
@@ -169,7 +176,8 @@ namespace AnimalShelter_WebAPI.Seeders
                     Sex = "F",
                     Address = "Weterynaryjna 8, Warszawa",
                     PhoneNumber = "101101101",
-                    EmailAddress = "vetkaanna@schronisko.pl"
+                    EmailAddress = "vetkaanna@schronisko.pl",
+                    Password = "AQAAAAEAACcQAAAAEAYq+o7N+Rme4n1yxX8yZG/vodgSBkjL/scZ0Vczxt8sj7lD1O3TZevwULlm8f9MqQ==" //haslo: haslo1
                 },
 
                 //pracownik przeprowadzajacy adopcje
@@ -235,7 +243,8 @@ namespace AnimalShelter_WebAPI.Seeders
                     Sex = "M",
                     Address = "Dyrektorska 1/11, Dyrektorowo",
                     PhoneNumber = "999999999",
-                    EmailAddress = "dyrektor@schronisko.pl"
+                    EmailAddress = "dyrektor@schronisko.pl",
+                    Password = "AQAAAAEAACcQAAAAEAYq+o7N+Rme4n1yxX8yZG/vodgSBkjL/scZ0Vczxt8sj7lD1O3TZevwULlm8f9MqQ=="   //haslo = haslo1
                 },
                      //jakiś miks
                     new Person()
@@ -269,7 +278,8 @@ namespace AnimalShelter_WebAPI.Seeders
                    Id = 7,
                    HireDate = new DateTime(2015, 10, 10, 0, 0, 0),
                    Salary = 3000,
-                   IsRoleActive = true
+                   IsRoleActive = false //ponieważ ma rolę weterynarz, nie employee
+
                 }
             };
             return employees;
@@ -281,12 +291,45 @@ namespace AnimalShelter_WebAPI.Seeders
                 new Vet()
                 {
                    Id = 7,
-                   PWZNumber = "111111"
+                   PWZNumber = "111111",
+                   IsRoleActive = true
                 },
 
             };
             return vets;
         }
+
+        private IEnumerable<GrantedRole> GetGrantedRoles()
+        {
+            var grantedRoles = new List<GrantedRole>()
+            {
+                 new GrantedRole()
+                {
+                   PersonId = 3,    //Admin
+                   RoleId = 4       //Admin
+                },
+                new GrantedRole()
+                {
+                   PersonId = 7,    //Vetowa
+                   RoleId = 5       //Vet
+                },
+                 new GrantedRole()
+                {
+                   PersonId = 6,    //Adopcyjny
+                   RoleId = 2       //Employee
+                },
+                  new GrantedRole()
+                {
+                   PersonId = 2,    //Dyrektorski
+                   RoleId = 3       //Ddirector
+                }
+
+
+            };
+            return grantedRoles;
+        }
+
+
         private IEnumerable<Specialty> GetSpecialties()
         {
             var specialties = new List<Specialty>()

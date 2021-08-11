@@ -12,6 +12,7 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Vet.Responses
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Sex { get; set; }
+    //    public bool IsRoleActive { get; set; }
         public IEnumerable <SpecialtyResponse> SpecialtyResponses { get; set; }
     }
 }

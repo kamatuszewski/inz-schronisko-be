@@ -18,6 +18,8 @@ namespace AnimalShelter.Models
         public string Password { get; set; }
 
 
+
+
         public virtual ICollection<GrantedRole> GrantedRoles { get; set; }
         public virtual ICollection<Volunteer> Volunteers { get; set; }
         public virtual ICollection<Adoption> Adoptions { get; set; }
