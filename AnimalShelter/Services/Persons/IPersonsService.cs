@@ -2,6 +2,7 @@
 using AnimalShelter.DTOs;
 using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Person.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.DTOs.Role.Responses;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace AnimalShelter.Services
         public IEnumerable<RoleResponse> GetRoles();
         public void RegisterPerson(RegisterPersonRequest registerPersonRequest);
   //      public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest);
-        string GenerateJwt(LoginRequest request);
+        TokenResponse GenerateJwt(LoginRequest request);
     }
 }
 

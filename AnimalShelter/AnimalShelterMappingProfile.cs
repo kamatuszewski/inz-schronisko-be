@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AnimalShelter_WebAPI.DTOs.Role.Requests;
 
 namespace AnimalShelter.MappingProfiles
 {
@@ -79,20 +80,26 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<AddSpecialtyToVetRequest, Vet_Specialty>();
 
 
-            //Persons mappings
+            //Token mapping
             CreateMap<Role, RoleResponse>();
 
-            CreateMap<CreatePersonRequest, Person>();
-            CreateMap<CreateAnimalRequest, Animal>();
-
             //People mapping
+            CreateMap<CreatePersonRequest, Person>();
+
+           
             CreateMap<RegisterPersonRequest, Volunteer>();
             CreateMap<RegisterPersonRequest, Employee>();
             CreateMap<RegisterPersonRequest, Vet>();
 
+            //Roles
             CreateMap<AddRoleToPersonRequest, Volunteer>();
             CreateMap<AddRoleToPersonRequest, Employee>();
             CreateMap<AddRoleToPersonRequest, Vet>();
+
+
+            CreateMap<RemoveRoleFromPersonRequest, Volunteer>();
+            CreateMap<RemoveRoleFromPersonRequest, Employee>();
+            CreateMap<RemoveRoleFromPersonRequest, Vet>();
 
             CreateMap<AddRoleToPersonRequest, GrantedRole>();
         }

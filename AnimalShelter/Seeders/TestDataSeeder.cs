@@ -221,7 +221,8 @@ namespace AnimalShelter_WebAPI.Seeders
                     Sex = "F",
                     Address = "Admina 9/20, Adminowo",
                     PhoneNumber = "111111111",
-                    EmailAddress = "admin@schronisko.pl"
+                    EmailAddress = "admin@schronisko.pl",
+                    Password = "AQAAAAEAACcQAAAAEAYq+o7N+Rme4n1yxX8yZG/vodgSBkjL/scZ0Vczxt8sj7lD1O3TZevwULlm8f9MqQ=="   //haslo = haslo1
                 },
 
                    //dyrektor
@@ -259,14 +260,16 @@ namespace AnimalShelter_WebAPI.Seeders
                 {
                    Id = 6,
                    HireDate = new DateTime(2010, 10, 10, 0, 0, 0),
-                   Salary = 5000
+                   Salary = 5000,
+                   IsRoleActive = true
                 },
 
                 new Employee()
                 {
                    Id = 7,
                    HireDate = new DateTime(2015, 10, 10, 0, 0, 0),
-                   Salary = 3000
+                   Salary = 3000,
+                   IsRoleActive = true
                 }
             };
             return employees;
