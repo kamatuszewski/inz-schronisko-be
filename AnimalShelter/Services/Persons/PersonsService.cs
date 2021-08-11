@@ -177,8 +177,9 @@ namespace AnimalShelter.Services
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, person.Id.ToString()),
-                new Claim("FirstName", $"{person.FirstName}"),
-                new Claim("LastName", $"{person.LastName}")
+                new Claim("firstName", $"{person.FirstName}"),
+                new Claim("lastName", $"{person.LastName}"),
+                new Claim("id", $"{person.Id}")
             };
 
 
@@ -191,17 +192,18 @@ namespace AnimalShelter.Services
                 .FirstOrDefault( p => p.RoleId == role.RoleId);
 
                 claims.Add(new Claim(ClaimTypes.Role, roleName.Role.Name));
+                claims.Add(new Claim("role", $"{roleName.Role.Name}"));
             }
               
         
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddHours(_authenticationSettings.JwtExpireHours);
+            //var expires = DateTime.Now.AddHours(_authenticationSettings.JwtExpireHours);
 
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer,
                 _authenticationSettings.JwtIssuer,
                 claims,
-                expires: expires,
+                expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: cred
                 );
 

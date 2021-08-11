@@ -1,4 +1,5 @@
 ﻿using AnimalShelter_WebAPI.DTOs.Role;
+using AnimalShelter_WebAPI.DTOs.Role.Requests;
 using AnimalShelter_WebAPI.Services.Roles;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,6 +24,12 @@ namespace AnimalShelter_WebAPI.Controllers
         public ActionResult AddRoleToPerson([FromRoute] int personId, AddRoleToPersonRequest request)
         {
             _rolesService.AddRoleToPerson(personId, request);
+            return Ok();
+        }
+        [HttpDelete]
+        public ActionResult RomoveRoleFromPerson([FromRoute] int personId, RemoveRoleFromPersonRequest request)
+        {
+            _rolesService.RemoveRoleFromPerson(personId, request);
             return Ok();
         }
     }
