@@ -5,6 +5,7 @@ using AnimalShelter_WebAPI.DTOs.Person.Vet.Requests;
 using AnimalShelter_WebAPI.DTOs.Person.Vet.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.DTOs.Role.Responses;
+using AnimalShelter_WebAPI.DTOs.Role;
 using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
 using AutoMapper;
 using System;
@@ -17,7 +18,7 @@ namespace AnimalShelter.MappingProfiles
     public class AnimalShelterMappingProfile : Profile
     {
         public AnimalShelterMappingProfile()
-        { 
+        {
             //Animal mappings
             CreateMap<Animal, GeneralAnimalResponse>()
                 .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
@@ -77,6 +78,7 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<CreateSpecialtyRequest, Specialty>();
             CreateMap<AddSpecialtyToVetRequest, Vet_Specialty>();
 
+
             //Persons mappings
             CreateMap<Role, RoleResponse>();
 
@@ -93,7 +95,6 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<AddRoleToPersonRequest, Vet>();
 
             CreateMap<AddRoleToPersonRequest, GrantedRole>();
-
         }
     }
 }
