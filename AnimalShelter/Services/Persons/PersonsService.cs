@@ -198,19 +198,21 @@ namespace AnimalShelter.Services
         
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            //var expires = DateTime.Now.AddHours(_authenticationSettings.JwtExpireHours);
+            var expires = DateTime.Now.AddHours(_authenticationSettings.JwtExpireHours);
 
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer,
                 _authenticationSettings.JwtIssuer,
                 claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: expires,
                 signingCredentials: cred
                 );
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
+            
 
-            return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer"};
+
+            return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer" };
 
 /*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
 
