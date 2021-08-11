@@ -15,10 +15,10 @@ namespace AnimalShelter_WebAPI.Services
 
         public IEnumerable<GeneralVetResponse> GetVets();
         public DetailedVetResponse GetVet(int id);
-     
-       
+
+        public void AddSpecialtyToVet(int VetId, AddSpecialtyToVetRequest addSpecialtyToVetRequest);
         public IEnumerable<SpecialtyResponse> GetSpecialties();
         public Specialty CreateSpecialty(CreateSpecialtyRequest createSpecialtyRequest);
-
+        void RemoveSpecialty(int id);
     }
 }

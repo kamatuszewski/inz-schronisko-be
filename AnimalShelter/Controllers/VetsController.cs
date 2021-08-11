@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    [Route("api/Persons/[controller]")]
+    [Route("api/persons/[controller]")]
     [ApiController]
     public class VetsController : ControllerBase
     {
@@ -36,6 +36,15 @@ namespace AnimalShelter_WebAPI.Controllers
         }
 
 
+
+        [Route("{vetId}/specialty")]
+        [HttpPost]
+        public ActionResult AddSpecialtyToVet([FromRoute] int vetId, AddSpecialtyToVetRequest addSpecialtyToVetRequest)
+        {
+            _vetsDbService.AddSpecialtyToVet(vetId, addSpecialtyToVetRequest);
+            return Ok();
+        }
+
         [Route("Specialties")]
         [HttpGet]
         public IActionResult GetSpecialties()
@@ -51,9 +60,14 @@ namespace AnimalShelter_WebAPI.Controllers
             return Ok();
 
         }
-        
+
+        [HttpDelete("Specialties/{Id}")]
+        public IActionResult RemoveSpecialty(int Id)
+        {
+            _vetsDbService.RemoveSpecialty(Id);
+            return Accepted();
+        }
 
 
-       
     }
 }

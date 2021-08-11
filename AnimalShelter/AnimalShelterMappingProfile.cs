@@ -19,7 +19,7 @@ namespace AnimalShelter.MappingProfiles
     public class AnimalShelterMappingProfile : Profile
     {
         public AnimalShelterMappingProfile()
-        { 
+        {
             //Animal mappings
             CreateMap<Animal, GeneralAnimalResponse>()
                 .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
@@ -77,13 +77,14 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.Email, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
                 .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
             CreateMap<CreateSpecialtyRequest, Specialty>();
+            CreateMap<AddSpecialtyToVetRequest, Vet_Specialty>();
+
 
             //Token mapping
             CreateMap<Role, RoleResponse>();
 
             //People mapping
             CreateMap<CreatePersonRequest, Person>();
-            CreateMap<CreateAnimalRequest, Animal>();
 
            
             CreateMap<RegisterPersonRequest, Volunteer>();
@@ -95,10 +96,10 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<AddRoleToPersonRequest, Employee>();
             CreateMap<AddRoleToPersonRequest, Vet>();
 
+
             CreateMap<RemoveRoleFromPersonRequest, Volunteer>();
             CreateMap<RemoveRoleFromPersonRequest, Employee>();
             CreateMap<RemoveRoleFromPersonRequest, Vet>();
-
 
             CreateMap<AddRoleToPersonRequest, GrantedRole>();
         }

@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Animal.Requests;
 using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Exceptions;
@@ -52,6 +53,21 @@ namespace AnimalShelter_WebAPI.Services.Animals
             _context.SaveChanges();
             return animal;
         }
+
+        public void UpdateAnimal(int id, UpdateAnimalRequest updateAnimalRequest)
+        {
+            var animal = _context.Animal.Where(a => a.Id == id)
+             .FirstOrDefault();
+            if (animal is null) throw new NotFoundException("ANIMAL_NOT_FOUND");
+
+            // animal.BirthDate = updateAnimalRequest.BirthDate;
+            animal.Name = updateAnimalRequest.Name;
+            animal.StatusId = updateAnimalRequest.StatusId;
+            animal.FoundPlace = updateAnimalRequest.FoundPlace;
+
+            _context.SaveChanges();
+        }
+
 
         public void RemoveAnimal(int id)
         {
