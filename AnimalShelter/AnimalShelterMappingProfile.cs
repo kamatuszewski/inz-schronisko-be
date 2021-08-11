@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using AnimalShelter_WebAPI.DTOs.Role.Requests;
 using AnimalShelter_WebAPI.DTOs.Person;
 using AnimalShelter_WebAPI.DTOs.Person.Employee.Responses;
+using AnimalShelter_WebAPI.DTOs.Person.PersonsGeneral.Responses;
+using AnimalShelter_WebAPI.DTOs.Adoption.Responses;
 
 namespace AnimalShelter.MappingProfiles
 {
@@ -47,7 +49,12 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Person.FirstName))
                 .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Person.LastName));
 
-
+            //Adoption mappings
+            CreateMap<Adoption, DetailedAdoptionResponse>()
+                .ForMember(m => m.AdopterResponse, c => c.MapFrom(s => s.Adopter))
+                .ForMember(m => m.EmployeeResponse, c => c.MapFrom(ad => ad.Employee))
+                .ForMember(m => m.GeneralAnimalResponse, c => c.MapFrom(ad => ad.Animal));
+          
             //VetVisit mappings
             CreateMap<Medicine, MedicinesResponse>();
             CreateMap<Treatment, TreatmentsResponse>();
@@ -61,7 +68,8 @@ namespace AnimalShelter.MappingProfiles
                .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Person.FirstName))
                .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Person.LastName))
                .ForMember(m => m.Sex, c => c.MapFrom(emp => emp.Person.Sex))
-               .ForMember(m => m.roleResponses, c => c.MapFrom(p => p.Person.GrantedRoles));
+               .ForMember(m => m.roleResponses, c => c.MapFrom(p => p.Person.GrantedRoles))
+               .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(p => p.Vet.Vet_Specialties));
             CreateMap<Employee, DetailedEmployeeResponse>()
                 .ForMember(m => m.FirstName, c => c.MapFrom(emp => emp.Person.FirstName))
                 .ForMember(m => m.LastName, c => c.MapFrom(emp => emp.Person.LastName))
@@ -72,8 +80,9 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.QuitDate, c => c.MapFrom(emp => emp.QuitDate))
                 .ForMember(m => m.Salary, c => c.MapFrom(emp => emp.Salary))
                 .ForMember(m => m.EmailAddress, c => c.MapFrom(emp => emp.Person.EmailAddress))
-                .ForMember(m => m.roleResponses, c => c.MapFrom(p => p.Person.GrantedRoles)); ;
-          //      .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
+                .ForMember(m => m.roleResponses, c => c.MapFrom(p => p.Person.GrantedRoles))
+                .ForMember(m => m.PwzNumber, c => c.MapFrom(emp => emp.Vet.PWZNumber))
+                .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet.Vet_Specialties));
 
             //Vet mappings
             CreateMap<Specialty, SpecialtyResponse>();
@@ -132,6 +141,8 @@ namespace AnimalShelter.MappingProfiles
             //Roles
             CreateMap<Person, PersonResponse>()
                .ForMember(m => m.Roles, c => c.MapFrom(s => s.GrantedRoles));
+            CreateMap<Person, GeneralPersonResponse>()
+              .ForMember(m => m.Roles, c => c.MapFrom(s => s.GrantedRoles));
             CreateMap<GrantedRole, RoleResponse>()
                 .ForMember(m => m.Id, c => c.MapFrom(r => r.RoleId))
                 .ForMember(m => m.Name, c => c.MapFrom(r => r.Role.Name));

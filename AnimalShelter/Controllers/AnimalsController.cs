@@ -1,6 +1,4 @@
-﻿
-using AnimalShelter.Services;
-using AnimalShelter_WebAPI.DTOs.Animal.Requests;
+﻿using AnimalShelter_WebAPI.DTOs.Animal.Requests;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Services.Animals;
 using Microsoft.AspNetCore.Authorization;

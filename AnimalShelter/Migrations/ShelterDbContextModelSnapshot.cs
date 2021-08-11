@@ -475,9 +475,9 @@ namespace AnimalShelter_WebAPI.Migrations
             modelBuilder.Entity("AnimalShelter.Models.Employee", b =>
                 {
                     b.HasOne("AnimalShelter.Models.Person", "Person")
-                        .WithMany("Employees")
-                        .HasForeignKey("Id")
-                        .HasConstraintName("Person_Emplyee")
+                        .WithOne("Employee")
+                        .HasForeignKey("AnimalShelter.Models.Employee", "Id")
+                        .HasConstraintName("Person_Employee")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -548,8 +548,8 @@ namespace AnimalShelter_WebAPI.Migrations
             modelBuilder.Entity("AnimalShelter.Models.Vet", b =>
                 {
                     b.HasOne("AnimalShelter.Models.Employee", "Employee")
-                        .WithMany("Vets")
-                        .HasForeignKey("Id")
+                        .WithOne("Vet")
+                        .HasForeignKey("AnimalShelter.Models.Vet", "Id")
                         .HasConstraintName("Employee_Vet")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -601,8 +601,8 @@ namespace AnimalShelter_WebAPI.Migrations
             modelBuilder.Entity("AnimalShelter.Models.Volunteer", b =>
                 {
                     b.HasOne("AnimalShelter.Models.Person", "Person")
-                        .WithMany("Volunteers")
-                        .HasForeignKey("Id")
+                        .WithOne("Volunteer")
+                        .HasForeignKey("AnimalShelter.Models.Volunteer", "Id")
                         .HasConstraintName("Person_Volunteer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -621,7 +621,7 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     b.Navigation("Adoptions");
 
-                    b.Navigation("Vets");
+                    b.Navigation("Vet");
                 });
 
             modelBuilder.Entity("AnimalShelter.Models.Medicine", b =>
@@ -633,11 +633,11 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     b.Navigation("Adoptions");
 
-                    b.Navigation("Employees");
+                    b.Navigation("Employee");
 
                     b.Navigation("GrantedRoles");
 
-                    b.Navigation("Volunteers");
+                    b.Navigation("Volunteer");
                 });
 
             modelBuilder.Entity("AnimalShelter.Models.Role", b =>

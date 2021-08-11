@@ -14,8 +14,11 @@ namespace AnimalShelter.Models
         public int Salary { get; set; }
         public bool IsRoleActive { get; set; } = true;
 
+
+        public virtual Vet Vet { get; set; }
         public virtual Person Person { get; set; }
-        public virtual ICollection<Vet> Vets { get; set; }
+
+      //  public virtual ICollection<Vet> Vet { get; set; }
         public virtual ICollection<Adoption> Adoptions { get; set; }
 
         //   public virtual ICollection<AdoptionOfficeWorker> AdoptionOfficeWorkers { get; set; }

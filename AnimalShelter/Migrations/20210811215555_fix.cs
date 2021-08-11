@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AnimalShelter_WebAPI.Migrations
 {
-    public partial class test : Migration
+    public partial class fix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -119,7 +119,7 @@ namespace AnimalShelter_WebAPI.Migrations
                 {
                     table.PrimaryKey("Employee_PK", x => x.Id);
                     table.ForeignKey(
-                        name: "Person_Emplyee",
+                        name: "Person_Employee",
                         column: x => x.Id,
                         principalTable: "Person",
                         principalColumn: "Id",

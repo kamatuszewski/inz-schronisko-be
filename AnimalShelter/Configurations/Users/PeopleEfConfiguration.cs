@@ -22,6 +22,15 @@ namespace AnimalShelter.Configurations
             builder.Property(e => e.Sex).HasMaxLength(36).IsRequired();
             builder.Property(e => e.Address).HasMaxLength(255);
             builder.Property(e => e.PhoneNumber).HasMaxLength(9);
+            builder.HasOne(d => d.Employee).WithOne(p => p.Person)
+                .HasForeignKey<Employee>(d => d.Id)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("Person_Employee");
+            builder.HasOne(d => d.Volunteer).WithOne(p => p.Person)
+                .HasForeignKey<Volunteer>(d => d.Id)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("Person_Volunteer");
+
         }
     }
 }

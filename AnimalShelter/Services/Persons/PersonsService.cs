@@ -2,6 +2,7 @@
 using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI;
+using AnimalShelter_WebAPI.DTOs.Person.PersonsGeneral.Responses;
 using AnimalShelter_WebAPI.DTOs.Person.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.DTOs.Role.Responses;
@@ -39,12 +40,12 @@ namespace AnimalShelter.Services
 
 
 
-        public IEnumerable<PersonResponse> GetPersons()
+        public IEnumerable<GeneralPersonResponse> GetPersons()
         {
             var persons = _context.Person
                  .Include(req => req.GrantedRoles).ThenInclude(req => req.Role)
                  .ToList();
-            return _mapper.Map<IEnumerable<PersonResponse>>(persons);
+            return _mapper.Map<IEnumerable<GeneralPersonResponse>>(persons);
         }
 
         public PersonResponse GetPerson(int Id)
