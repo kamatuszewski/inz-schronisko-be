@@ -52,9 +52,9 @@ namespace AnimalShelter
 
             services.AddAuthentication(option =>
             {
-                option.DefaultAuthenticateScheme = "Bearer";
-                option.DefaultScheme = "Bearer";
-                option.DefaultChallengeScheme = "Bearer";
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(cfg =>
             {
                 cfg.RequireHttpsMetadata = false;
@@ -63,6 +63,7 @@ namespace AnimalShelter
                 {
                     ValidIssuer = authenticationSettings.JwtIssuer,
                     ValidAudience = authenticationSettings.JwtIssuer,
+                    ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
                 };
             });
@@ -113,11 +114,11 @@ namespace AnimalShelter
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter v1"));
             }
 
-            app.UseAuthentication();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

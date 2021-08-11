@@ -180,7 +180,8 @@ namespace AnimalShelter.Services
                 new Claim(ClaimTypes.NameIdentifier, person.Id.ToString()),
                 new Claim("firstName", $"{person.FirstName}"),
                 new Claim("lastName", $"{person.LastName}"),
-                new Claim("id", $"{person.Id}"),
+
+                new Claim("id", $"{person.Id}")
             };
 
 
@@ -193,7 +194,10 @@ namespace AnimalShelter.Services
                 .FirstOrDefault( p => p.RoleId == role.RoleId);
                 rolesArray.Add(grantedRole.Role.Name);
 
-                claims.Add(new Claim(ClaimTypes.Role, grantedRole.Role.Name));
+
+                claims.Add(new Claim(ClaimTypes.Role, roleName.Role.Name));
+                claims.Add(new Claim("role", $"{roleName.Role.Name}"));
+
             }
             string rolesJson = JsonConvert.SerializeObject(rolesArray);
             claims.Add(new Claim("roles", rolesJson, JsonClaimValueTypes.JsonArray));
@@ -212,8 +216,10 @@ namespace AnimalShelter.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
+            
 
-            return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer"};
+
+            return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer" };
 
 /*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
 

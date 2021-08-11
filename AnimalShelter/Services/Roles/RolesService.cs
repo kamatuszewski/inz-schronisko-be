@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Role;
+using AnimalShelter_WebAPI.DTOs.Role.Requests;
 using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using System;
@@ -12,7 +13,8 @@ namespace AnimalShelter_WebAPI.Services.Roles
 {
     public interface IRolesService
     {
-        void AddRoleToPerson(int personId, AddRoleToPersonRequest request);
+        void AddRoleToPerson(int PersonId, AddRoleToPersonRequest request);
+        void RemoveRoleFromPerson(int PersonId, RemoveRoleFromPersonRequest request);
     }
     public class RolesService: IRolesService
     {
@@ -49,12 +51,83 @@ namespace AnimalShelter_WebAPI.Services.Roles
             var grantedRoleEntity = _mapper.Map<GrantedRole>(request);
             grantedRoleEntity.PersonId = PersonId;
 
-            _context.GrantedRole.Add(grantedRoleEntity);
-            _context.SaveChanges();
 
             // method need to create Vet/Emp/Volunteer DB entities
             CreateEntitiesBasedOnPersonRole(grantedRoleEntity, request);
 
+            _context.GrantedRole.Add(grantedRoleEntity);
+            _context.SaveChanges();
+
+        }
+
+        public void RemoveRoleFromPerson(int PersonId, RemoveRoleFromPersonRequest request)
+        {
+            var person = _context.Person.FirstOrDefault(p => p.Id == PersonId);
+
+            if (person is null)
+            {
+                throw new BadRequestException("PERSON_NOT_FOUND");
+            }
+
+            var role = _context.Role.FirstOrDefault(r => r.Id == request.RoleId);
+            if (role is null)
+            {
+                throw new BadRequestException("ROLE_NOT_FOUND");
+            }
+
+            var grantetRoleToRemoveExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == request.RoleId);
+            if (grantetRoleToRemoveExists is null)
+            {
+                throw new BadRequestException("USER_ROLE_DONT_EXIST");
+            }
+
+            SoftDeleteEntitiesBasedOnPersonRole(grantetRoleToRemoveExists, request);
+
+            _context.GrantedRole.Remove(grantetRoleToRemoveExists);
+            _context.SaveChanges();
+        }
+
+        private void SoftDeleteEntitiesBasedOnPersonRole(GrantedRole grantedRoleToRemove, RemoveRoleFromPersonRequest request)
+        {
+            switch (request.RoleId)
+            {
+                case 1: //Volunteer
+                    var volunteerToSoftDelete = new Volunteer()
+                    {
+                        Id = grantedRoleToRemove.PersonId,
+                        IsActive = false
+                    };
+                    
+                    _context.Volunteer.Update(volunteerToSoftDelete);
+                    _context.SaveChanges();
+                    break;
+                case 5: //Vet
+
+                    var vetToSoftDelete = new Vet
+                    {
+                        Id = grantedRoleToRemove.PersonId,
+                        IsActive = false
+                    };
+
+                    _context.Vet.Update(vetToSoftDelete);
+                    _context.SaveChanges();
+                    break;
+                case 2: //Emp
+                    var empToSoftDelete = new Employee
+                    {
+                        Id = grantedRoleToRemove.PersonId,
+                        IsRoleActive = false,
+                        QuitDate = request.QuitDate
+                    };
+
+                 
+                    _context.Employee.Update(empToSoftDelete);
+                    _context.SaveChanges();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void CreateEntitiesBasedOnPersonRole(GrantedRole grantedRoleEntity, AddRoleToPersonRequest request)
