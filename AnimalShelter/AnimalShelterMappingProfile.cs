@@ -75,10 +75,25 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.Email, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
                 .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
             CreateMap<CreateSpecialtyRequest, Specialty>();
+            CreateMap<AddSpecialtyToVetRequest, Vet_Specialty>();
 
             //Persons mappings
             CreateMap<Role, RoleResponse>();
-            
+
+            CreateMap<CreatePersonRequest, Person>();
+            CreateMap<CreateAnimalRequest, Animal>();
+
+            //People mapping
+            CreateMap<RegisterPersonRequest, Volunteer>();
+            CreateMap<RegisterPersonRequest, Employee>();
+            CreateMap<RegisterPersonRequest, Vet>();
+
+            CreateMap<AddRoleToPersonRequest, Volunteer>();
+            CreateMap<AddRoleToPersonRequest, Employee>();
+            CreateMap<AddRoleToPersonRequest, Vet>();
+
+            CreateMap<AddRoleToPersonRequest, GrantedRole>();
+
         }
     }
 }

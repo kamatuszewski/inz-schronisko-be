@@ -1,5 +1,6 @@
 ﻿
 using AnimalShelter.Services;
+using AnimalShelter_WebAPI.DTOs.Animal.Requests;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Services.Animals;
 using Microsoft.AspNetCore.Authorization;
@@ -42,9 +43,20 @@ namespace AnimalShelter.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAnimal([FromHeader] CreateAnimalRequest createAnimalRequest)
+        public IActionResult CreateAnimal([FromBody] CreateAnimalRequest createAnimalRequest)
         {
             _animalsDbService.CreateAnimal(createAnimalRequest);
+            return Ok();
+
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateAnimal([FromRoute] int id, [FromBody] UpdateAnimalRequest updateAnimalRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            _animalsDbService.UpdateAnimal(id, updateAnimalRequest);
             return Ok();
 
         }
