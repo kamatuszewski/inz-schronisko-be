@@ -35,15 +35,23 @@ namespace AnimalShelter_WebAPI.Controllers
                 return Ok(vet);
         }
 
-
-
         [Route("{vetId}/specialty")]
         [HttpPost]
-        public ActionResult AddSpecialtyToVet([FromRoute] int vetId, AddSpecialtyToVetRequest addSpecialtyToVetRequest)
+        public ActionResult AddSpecialtyToVet([FromRoute] int vetId, [FromBody]AddSpecialtyToVetRequest addSpecialtyToVetRequest)
         {
             _vetsDbService.AddSpecialtyToVet(vetId, addSpecialtyToVetRequest);
             return Ok();
         }
+
+        [Route("{vetId}/specialty")]
+        [HttpDelete]
+        public ActionResult RemoveSpecialtyFromVet([FromRoute] int vetId, [FromBody] RemoveSpecialtyFromVetRequest removeSpecialtyFromVetRequest)
+        {
+            _vetsDbService.RemoveSpecialtyFromVet(vetId, removeSpecialtyFromVetRequest);
+            return Accepted();
+        }
+
+
 
         [Route("Specialties")]
         [HttpGet]
