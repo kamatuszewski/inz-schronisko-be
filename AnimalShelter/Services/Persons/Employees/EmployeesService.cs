@@ -26,8 +26,8 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
         {
             var employees = _context.Employee
                 .Include(req => req.Person).ThenInclude(req => req.GrantedRoles).ThenInclude(req => req.Role)
-                .Include(req => req.Vets).ThenInclude(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
-                .Where(req => req.IsRoleActive == true || req.Vets.Any(x => x.IsRoleActive==true))
+                .Include(req => req.Vet).ThenInclude(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
+                .Where(req => req.IsRoleActive == true || req.Vet.IsRoleActive==true)
                 .ToList();
             return _mapper.Map<IEnumerable<GeneralEmployeeResponse>>(employees);
         }
@@ -36,7 +36,7 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
         {
             var employee = _context.Employee.Where(a => a.Id == id)
                  .Include(req => req.Person).ThenInclude(req => req.GrantedRoles).ThenInclude(req => req.Role)
-                 .Include(req => req.Vets).ThenInclude(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
+                 .Include(req => req.Vet).ThenInclude(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
                  .FirstOrDefault();
             return _mapper.Map<DetailedEmployeeResponse>(employee);
         }

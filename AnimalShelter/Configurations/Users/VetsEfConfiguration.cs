@@ -15,10 +15,7 @@ namespace AnimalShelter.Configurations
         {
             builder.HasKey(e => e.Id).HasName("Vet_PK");
             builder.Property(e => e.PWZNumber).IsRequired();
-            builder.HasOne(d => d.Employee).WithMany(p => p.Vets)
-                .HasForeignKey(d => d.Id)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("Employee_Vet");
+            
         }
     }
 }

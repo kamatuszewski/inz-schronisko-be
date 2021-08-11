@@ -16,10 +16,10 @@ namespace AnimalShelter.Configurations
             builder.HasKey(e => e.Id).HasName("Employee_PK");
             builder.Property(e => e.HireDate).IsRequired();
             builder.Property(e => e.Salary).IsRequired();
-            builder.HasOne(d => d.Person).WithMany(p => p.Employees)
-                .HasForeignKey(d => d.Id)
+            builder.HasOne(d => d.Vet).WithOne(p => p.Employee)
+                .HasForeignKey<Vet>(d => d.Id)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("Person_Emplyee");
+                .HasConstraintName("Employee_Vet");
         }
     }
 }

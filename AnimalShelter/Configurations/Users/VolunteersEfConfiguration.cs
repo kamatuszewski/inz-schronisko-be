@@ -17,10 +17,7 @@ namespace AnimalShelter.Configurations
             builder.HasKey(e => e.Id).HasName("Volunteer_PK");
             builder.Property(e => e.JoiningDate).IsRequired();
             builder.Property(e => e.Attendance).HasMaxLength(255);
-            builder.HasOne(d => d.Person).WithMany(p => p.Volunteers)
-                .HasForeignKey(d => d.Id)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("Person_Volunteer");
+            
         }
     }
 }

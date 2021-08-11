@@ -17,14 +17,15 @@ namespace AnimalShelter.Models
         public string EmailAddress { get; set; }
         public string Password { get; set; }
 
-
+        public virtual Volunteer Volunteer { get; set; }
+        public virtual Employee Employee { get; set; }
 
 
         public virtual ICollection<GrantedRole> GrantedRoles { get; set; }
-        public virtual ICollection<Volunteer> Volunteers { get; set; }
+     //   public virtual ICollection<Volunteer> Volunteer { get; set; }
         public virtual ICollection<Adoption> Adoptions { get; set; }
        // public virtual ICollection<Adopter> Adopters { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
+      //  public virtual ICollection<Employee> Employee { get; set; }
 
 
 
