@@ -92,36 +92,30 @@ namespace AnimalShelter_WebAPI.Services.Roles
             switch (request.RoleId)
             {
                 case 1: //Volunteer
-                    var volunteerToSoftDelete = new Volunteer()
+                    var volunteerToSoftDelete = _context.Volunteer.FirstOrDefault(v => v.Id == grantedRoleToRemove.PersonId);
+                    volunteerToSoftDelete.IsRoleActive = false;
+
+/*                    var volunteerToSoftDelete = new Volunteer()
                     {
                         Id = grantedRoleToRemove.PersonId,
                         IsRoleActive = false
-                    };
-                    
+                    };*/
+
                     _context.Volunteer.Update(volunteerToSoftDelete);
                     _context.SaveChanges();
                     break;
                 case 5: //Vet
-                //    string oldPWZnumber = _context.Person.FirstOrDefault(x => x.Id == Pero).FirstOrDefault(x => x.Id == grantedRoleToRemove.PersonId).PWZNumber;
-                    var vetToSoftDelete = new Vet
-                    {
-                        Id = grantedRoleToRemove.PersonId,
-                   //     PWZNumber = oldPWZnumber,
-                        IsRoleActive = false
-                    };
+                    var vetToSoftDelete = _context.Vet.FirstOrDefault(v => v.Id == grantedRoleToRemove.PersonId);
+                    vetToSoftDelete.IsRoleActive = false;
 
                     _context.Vet.Update(vetToSoftDelete);
                     _context.SaveChanges();
                     break;
                 case 2: //Emp
-                    var empToSoftDelete = new Employee
-                    {
-                        Id = grantedRoleToRemove.PersonId,
-                        IsRoleActive = false,
-                        QuitDate = request.QuitDate
-                    };
+                    var empToSoftDelete = _context.Employee.FirstOrDefault(v => v.Id == grantedRoleToRemove.PersonId);
+                    empToSoftDelete.IsRoleActive = false;
+                    empToSoftDelete.QuitDate = request.QuitDate;
 
-                 
                     _context.Employee.Update(empToSoftDelete);
                     _context.SaveChanges();
                     break;
