@@ -26,12 +26,28 @@ namespace AnimalShelter_WebAPI.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult AddAdoption([FromBody] CreateAdoptionRequest createAdoptionRequest)
+        {
+            _adoptionsService.CreateAdoption(createAdoptionRequest);
+            return Ok();
+
+        }
+
         [HttpGet]
         public IActionResult GetAdoptions()
         {
             return Ok(_adoptionsService.GetAdoptions());
 
         }
+
+        [HttpDelete("{Id}")]
+        public IActionResult RemoveAdoption(int Id)
+        {
+            _adoptionsService.RemoveAdoption(Id);
+            return Accepted();
+        }
+
 
         //do konkretnej adopcji dostajemy sie poprzez sciezke zwierzecia
         /*

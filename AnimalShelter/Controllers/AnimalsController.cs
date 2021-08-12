@@ -34,9 +34,9 @@ namespace AnimalShelter.Controllers
         public IActionResult GetAnimal(int Id)
         {
             var animal = _animalsDbService.GetAnimal(Id);
-            if (animal is null)
-                return NotFound();
-            else 
+     //       if (animal is null)
+     //           return NotFound();
+     //       else 
                 return Ok(animal);
         }
 

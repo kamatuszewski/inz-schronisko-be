@@ -1,6 +1,8 @@
 ﻿using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Adoption.Responses;
 using AnimalShelter_WebAPI.DTOs.Animal.Responses;
+using AnimalShelter_WebAPI.DTOs.Requests;
+using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,6 +24,14 @@ namespace AnimalShelter_WebAPI.Services.Adoptions
             _mapper = mapper;
         }
 
+        public Adoption CreateAdoption(CreateAdoptionRequest createAdoptionRequest)
+        {
+            var adoption = _mapper.Map<Adoption>(createAdoptionRequest);
+            _context.Adoption.Add(adoption);
+            _context.SaveChanges();
+            return adoption;
+        }
+
         public IEnumerable<DetailedAdoptionResponse> GetAdoptions()
         {
             var adoptions = _context.Adoption
@@ -31,6 +41,17 @@ namespace AnimalShelter_WebAPI.Services.Adoptions
                 .Include(req => req.Animal).ThenInclude(req => req.Status)
                 .ToList();
             return _mapper.Map<IEnumerable<DetailedAdoptionResponse>>(adoptions);
+        }
+
+        public void RemoveAdoption(int id)
+        {
+            var adoption = _context.Adoption.Where(a => a.Id == id)
+               .FirstOrDefault();
+            if (adoption is null) throw new NotFoundException("ADOPTION_NOT_FOUND");
+
+            _context.Adoption.Remove(adoption);
+            _context.SaveChanges();
+
         }
 
     }
