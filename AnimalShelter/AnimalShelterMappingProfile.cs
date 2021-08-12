@@ -81,8 +81,8 @@ namespace AnimalShelter.MappingProfiles
             CreateMap<CreateMedicineRequest, Medicine>();
             CreateMap<CreateTreatmentRequest, Treatment>();
             CreateMap<CreateVetVisitRequest, VetVisit>();
-
-
+              
+            
 
 
             //Employee mappings

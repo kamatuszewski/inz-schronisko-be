@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    [Route("api/animals/{animalId}/vetvisit")]
+    [Route("api/[controller]")]
     [ApiController]
     public class VetVisitsController : ControllerBase
     {
@@ -25,21 +25,27 @@ namespace AnimalShelter_WebAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateVetVisit([FromRoute] int animalId, [FromBody] CreateVetVisitRequest createVetVisitRequest)
+        public ActionResult CreateVetVisit([FromBody] CreateVetVisitRequest createVetVisitRequest)
         {
-            var newVetVisit = _vetVisitsDbService.CreateVetVisit(createVetVisitRequest);
-            return Created($"api/{animalId}/vetvisits/{newVetVisit.Id}", null);
+           _vetVisitsDbService.CreateVetVisit(createVetVisitRequest);
+            return Ok();
 
         }
 
-        [HttpGet("{visitId}")]
-        public ActionResult GetVetVisit([FromRoute] int animalId, [FromRoute] int visitId)
+        [HttpPost("{visitId})")]
+        public ActionResult AddDetailsToVetVisit([FromRoute] int visitId, [FromBody] AddDetailsToVetVisitRequest addDetailsToVetVisitRequest)
         {
-            var vetvisit = _vetVisitsDbService.GetVetVisit(animalId, visitId);
-            if (vetvisit is null)
-                return NotFound();
-            else
-                return Ok(vetvisit);
+            _vetVisitsDbService.AddDetailsToVetVisit(visitId, addDetailsToVetVisitRequest);
+            return Ok();
+
+        }
+
+
+        [HttpGet("{id}")]
+        public ActionResult GetVetVisit([FromRoute] int id)
+        {
+            var vetvisit = _vetVisitsDbService.GetVetVisit(id);
+            return Ok(vetvisit);
 
         }
     }

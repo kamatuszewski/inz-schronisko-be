@@ -32,19 +32,19 @@ namespace AnimalShelter_WebAPI.Services.Roles
 
             if (person is null)
             {
-                throw new BadRequestException("PERSON_NOT_FOUND");
+                throw new NotFoundException("PERSON_NOT_FOUND");
             }
 
             var role = _context.Role.FirstOrDefault(r => r.Id == request.RoleId);
             if (role is null)
             {
-                throw new BadRequestException("ROLE_NOT_FOUND");
+                throw new NotFoundException("ROLE_NOT_FOUND");
             }
 
             var grantetRoleExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == request.RoleId);
             if (grantetRoleExists is not null)
             {
-                throw new BadRequestException("USER_ROLE_EXISTS");
+                throw new NotFoundException("USER_ROLE_EXISTS");
             }
 
             
@@ -66,19 +66,19 @@ namespace AnimalShelter_WebAPI.Services.Roles
 
             if (person is null)
             {
-                throw new BadRequestException("PERSON_NOT_FOUND");
+                throw new NotFoundException("PERSON_NOT_FOUND");
             }
 
             var role = _context.Role.FirstOrDefault(r => r.Id == request.RoleId);
             if (role is null)
             {
-                throw new BadRequestException("ROLE_NOT_FOUND");
+                throw new NotFoundException("ROLE_NOT_FOUND");
             }
 
             var grantetRoleToRemoveExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == request.RoleId);
             if (grantetRoleToRemoveExists is null)
             {
-                throw new BadRequestException("USER_ROLE_DONT_EXIST");
+                throw new NotFoundException("USER_ROLE_DONT_EXIST");
             }
 
             SoftDeleteEntitiesBasedOnPersonRole(grantetRoleToRemoveExists, request);

@@ -67,17 +67,6 @@ namespace AnimalShelter.Services
             return _mapper.Map<IEnumerable<RoleResponse>>(roles);
         }
 
-        //// ta metoa jest raczej do wyrzucenia - CreatePerson = RegisterUser moim zdaniem 
-        //public Person CreatePerson(CreatePersonRequest createPersonRequest)
-        //{
-        //    var person = _mapper.Map<Person>(createPersonRequest);
-        //    _context.Person.Add(person);
-        //    _context.SaveChanges();
-
-        //    return person;
-        //}
-
-
 
         //Adopter to osoba, ale bez hasła
 
@@ -170,14 +159,14 @@ namespace AnimalShelter.Services
 
             if (person is null)
             {
-                throw new BadRequestException("Login or password incorrect.");
+                throw new UnauthorizedException("WRONG_LOGIN_OR_PASSWORD");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(person, person.Password, request.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new BadRequestException("Login or password incorrect.");
+                throw new UnauthorizedException("WRONG_LOGIN_OR_PASSWORD");
             }
 
             var roles = person.GrantedRoles;

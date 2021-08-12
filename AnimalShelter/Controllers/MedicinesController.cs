@@ -29,11 +29,18 @@ namespace AnimalShelter_WebAPI.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateTreatment([FromHeader] CreateMedicineRequest createMedicineRequest)
+        public IActionResult CreateTreatment([FromBody] CreateMedicineRequest createMedicineRequest)
         {
             _medicinesDbService.CreateMedicine(createMedicineRequest);
             return Ok();
 
+        }
+
+        [HttpDelete("{Id}")]
+        public IActionResult RemoveMedicine(int Id)
+        {
+            _medicinesDbService.RemoveMedicine(Id);
+            return Accepted();
         }
 
     }

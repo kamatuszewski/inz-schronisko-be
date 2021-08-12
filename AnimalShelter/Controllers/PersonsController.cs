@@ -61,11 +61,6 @@ namespace AnimalShelter.Controllers
         }
 
     
-
-
-
-
-
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
@@ -92,7 +87,5 @@ namespace AnimalShelter.Controllers
 
         }
         
-
-       
     }
 }
