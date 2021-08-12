@@ -40,6 +40,12 @@ namespace AnimalShelter_WebAPI.Services.Adoptions
             var adoption = _mapper.Map<Adoption>(createAdoptionRequest);
             _context.Adoption.Add(adoption);
             _context.SaveChanges();
+
+            var animal = _context.Animal.Where(a => a.Id == createAdoptionRequest.AnimalId)
+            .FirstOrDefault();
+
+            animal.StatusId = _context.Status.Where(a => a.Name == "ADOPTED").FirstOrDefault().Id;
+            _context.SaveChanges();
             return adoption;
         }
 

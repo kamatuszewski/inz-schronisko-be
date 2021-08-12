@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
@@ -22,8 +23,9 @@ namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
         [Required]
         public string Description { get; set; }
 
-        
-        public IEnumerable<PrescribedMedicine> PrescribedMedicines { get; set; }
-        public IEnumerable<PerformedTreatment> PerformedTreatments { get; set; }
+    //    [JsonPropertyName("medicines")]
+    //    public IEnumerable<PrescribeMedicineRequest> PrescribedMedicines { get; set; }
+    //    [JsonPropertyName("treatments")]
+     //   public IEnumerable<int> PerformedTreatmentIds { get; set; }
     }
 }

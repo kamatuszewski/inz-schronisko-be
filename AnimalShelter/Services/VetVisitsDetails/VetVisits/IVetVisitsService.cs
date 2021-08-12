@@ -13,7 +13,8 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
     {
         public VetVisit CreateVetVisit(CreateVetVisitRequest createVetVisitRequest);
 
-        public VetVisitResponse GetVetVisit(int animalId, int visitId);
+        public VetVisitResponse GetVetVisit(int id);
 
+       public void AddDetailsToVetVisit(int visitId, AddDetailsToVetVisitRequest addDetailsToVetVisitRequest);
     }
 }
