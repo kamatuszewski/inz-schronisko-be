@@ -17,6 +17,8 @@ using AnimalShelter_WebAPI.DTOs.Person;
 using AnimalShelter_WebAPI.DTOs.Person.Employee.Responses;
 using AnimalShelter_WebAPI.DTOs.Person.PersonsGeneral.Responses;
 using AnimalShelter_WebAPI.DTOs.Adoption.Responses;
+using AnimalShelter_WebAPI.DTOs.VetVisitDetails.VetVisits.Responses;
+using AnimalShelter_WebAPI.DTOs.VetVisitDetails.Medicines.Responses;
 
 namespace AnimalShelter.MappingProfiles
 {
@@ -54,14 +56,31 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.AdopterResponse, c => c.MapFrom(s => s.Adopter))
                 .ForMember(m => m.EmployeeResponse, c => c.MapFrom(ad => ad.Employee))
                 .ForMember(m => m.GeneralAnimalResponse, c => c.MapFrom(ad => ad.Animal));
-          
+
             //VetVisit mappings
+
+            CreateMap<VetVisit, VetVisitResponse>()
+                .ForMember(m => m.prescribedMedicineResponses, c => c.MapFrom(v => v.PrescribedMedicines))
+                .ForMember(m => m.treatmentsResponses, c => c.MapFrom(v => v.PerformedTreatments))
+                .ForMember(m => m.generalAnimalResponse, c => c.MapFrom(v => v.Animal))
+                .ForMember(m => m.generalVetResponse, c => c.MapFrom(v => v.Vet));
+            
             CreateMap<Medicine, MedicinesResponse>();
+            CreateMap<PrescribedMedicine, PrescribedMedicineResponse>()
+                .ForMember(m => m.Name, c => c.MapFrom(m => m.Medicine.Name))
+                .ForMember(m => m.Id, c => c.MapFrom(m => m.Medicine.Id))
+                .ForMember(m => m.Amount, c => c.MapFrom(m => m.Amount));
+            CreateMap<PerformedTreatment, TreatmentsResponse>()
+                .ForMember(m => m.Name, c => c.MapFrom(m => m.Treatment.Name))
+                .ForMember(m => m.Id, c => c.MapFrom(m => m.Treatment.Id));
             CreateMap<Treatment, TreatmentsResponse>();
 
             CreateMap<CreateMedicineRequest, Medicine>();
             CreateMap<CreateTreatmentRequest, Treatment>();
             CreateMap<CreateVetVisitRequest, VetVisit>();
+
+
+
 
             //Employee mappings
             CreateMap<Employee, GeneralEmployeeResponse>()

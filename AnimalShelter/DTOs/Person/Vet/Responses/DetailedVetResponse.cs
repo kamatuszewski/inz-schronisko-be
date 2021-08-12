@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.Person.Vet.Responses
@@ -19,7 +20,9 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Vet.Responses
         public DateTime? QuitDate { get; set; }
         public int Salary { get; set; }
         public string PwzNumber { get; set; }
-    //    public bool IsRoleActive { get; set; }
+        //    public bool IsRoleActive { get; set; }
+
+        [JsonPropertyName("specialties")]
         public IEnumerable<ObtainedSpecialtyResponse> SpecialtyResponses { get; set; }
     }
 }

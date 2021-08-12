@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 
@@ -19,6 +20,7 @@ namespace AnimalShelter.DTOs.Responses
         public string EmailAddress { get; set; }
         public string Address { get; set; }
 
+        [JsonPropertyName("roles")]
         public IEnumerable<RoleResponse> Roles { get; set; }
     }
 }

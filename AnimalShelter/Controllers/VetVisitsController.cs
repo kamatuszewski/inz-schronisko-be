@@ -11,24 +11,35 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    [Route("api/animals/{animalId}/[controller]")]
+    [Route("api/animals/{animalId}/vetvisit")]
     [ApiController]
     public class VetVisitsController : ControllerBase
     {
 
         public IConfiguration _configuration;
         private readonly IVetVisitsService _vetVisitsDbService;
-        public VetVisitsController(IVetVisitsService vetVisitsDbService, IConfiguration configuration)
+        public VetVisitsController(IVetVisitsService vetVisitsDbService)
         {
-            _configuration = configuration;
+
             _vetVisitsDbService = vetVisitsDbService;
         }
 
         [HttpPost]
-        public ActionResult CreateVetVisit([FromRoute] int animalId, [FromHeader] CreateVetVisitRequest createVetVisitRequest)
+        public ActionResult CreateVetVisit([FromRoute] int animalId, [FromBody] CreateVetVisitRequest createVetVisitRequest)
         {
             var newVetVisit = _vetVisitsDbService.CreateVetVisit(createVetVisitRequest);
             return Created($"api/{animalId}/vetvisits/{newVetVisit.Id}", null);
+
+        }
+
+        [HttpGet("{visitId}")]
+        public ActionResult GetVetVisit([FromRoute] int animalId, [FromRoute] int visitId)
+        {
+            var vetvisit = _vetVisitsDbService.GetVetVisit(animalId, visitId);
+            if (vetvisit is null)
+                return NotFound();
+            else
+                return Ok(vetvisit);
 
         }
     }
