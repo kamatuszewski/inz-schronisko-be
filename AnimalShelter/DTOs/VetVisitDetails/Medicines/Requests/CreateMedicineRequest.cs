@@ -10,7 +10,7 @@ namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
 {
     public class CreateMedicineRequest
     {
-        [FromHeader]
+       
         [Required]
         public string Name { get; set; }
     }

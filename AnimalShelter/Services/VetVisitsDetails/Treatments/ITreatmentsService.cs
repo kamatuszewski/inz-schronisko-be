@@ -13,6 +13,6 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
         public IEnumerable<TreatmentsResponse> GetTreatments();
         public Treatment CreateTreatment(CreateTreatmentRequest createTreatmentRequest);
 
-
+        public void RemoveTreatment(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
+using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,20 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
             var treatments = _context.Treatment
                 .ToList();
             return _mapper.Map<IEnumerable<TreatmentsResponse>>(treatments);
+        }
+
+
+        public void RemoveTreatment(int id)
+        {
+            var treatment = _context.Treatment.Where(a => a.Id == id)
+               .FirstOrDefault();
+
+            if (treatment is null)
+                throw new NotFoundException("TREATMENT_NOT_FOUND");
+
+            _context.Treatment.Remove(treatment);
+            _context.SaveChanges();
+
         }
     }
 }
