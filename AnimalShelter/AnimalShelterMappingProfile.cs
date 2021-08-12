@@ -56,6 +56,8 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.AdopterResponse, c => c.MapFrom(s => s.Adopter))
                 .ForMember(m => m.EmployeeResponse, c => c.MapFrom(ad => ad.Employee))
                 .ForMember(m => m.GeneralAnimalResponse, c => c.MapFrom(ad => ad.Animal));
+            
+            CreateMap<CreateAdoptionRequest, Adoption>();
 
             //VetVisit mappings
 

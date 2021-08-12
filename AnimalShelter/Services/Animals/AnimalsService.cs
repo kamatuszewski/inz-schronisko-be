@@ -29,6 +29,7 @@ namespace AnimalShelter_WebAPI.Services.Animals
                 .Include(req => req.Species)
                 .Include(req => req.Status)
                 .ToList();
+
              return _mapper.Map<IEnumerable<GeneralAnimalResponse>>(animals);
         }
 
@@ -43,6 +44,14 @@ namespace AnimalShelter_WebAPI.Services.Animals
                           .ThenInclude(e => e.Employee).ThenInclude(emp => emp.Person)
                 .Include(req => req.VetVisits)
                 .FirstOrDefault();
+
+            if (animal == null)
+            {
+                throw new BadRequestException("not found");
+            }
+
+
+
             return _mapper.Map<FullDataAnimalResponse>(animal);
         }
 
