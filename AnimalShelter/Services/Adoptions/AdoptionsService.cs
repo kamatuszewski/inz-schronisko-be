@@ -24,14 +24,6 @@ namespace AnimalShelter_WebAPI.Services.Adoptions
             _mapper = mapper;
         }
 
-        public Adoption CreateAdoption(CreateAdoptionRequest createAdoptionRequest)
-        {
-            var adoption = _mapper.Map<Adoption>(createAdoptionRequest);
-            _context.Adoption.Add(adoption);
-            _context.SaveChanges();
-            return adoption;
-        }
-
         public IEnumerable<DetailedAdoptionResponse> GetAdoptions()
         {
             var adoptions = _context.Adoption
@@ -41,6 +33,14 @@ namespace AnimalShelter_WebAPI.Services.Adoptions
                 .Include(req => req.Animal).ThenInclude(req => req.Status)
                 .ToList();
             return _mapper.Map<IEnumerable<DetailedAdoptionResponse>>(adoptions);
+        }
+
+        public Adoption CreateAdoption(CreateAdoptionRequest createAdoptionRequest)
+        {
+            var adoption = _mapper.Map<Adoption>(createAdoptionRequest);
+            _context.Adoption.Add(adoption);
+            _context.SaveChanges();
+            return adoption;
         }
 
         public void RemoveAdoption(int id)

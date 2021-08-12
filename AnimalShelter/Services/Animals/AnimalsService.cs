@@ -40,36 +40,33 @@ namespace AnimalShelter_WebAPI.Services.Animals
                 .Include(req => req.Status)
                 .Include(req => req.Adoptions).ThenInclude(ad => ad.Adopter)
                 .Include(req => req.Adoptions)
-                        //.ThenInclude(ad => ad.AdoptionOfficeWorker)
                           .ThenInclude(e => e.Employee).ThenInclude(emp => emp.Person)
                 .Include(req => req.VetVisits)
                 .FirstOrDefault();
 
-            if (animal == null)
-            {
-                throw new BadRequestException("not found");
-            }
-
-
+            if (animal is null)
+                throw new BadRequestException("ANIMAL_NOT_FOUND");
 
             return _mapper.Map<FullDataAnimalResponse>(animal);
         }
 
-        public Animal CreateAnimal(CreateAnimalRequest createAnimalRequest)
+        public void CreateAnimal(CreateAnimalRequest createAnimalRequest)
         {
             var animal = _mapper.Map<Animal>(createAnimalRequest);
             _context.Animal.Add(animal);
             _context.SaveChanges();
-            return animal;
+
         }
 
         public void UpdateAnimal(int id, UpdateAnimalRequest updateAnimalRequest)
         {
             var animal = _context.Animal.Where(a => a.Id == id)
              .FirstOrDefault();
-            if (animal is null) throw new NotFoundException("ANIMAL_NOT_FOUND");
 
-            // animal.BirthDate = updateAnimalRequest.BirthDate;
+            if (animal is null) 
+                throw new NotFoundException("ANIMAL_NOT_FOUND");
+
+            
             animal.Name = updateAnimalRequest.Name;
             animal.StatusId = updateAnimalRequest.StatusId;
             animal.FoundPlace = updateAnimalRequest.FoundPlace;
@@ -82,7 +79,9 @@ namespace AnimalShelter_WebAPI.Services.Animals
         {
             var animal = _context.Animal.Where(a => a.Id == id)
                .FirstOrDefault();
-            if (animal is null) throw new NotFoundException("Animal not found");
+
+            if (animal is null) 
+                throw new NotFoundException("ANIMAL_NOT_FOUND");
 
             _context.Animal.Remove(animal);
             _context.SaveChanges();

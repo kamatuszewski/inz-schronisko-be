@@ -22,7 +22,7 @@ namespace AnimalShelter.Services
         public IEnumerable<GeneralPersonResponse> GetPersons();
         public IEnumerable<RoleResponse> GetRoles();
         public void RegisterPerson(RegisterPersonRequest registerPersonRequest);
-  //      public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest);
+        public Person CreateAdopter(CreateAdopterRequest createAdopterRequest);
         TokenResponse GenerateJwt(LoginRequest request);
     }
 }

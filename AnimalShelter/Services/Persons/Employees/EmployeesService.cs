@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Person.Employee.Responses;
+using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,10 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
                  .Include(req => req.Person).ThenInclude(req => req.GrantedRoles).ThenInclude(req => req.Role)
                  .Include(req => req.Vet).ThenInclude(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
                  .FirstOrDefault();
+
+            if (employee is null)
+                throw new NotFoundException("EMPLOYEE_NOT_FOUND");
+
             return _mapper.Map<DetailedEmployeeResponse>(employee);
         }
     }

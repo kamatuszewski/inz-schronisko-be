@@ -34,9 +34,6 @@ namespace AnimalShelter.Controllers
         public IActionResult GetAnimal(int Id)
         {
             var animal = _animalsDbService.GetAnimal(Id);
-     //       if (animal is null)
-     //           return NotFound();
-     //       else 
                 return Ok(animal);
         }
 
@@ -51,8 +48,6 @@ namespace AnimalShelter.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateAnimal([FromRoute] int id, [FromBody] UpdateAnimalRequest updateAnimalRequest)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
             _animalsDbService.UpdateAnimal(id, updateAnimalRequest);
             return Ok();

@@ -53,6 +53,10 @@ namespace AnimalShelter.Services
             var person = _context.Person.Where(a => a.Id == Id)
                 .Include(req => req.GrantedRoles).ThenInclude(req => req.Role)
                .FirstOrDefault();
+
+            if (person is null)
+                throw new NotFoundException("PERSON_NOT_FOUND");
+
             return _mapper.Map<PersonResponse>(person);
         }
 
@@ -75,18 +79,17 @@ namespace AnimalShelter.Services
 
 
 
-        //Adopter usunięty - to będzie po prostu osoba
-        /*
+        //Adopter to osoba, ale bez hasła
 
-                public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest)
-                {
-                    var adopter = _mapper.Map<Adopter>(createAdopterRequest);
-                    _context.Adopter.Add(adopter);
-                    _context.SaveChanges();
+        public Person CreateAdopter(CreateAdopterRequest createAdopterRequest)
+        {
+            var adopter = _mapper.Map<Person>(createAdopterRequest);
+            _context.Person.Add(adopter);
+            _context.SaveChanges();
 
-                    return adopter;
-                }
-        */
+            return adopter;
+        }
+
 
         public void RegisterPerson(RegisterPersonRequest registerPersonRequest)
         {
@@ -221,52 +224,8 @@ namespace AnimalShelter.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            
-
 
             return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer" };
-
-/*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
-
-
-            if (s == null)
-            {
-                return NotFound("Zly login lub haslo");
-            }
-
-
-            //nie kumaaaam, czemu to jest na sztywno, skad mma wiedziec ile rol etc.
-            var userclaim = new[]
-                {
-                new Claim(ClaimTypes.Name, "mj"),
-                new Claim(ClaimTypes.Role, "user1"),
-                new Claim(ClaimTypes.Role, "admin"),
-                };
-
-
-
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
-            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken token = new JwtSecurityToken
-            (
-                issuer: "http://localhost:5001",
-                audience: "http://localhost:5001",
-                claims: userclaim,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds
-            );
-
-            var refreshToken = Guid.NewGuid();
-            //  s.refToken = refreshToken.ToString();
-            //  _studentDbService.setToken(s, refreshToken);
-
-            return Ok(new
-            {
-                accessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                refreshToken
-            });*/
-
 
         }
     }
