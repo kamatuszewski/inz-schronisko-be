@@ -431,12 +431,14 @@ namespace AnimalShelter_WebAPI.Seeders
                 new PrescribedMedicine()
                 {
                     MedicineId = 3,
-                    VisitId = 1
+                    VisitId = 1,
+                    Amount = 1
                 },
                  new PrescribedMedicine()
                 {
                     MedicineId = 2,
-                    VisitId = 1
+                    VisitId = 1,
+                    Amount = 2
                 }
 
             };

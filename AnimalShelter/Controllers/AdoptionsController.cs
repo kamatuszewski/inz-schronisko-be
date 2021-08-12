@@ -20,9 +20,8 @@ namespace AnimalShelter_WebAPI.Controllers
     {
         public IConfiguration _configuration;
         private readonly IAdoptionsService _adoptionsService;
-        public AdoptionsController(IAdoptionsService adoptionsService, IConfiguration configuration)
+        public AdoptionsController(IAdoptionsService adoptionsService)
         {
-            _configuration = configuration;
             _adoptionsService = adoptionsService;
         }
 

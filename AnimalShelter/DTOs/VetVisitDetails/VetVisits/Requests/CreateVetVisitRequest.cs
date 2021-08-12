@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AnimalShelter.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,17 +12,18 @@ namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
 {
     public class CreateVetVisitRequest
     {
-        [FromHeader]
+       
         [Required]
         public int VetId { get; set; }
         [Required]
-        [FromHeader]
         public int AnimalId { get; set; }
         [Required]
-        [FromHeader]
         public DateTime VisitDate { get; set; }
         [Required]
-        [FromHeader]
         public string Description { get; set; }
+
+        
+        public IEnumerable<PrescribedMedicine> PrescribedMedicines { get; set; }
+        public IEnumerable<PerformedTreatment> PerformedTreatments { get; set; }
     }
 }
