@@ -12,7 +12,7 @@ namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
     {
       
         [Required]
-        public int Id { get; set; } //Medicine ID
+        public int Id { get; set; } 
         [Required]
         public int Amount { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
+using AnimalShelter_WebAPI.DTOs.VetVisitDetails.VetVisits.Requests;
 using AnimalShelter_WebAPI.DTOs.VetVisitDetails.VetVisits.Responses;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,13 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
 {
     public interface IVetVisitsService
     {
-        public VetVisit CreateVetVisit(CreateVetVisitRequest createVetVisitRequest);
-
         public VetVisitResponse GetVetVisit(int id);
-
-       public void AddDetailsToVetVisit(int visitId, AddDetailsToVetVisitRequest addDetailsToVetVisitRequest);
+        public VetVisit CreateVetVisit(CreateVetVisitRequest createVetVisitRequest);
+        public void UpdateVetVisit(int id, UpdateVetVisitRequest updateVetVisitRequest);
+  
+        public void AddDetailsToVetVisit(int visitId, AddDetailsToVetVisitRequest addDetailsToVetVisitRequest);
+        public void RemoveMedicineFromVisit(int VetVisitId, int MedicineId);
+        public void RemoveTreatmentFromVisit(int VetVisitId, int TreatmentId);
+        
     }
 }
