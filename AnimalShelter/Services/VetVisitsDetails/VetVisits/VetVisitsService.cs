@@ -82,6 +82,9 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
             using var transaction = _context.Database.BeginTransaction(); //dane nie zapiszą się, jeśli którykolwiek element będzie niepoprawny
 
             foreach (var medicine in addDetailsToVetVisitRequest.PrescribedMedicines) {
+                var medicineExistenceCheck = _context.Medicine.FirstOrDefault(p => p.Id == medicine.Id);
+                if (medicineExistenceCheck is null)
+                    throw new BadRequestException("MEDICINE_NOT_EXISTS");
 
                 var prescribedMedicineExists = _context.PrescribedMedicine.FirstOrDefault(gr => gr.VisitId == id && gr.MedicineId == medicine.Id);
                 if (prescribedMedicineExists is not null)
@@ -102,6 +105,10 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
 
             foreach (var treatment in addDetailsToVetVisitRequest.PerformedTreatments)
             {
+                var treatmentExistenceCheck = _context.Treatment.FirstOrDefault(p => p.Id == treatment.Id);
+                if (treatmentExistenceCheck is null)
+                    throw new BadRequestException("TREATMENT_NOT_EXISTS");
+
                 var performedTreatment = _context.PerformedTreatment.FirstOrDefault(gr => gr.VisitId == id && gr.TreatmentId == treatment.Id);
                 if (performedTreatment is null) //w przeciwnym razie nic nie robimy, juz istnieje takie polaczenie
                 {

@@ -50,13 +50,6 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
-        [Route("{visitId}/medicines/{medicineId}")]
-        [HttpDelete]
-        public ActionResult RemoveMedicineFromVisit([FromRoute] int visitId, [FromRoute] int medicineId)
-        {
-            _vetVisitsDbService.RemoveMedicineFromVisit(visitId, medicineId);
-            return Accepted();
-        }
 
         [HttpPost("{id})")]
         public ActionResult AddDetailsToVetVisit([FromRoute] int id, [FromBody] AddDetailsToVetVisitRequest addDetailsToVetVisitRequest)
