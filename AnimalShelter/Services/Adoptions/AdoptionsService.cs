@@ -54,10 +54,18 @@ namespace AnimalShelter_WebAPI.Services.Adoptions
             var adoption = _context.Adoption.Where(a => a.Id == id)
                .FirstOrDefault();
             if (adoption is null) throw new NotFoundException("ADOPTION_NOT_FOUND");
+            int animalId = adoption.AnimalId;
 
             _context.Adoption.Remove(adoption);
             _context.SaveChanges();
 
+            var animal = _context.Animal.Where(a => a.Id == animalId).Include(req => req.Adoptions)
+                .FirstOrDefault();
+            if (animal.Adoptions.Count == 0)
+                animal.StatusId = _context.Status.Where(a => a.Name == "FOR_ADOPTION").FirstOrDefault().Id;
+
+            _context.SaveChanges();
+          
         }
 
     }
