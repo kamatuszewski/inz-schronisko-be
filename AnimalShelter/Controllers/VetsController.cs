@@ -43,11 +43,11 @@ namespace AnimalShelter_WebAPI.Controllers
             return Ok();
         }
 
-        [Route("{vetId}/specialty")]
+        [Route("{vetId}/{specialtyId}")]
         [HttpDelete]
-        public ActionResult RemoveSpecialtyFromVet([FromRoute] int vetId, [FromBody] RemoveSpecialtyFromVetRequest removeSpecialtyFromVetRequest)
+        public ActionResult RemoveSpecialtyFromVet([FromRoute] int vetId, [FromRoute] int specialtyId)
         {
-            _vetsDbService.RemoveSpecialtyFromVet(vetId, removeSpecialtyFromVetRequest);
+            _vetsDbService.RemoveSpecialtyFromVet(vetId, specialtyId);
             return Accepted();
         }
 

@@ -1,4 +1,5 @@
 ﻿using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
+using AnimalShelter_WebAPI.DTOs.VetVisitDetails.VetVisits.Requests;
 using AnimalShelter_WebAPI.Services.Animals;
 using AnimalShelter_WebAPI.Services.VetVisitsDetails;
 using AutoMapper.Configuration;
@@ -24,6 +25,14 @@ namespace AnimalShelter_WebAPI.Controllers
             _vetVisitsDbService = vetVisitsDbService;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetVetVisit([FromRoute] int id)
+        {
+            var vetvisit = _vetVisitsDbService.GetVetVisit(id);
+            return Ok(vetvisit);
+
+        }
+
         [HttpPost]
         public ActionResult CreateVetVisit([FromBody] CreateVetVisitRequest createVetVisitRequest)
         {
@@ -31,6 +40,16 @@ namespace AnimalShelter_WebAPI.Controllers
             return Ok();
 
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateVetVisit([FromRoute] int id, [FromBody] UpdateVetVisitRequest updateVetVisitRequest)
+        {
+
+            _vetVisitsDbService.UpdateVetVisit(id, updateVetVisitRequest);
+            return Ok();
+
+        }
+
 
         [HttpPost("{visitId})")]
         public ActionResult AddDetailsToVetVisit([FromRoute] int visitId, [FromBody] AddDetailsToVetVisitRequest addDetailsToVetVisitRequest)
@@ -40,13 +59,21 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
-
-        [HttpGet("{id}")]
-        public ActionResult GetVetVisit([FromRoute] int id)
+        [Route("{visitId}/medicines/{medicineId}")]
+        [HttpDelete]
+        public ActionResult RemoveMedicineFromVisit([FromRoute] int visitId, [FromRoute] int medicineId)
         {
-            var vetvisit = _vetVisitsDbService.GetVetVisit(id);
-            return Ok(vetvisit);
-
+            _vetVisitsDbService.RemoveMedicineFromVisit(visitId, medicineId);
+            return Accepted();
         }
+
+        [Route("{visitId}/treatments/{treatmentId}")]
+        [HttpDelete]
+        public ActionResult RemoveTreatmentFromVisit([FromRoute] int visitId, [FromRoute] int treatmentId)
+        {
+            _vetVisitsDbService.RemoveTreatmentFromVisit(visitId, treatmentId);
+            return Accepted();
+        }
+
     }
 }

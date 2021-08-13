@@ -63,17 +63,17 @@ namespace AnimalShelter_WebAPI.Services
 
         }
 
-        public void RemoveSpecialtyFromVet(int VetId, RemoveSpecialtyFromVetRequest removeSpecialtyFromVetRequest)
+        public void RemoveSpecialtyFromVet(int VetId, int SpecialtyId)
         {
             var vet = _context.Vet.FirstOrDefault(p => p.Id == VetId);
             if (vet is null)
                 throw new BadRequestException("VET_NOT_EXISTS");
 
-            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == removeSpecialtyFromVetRequest.SpecialtyId);
+            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == SpecialtyId);
             if (specialty is null)
                 throw new BadRequestException("SPECIALTY_NOT_EXISTS");
 
-            var vet_spec = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == removeSpecialtyFromVetRequest.SpecialtyId);
+            var vet_spec = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == SpecialtyId);
             if (vet_spec is null)
                 throw new BadRequestException("NOT_GRANTED");
 
