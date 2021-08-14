@@ -50,7 +50,7 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
-
+        /*
         [HttpPost("{id})")]
         public ActionResult AddDetailsToVetVisit([FromRoute] int id, [FromBody] AddDetailsToVetVisitRequest addDetailsToVetVisitRequest)
         {
@@ -58,6 +58,7 @@ namespace AnimalShelter_WebAPI.Controllers
             return Ok();
 
         }
+        */
 
         [HttpDelete("{Id}")]
         public IActionResult RemoveVetVisit(int Id)
