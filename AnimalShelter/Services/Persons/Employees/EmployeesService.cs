@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.Models;
 using AnimalShelter_WebAPI.DTOs.Person.Employee.Responses;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,21 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
                 throw new NotFoundException("EMPLOYEE_NOT_FOUND");
 
             return _mapper.Map<DetailedEmployeeResponse>(employee);
+        }
+
+        public void EditEmployee(int id, EditEmployeeRequest editEmployeeRequest)
+        {
+            var employee = _context.Employee.Where(a => a.Id == id)
+             .FirstOrDefault();
+
+            if (employee is null)
+                throw new NotFoundException("EMPLOYEE_NOT_FOUND");
+
+
+            employee.Salary = editEmployeeRequest.Salary;
+            employee.HireDate = editEmployeeRequest.HireDate;
+           
+            _context.SaveChanges();
         }
     }
 }

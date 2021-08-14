@@ -217,5 +217,25 @@ namespace AnimalShelter.Services
             return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer" };
 
         }
+
+        public void EditPerson(int id, EditPersonRequest editPersonRequest)
+        {
+            var preson = _context.Person.Where(a => a.Id == id)
+             .FirstOrDefault();
+
+            if (preson is null)
+                throw new NotFoundException("PERSON_NOT_FOUND");
+
+
+            preson.FirstName = editPersonRequest.FirstName;
+            preson.LastName = editPersonRequest.LastName;
+            preson.PESEL = editPersonRequest.PESEL;
+            preson.PhoneNumber = editPersonRequest.PhoneNumber;
+            preson.Address = editPersonRequest.Address;
+            preson.Sex = editPersonRequest.Sex;
+
+
+            _context.SaveChanges();
+        }
     }
 }

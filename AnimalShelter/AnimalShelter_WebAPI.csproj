@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Person\Employee\Requests\" />
     <Folder Include="DTOs\Person\Volunteer\Requests\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

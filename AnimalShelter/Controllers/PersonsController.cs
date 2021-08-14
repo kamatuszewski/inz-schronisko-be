@@ -86,6 +86,15 @@ namespace AnimalShelter.Controllers
             return Ok();
 
         }
-        
+
+        [HttpPut("{id}")]
+        public IActionResult EditPerson([FromRoute] int id, [FromBody] EditPersonRequest editPersonRequest)
+        {
+
+            _personsDbService.EditPerson(id, editPersonRequest);
+            return Ok();
+
+        }
+
     }
 }

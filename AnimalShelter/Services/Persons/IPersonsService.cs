@@ -24,6 +24,7 @@ namespace AnimalShelter.Services
         public void RegisterPerson(RegisterPersonRequest registerPersonRequest);
         public Person CreateAdopter(CreateAdopterRequest createAdopterRequest);
         TokenResponse GenerateJwt(LoginRequest request);
+        public void EditPerson(int id, EditPersonRequest editPersonRequest);
     }
 }
 
