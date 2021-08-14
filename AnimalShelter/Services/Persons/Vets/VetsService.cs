@@ -66,11 +66,11 @@ namespace AnimalShelter_WebAPI.Services
             
             foreach (var specialty in addSpecialtiesToVetRequest)
             {
-                var specialtyExistenceCheck = _context.Specialty.FirstOrDefault(p => p.Id == specialty.Id);
+                var specialtyExistenceCheck = _context.Specialty.FirstOrDefault(p => p.Id == specialty.SpecialtyId);
                 if (specialtyExistenceCheck is null)
                     throw new BadRequestException("SPECIALTY_NOT_EXISTS");
 
-                var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == specialty.Id && vs.VetId == VetId);
+                var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == specialty.SpecialtyId && vs.VetId == VetId);
                 if (specialtyAddedExists is not null)
                     specialtyAddedExists.ObtainingDate = specialty.ObtainingDate;
                 else
@@ -78,7 +78,7 @@ namespace AnimalShelter_WebAPI.Services
                     var vet_specialty = new Vet_Specialty()
                     {
                         VetId = VetId,
-                        SpecialtyId = specialty.Id,
+                        SpecialtyId = specialty.SpecialtyId,
                         ObtainingDate = specialty.ObtainingDate
                     };
 
