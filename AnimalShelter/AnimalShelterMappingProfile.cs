@@ -131,7 +131,7 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.EmailAddress, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
                 .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
             CreateMap<CreateSpecialtyRequest, Specialty>();
-            CreateMap<AddSpecialtyToVetRequest, Vet_Specialty>();
+            CreateMap<AddSpecialtiesToVetRequest, Vet_Specialty>();
 
             //Volunteer mappings
             CreateMap<Volunteer, GeneralVolunteerResponse>()

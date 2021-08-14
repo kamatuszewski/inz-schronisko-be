@@ -70,6 +70,10 @@ namespace AnimalShelter_WebAPI
                  new Role()
                  {
                      Name = "Vet"
+                 },
+                 new Role()
+                 {
+                     Name = "Adopter"
                  }
             };
 

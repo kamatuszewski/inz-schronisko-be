@@ -103,6 +103,7 @@ namespace AnimalShelter_WebAPI.Services.Roles
                     var vetToSoftDelete = _context.Vet.FirstOrDefault(v => v.Id == grantedRoleToRemove.PersonId);
                     vetToSoftDelete.IsRoleActive = false;
 
+
                     _context.Vet.Update(vetToSoftDelete);
                     _context.SaveChanges();
                     break;

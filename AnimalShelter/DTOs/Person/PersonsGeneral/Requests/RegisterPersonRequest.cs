@@ -1,9 +1,11 @@
 ﻿using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs.Person.Vet.Requests;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.Requests
@@ -33,6 +35,8 @@ namespace AnimalShelter_WebAPI.DTOs.Requests
         public DateTime? JoiningDate { get; set; }
         public string Attendance { get; set; }
 
+        [JsonPropertyName("VetSpecialties")]
+        public IEnumerable<AddSpecialtiesToVetRequest> VetSpecialties { get; set; }
 
     }
 }
