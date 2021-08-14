@@ -65,65 +65,14 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
             };
                 
                                 
-                //_mapper.Map<VetVisit>(createVetVisitRequest);
+    
             _context.VetVisit.Add(newVetVisit);
             _context.SaveChanges();
 
             AddDetailsToVetVisit(newVetVisit.Id, createVetVisitRequest.PrescribedMedicines, createVetVisitRequest.PerformedTreatments);
-            
 
-
-
-                //--
-
-
-                /*
-              foreach (var medicine in createVetVisitRequest.PrescribedMedicines)
-              {
-                  var medicineExistenceCheck = _context.Medicine.FirstOrDefault(p => p.Id == medicine.Id);
-                  if (medicineExistenceCheck is null)
-                      throw new BadRequestException("MEDICINE_NOT_EXISTS");
-
-                  var prescribedMedicineExists = _context.PrescribedMedicine.FirstOrDefault(gr => gr.VisitId == newVetVisit.Id && gr.MedicineId == medicine.Id);
-                  if (prescribedMedicineExists is not null)
-                      prescribedMedicineExists.Amount = medicine.Amount;
-                  else
-                  {
-                      var prescribedMedicine = new PrescribedMedicine()
-                      {
-                          MedicineId = medicine.Id,
-                          VisitId = newVetVisit.Id,
-                          Amount = medicine.Amount
-                      };
-                      _context.PrescribedMedicine.Add(prescribedMedicine);
-                  }
-
-                  _context.SaveChanges();
-              }
-
-              foreach (var treatment in createVetVisitRequest.PerformedTreatments)
-              {
-                  var treatmentExistenceCheck = _context.Treatment.FirstOrDefault(p => p.Id == treatment.Id);
-                  if (treatmentExistenceCheck is null)
-                      throw new BadRequestException("TREATMENT_NOT_EXISTS");
-
-                  var performedTreatment = _context.PerformedTreatment.FirstOrDefault(gr => gr.VisitId == newVetVisit.Id && gr.TreatmentId == treatment.Id);
-                  if (performedTreatment is null) //w przeciwnym razie nic nie robimy, juz istnieje takie polaczenie
-                  {
-                      performedTreatment = new PerformedTreatment()
-                      {
-                          TreatmentId = treatment.Id,
-                          VisitId = newVetVisit.Id
-                      };
-                      _context.PerformedTreatment.Add(performedTreatment);
-                      _context.SaveChanges();
-                  }
-              }
-                */
-              transaction.Commit();
-
-                //--
-                return newVetVisit;
+            transaction.Commit();
+            return newVetVisit;
         }
 
         public void UpdateVetVisit (int id, UpdateVetVisitRequest updateVetVisitRequest)
