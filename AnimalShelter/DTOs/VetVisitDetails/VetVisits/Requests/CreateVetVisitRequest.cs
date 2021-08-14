@@ -23,9 +23,14 @@ namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
         [Required]
         public string Description { get; set; }
 
-    //    [JsonPropertyName("medicines")]
-    //    public IEnumerable<PrescribeMedicineRequest> PrescribedMedicines { get; set; }
-    //    [JsonPropertyName("treatments")]
-     //   public IEnumerable<int> PerformedTreatmentIds { get; set; }
+        [JsonPropertyName("medicines")]
+        public IEnumerable<PrescribeMedicineRequest> PrescribedMedicines { get; set; }
+        [JsonPropertyName("treatments")]
+        public IEnumerable<AddPerformedTreatmentRequest> PerformedTreatments { get; set; }
+
+        //    [JsonPropertyName("medicines")]
+        //    public IEnumerable<PrescribeMedicineRequest> PrescribedMedicines { get; set; }
+        //    [JsonPropertyName("treatments")]
+        //   public IEnumerable<int> PerformedTreatmentIds { get; set; }
     }
 }

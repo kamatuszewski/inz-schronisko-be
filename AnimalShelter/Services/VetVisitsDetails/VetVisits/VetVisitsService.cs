@@ -45,6 +45,8 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
         }
         public VetVisit CreateVetVisit (CreateVetVisitRequest createVetVisitRequest)
         {
+            using var transaction = _context.Database.BeginTransaction(); //dane nie zapiszą się, jeśli którykolwiek element będzie niepoprawny
+
             var vet = _context.Vet.FirstOrDefault(p => p.Id == createVetVisitRequest.VetId);
             if (vet is null)
                 throw new NotFoundException("VET_NOT_FOUND");
@@ -52,16 +54,82 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
             var animal = _context.Animal.FirstOrDefault(p => p.Id == createVetVisitRequest.AnimalId);
             if (animal is null)
                 throw new NotFoundException("ANIMAL_NOT_FOUND");
-            
-         
-            var vetVisit = _mapper.Map<VetVisit>(createVetVisitRequest);
-            _context.VetVisit.Add(vetVisit);
+
+
+            var newVetVisit = new VetVisit
+            {
+                AnimalId = createVetVisitRequest.AnimalId,
+                VetId = createVetVisitRequest.VetId,
+                VisitDate = createVetVisitRequest.VisitDate,
+                Description = createVetVisitRequest.Description
+            };
+                
+                                
+                //_mapper.Map<VetVisit>(createVetVisitRequest);
+            _context.VetVisit.Add(newVetVisit);
             _context.SaveChanges();
-            return vetVisit;
+
+            AddDetailsToVetVisit(newVetVisit.Id, createVetVisitRequest.PrescribedMedicines, createVetVisitRequest.PerformedTreatments);
+            
+
+
+
+                //--
+
+
+                /*
+              foreach (var medicine in createVetVisitRequest.PrescribedMedicines)
+              {
+                  var medicineExistenceCheck = _context.Medicine.FirstOrDefault(p => p.Id == medicine.Id);
+                  if (medicineExistenceCheck is null)
+                      throw new BadRequestException("MEDICINE_NOT_EXISTS");
+
+                  var prescribedMedicineExists = _context.PrescribedMedicine.FirstOrDefault(gr => gr.VisitId == newVetVisit.Id && gr.MedicineId == medicine.Id);
+                  if (prescribedMedicineExists is not null)
+                      prescribedMedicineExists.Amount = medicine.Amount;
+                  else
+                  {
+                      var prescribedMedicine = new PrescribedMedicine()
+                      {
+                          MedicineId = medicine.Id,
+                          VisitId = newVetVisit.Id,
+                          Amount = medicine.Amount
+                      };
+                      _context.PrescribedMedicine.Add(prescribedMedicine);
+                  }
+
+                  _context.SaveChanges();
+              }
+
+              foreach (var treatment in createVetVisitRequest.PerformedTreatments)
+              {
+                  var treatmentExistenceCheck = _context.Treatment.FirstOrDefault(p => p.Id == treatment.Id);
+                  if (treatmentExistenceCheck is null)
+                      throw new BadRequestException("TREATMENT_NOT_EXISTS");
+
+                  var performedTreatment = _context.PerformedTreatment.FirstOrDefault(gr => gr.VisitId == newVetVisit.Id && gr.TreatmentId == treatment.Id);
+                  if (performedTreatment is null) //w przeciwnym razie nic nie robimy, juz istnieje takie polaczenie
+                  {
+                      performedTreatment = new PerformedTreatment()
+                      {
+                          TreatmentId = treatment.Id,
+                          VisitId = newVetVisit.Id
+                      };
+                      _context.PerformedTreatment.Add(performedTreatment);
+                      _context.SaveChanges();
+                  }
+              }
+                */
+              transaction.Commit();
+
+                //--
+                return newVetVisit;
         }
 
         public void UpdateVetVisit (int id, UpdateVetVisitRequest updateVetVisitRequest)
         {
+            using var transaction = _context.Database.BeginTransaction(); //dane nie zapiszą się, jeśli którykolwiek element będzie niepoprawny
+
             var vetVisit = _context.VetVisit.Where(a => a.Id == id)
              .FirstOrDefault();
 
@@ -70,6 +138,19 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
 
             vetVisit.Description = updateVetVisitRequest.Description;
             _context.SaveChanges();
+
+            var oldMedicines =_context.PrescribedMedicine.Where(a => a.VisitId == id).ToList();
+            _context.PrescribedMedicine.RemoveRange(oldMedicines);
+
+            var oldTreatments = _context.PerformedTreatment.Where(a => a.VisitId == id).ToList();
+            _context.PerformedTreatment.RemoveRange(oldTreatments);
+
+            AddDetailsToVetVisit(id, updateVetVisitRequest.PrescribedMedicines, updateVetVisitRequest.PerformedTreatments);
+            transaction.Commit();
+
+          
+
+
         }
         public void RemoveVetVisit (int id)
         {
@@ -84,16 +165,15 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
 
         }
 
-        public void AddDetailsToVetVisit(int id, AddDetailsToVetVisitRequest addDetailsToVetVisitRequest) {
+        public void AddDetailsToVetVisit(int id, IEnumerable<PrescribeMedicineRequest> PrescribedMedicines, IEnumerable<AddPerformedTreatmentRequest> PerformedTreatments) {
 
             var vet_visit = _context.VetVisit.FirstOrDefault(p => p.Id == id);
             if (vet_visit is null)
                 throw new BadRequestException("VISIT_NOT_EXISTS");
 
 
-            using var transaction = _context.Database.BeginTransaction(); //dane nie zapiszą się, jeśli którykolwiek element będzie niepoprawny
-
-            foreach (var medicine in addDetailsToVetVisitRequest.PrescribedMedicines) {
+       
+            foreach (var medicine in PrescribedMedicines) {
                 var medicineExistenceCheck = _context.Medicine.FirstOrDefault(p => p.Id == medicine.Id);
                 if (medicineExistenceCheck is null)
                     throw new BadRequestException("MEDICINE_NOT_EXISTS");
@@ -115,7 +195,7 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
                 _context.SaveChanges();
             }
 
-            foreach (var treatment in addDetailsToVetVisitRequest.PerformedTreatments)
+            foreach (var treatment in PerformedTreatments)
             {
                 var treatmentExistenceCheck = _context.Treatment.FirstOrDefault(p => p.Id == treatment.Id);
                 if (treatmentExistenceCheck is null)
@@ -134,7 +214,7 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
                 }
             }
 
-            transaction.Commit();
+
         }
 
         public void RemoveMedicineFromVisit (int VetVisitId, int MedicineId)
@@ -172,7 +252,6 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
             _context.PerformedTreatment.Remove(performedTreatment);
             _context.SaveChanges();
         }
-
 
         
     }

@@ -16,7 +16,7 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
         public VetVisit CreateVetVisit(CreateVetVisitRequest createVetVisitRequest);
         public void UpdateVetVisit(int id, UpdateVetVisitRequest updateVetVisitRequest);
         public void RemoveVetVisit(int id);
-        public void AddDetailsToVetVisit(int visitId, AddDetailsToVetVisitRequest addDetailsToVetVisitRequest);
+      //  public void AddDetailsToVetVisit(int visitId, AddDetailsToVetVisitRequest addDetailsToVetVisitRequest);
         public void RemoveMedicineFromVisit(int VetVisitId, int MedicineId);
         public void RemoveTreatmentFromVisit(int VetVisitId, int TreatmentId);
         
