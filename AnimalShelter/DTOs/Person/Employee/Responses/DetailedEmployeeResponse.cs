@@ -20,6 +20,8 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Employee.Responses
         public string EmailAddress { get; set; }
         public DateTime HireDate { get; set; }
         public DateTime? QuitDate { get; set; }
+        public bool isVet { get; set; }
+
         public int Salary { get; set; }                            //Vet Only
         [JsonPropertyName("roles")]
         public IEnumerable<RoleResponse> roleResponses { get; set; }
