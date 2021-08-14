@@ -59,6 +59,14 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
+        [HttpDelete("{Id}")]
+        public IActionResult RemoveVetVisit(int Id)
+        {
+            _vetVisitsDbService.RemoveVetVisit(Id);
+            return Accepted();
+        }
+
+
         [Route("{visitId}/medicines/{medicineId}")]
         [HttpDelete]
         public ActionResult RemoveMedicineFromVisit([FromRoute] int visitId, [FromRoute] int medicineId)

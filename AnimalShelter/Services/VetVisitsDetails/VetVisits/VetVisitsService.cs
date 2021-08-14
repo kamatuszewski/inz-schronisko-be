@@ -71,6 +71,18 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
             vetVisit.Description = updateVetVisitRequest.Description;
             _context.SaveChanges();
         }
+        public void RemoveVetVisit (int id)
+        {
+            var vetVisit = _context.VetVisit.Where(a => a.Id == id)
+               .FirstOrDefault();
+
+            if (vetVisit is null)
+                throw new NotFoundException("VETVISIT_NOT_FOUND");
+
+            _context.VetVisit.Remove(vetVisit);
+            _context.SaveChanges();
+
+        }
 
         public void AddDetailsToVetVisit(int id, AddDetailsToVetVisitRequest addDetailsToVetVisitRequest) {
 
