@@ -80,7 +80,7 @@ namespace AnimalShelter.Services
         }
 
 
-        public void RegisterPerson(RegisterPersonRequest registerPersonRequest)
+        public int RegisterPerson(RegisterPersonRequest registerPersonRequest)
         {
             var newPerson = new Person()
             {
@@ -100,17 +100,24 @@ namespace AnimalShelter.Services
             _context.Person.Add(newPerson);
             _context.SaveChanges();
 
-            //adding roles to newly created person
-            var newGrantedRole = new GrantedRole()
+            if (registerPersonRequest.RoleId is not null)
             {
-                PersonId = newPerson.Id,
-                RoleId = registerPersonRequest.RoleId
-            };
+                //adding roles to newly created person
+                var newGrantedRole = new GrantedRole()
+                {
+                    PersonId = newPerson.Id,
+                    RoleId = (int)registerPersonRequest.RoleId
+                };
 
-            _context.GrantedRole.Add(newGrantedRole);
-            _context.SaveChanges();
 
-            CreateEntitiesBasedOnPersonRoles(newPerson, newGrantedRole, registerPersonRequest);
+                _context.GrantedRole.Add(newGrantedRole);
+
+                _context.SaveChanges();
+
+                CreateEntitiesBasedOnPersonRoles(newPerson, newGrantedRole, registerPersonRequest);
+            }
+
+            return newPerson.Id;
 
         }
 

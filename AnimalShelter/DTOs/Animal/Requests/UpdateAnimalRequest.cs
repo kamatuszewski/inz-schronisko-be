@@ -10,10 +10,6 @@ namespace AnimalShelter_WebAPI.DTOs.Animal.Requests
     {
 
         public string Name { get; set; }
-        //    [Required]
-        //    public DateTime BirthDate { get; set; }
-        //   [Required]
-        //    public string Sex { get; set; }
         [Required]
         public string FoundPlace { get; set; }
         [Required]

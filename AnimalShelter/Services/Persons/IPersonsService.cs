@@ -21,7 +21,7 @@ namespace AnimalShelter.Services
         public PersonResponse GetPerson(int id);
         public IEnumerable<GeneralPersonResponse> GetPersons();
         public IEnumerable<RoleResponse> GetRoles();
-        public void RegisterPerson(RegisterPersonRequest registerPersonRequest);
+        public int RegisterPerson(RegisterPersonRequest registerPersonRequest);
         public Person CreateAdopter(CreateAdopterRequest createAdopterRequest);
         TokenResponse GenerateJwt(LoginRequest request);
         public void EditPerson(int id, EditPersonRequest editPersonRequest);

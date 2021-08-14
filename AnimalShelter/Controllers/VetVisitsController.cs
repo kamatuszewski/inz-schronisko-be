@@ -36,8 +36,8 @@ namespace AnimalShelter_WebAPI.Controllers
         [HttpPost]
         public ActionResult CreateVetVisit([FromBody] CreateVetVisitRequest createVetVisitRequest)
         {
-           _vetVisitsDbService.CreateVetVisit(createVetVisitRequest);
-            return Ok();
+          var vetVisit = _vetVisitsDbService.CreateVetVisit(createVetVisitRequest);
+            return Ok(vetVisit.Id);
 
         }
 

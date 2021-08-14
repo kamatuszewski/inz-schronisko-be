@@ -10,14 +10,21 @@ namespace AnimalShelter_WebAPI.DTOs.Requests
 {
     public class RegisterPersonRequest
     {
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string PESEL { get; set; }
+        [Required]
         public string Sex { get; set; }
+        [Required]
         public string EmailAddress { get; set; }
         public string Password { get; set; }
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
+        [Required]
         public string Address { get; set; }
+        [Required]
         public string PhoneNumber { get; set; }
         public DateTime? HireDate { get; set; }
         public DateTime? QuitDate { get; set; }
