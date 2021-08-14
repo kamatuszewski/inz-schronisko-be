@@ -14,6 +14,7 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Employee.Responses
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public bool isVet { get; set; }
         public string Sex { get; set; }                       //Vet Only
         [JsonPropertyName("specialties")]
         public IEnumerable<SpecialtyResponse> SpecialtyResponses { get; set; }  //Vet only
