@@ -68,7 +68,7 @@ namespace AnimalShelter.Services
         }
 
 
-        //Adopter to osoba, ale bez hasła
+        //Adopter to osoba, ale bez hasła  - bedzie tworzone poprzez createperson
 
         public Person CreateAdopter(CreateAdopterRequest createAdopterRequest)
         {
@@ -82,6 +82,8 @@ namespace AnimalShelter.Services
 
         public int RegisterPerson(RegisterPersonRequest registerPersonRequest)
         {
+            using var transaction = _context.Database.BeginTransaction(); //dane nie zapiszą się, jeśli którykolwiek element będzie niepoprawny
+
             var newPerson = new Person()
             {
                 EmailAddress = registerPersonRequest.EmailAddress,
@@ -93,8 +95,11 @@ namespace AnimalShelter.Services
                 Address = registerPersonRequest.Address
             };
 
-            var hashedPassword = _passwordHasher.HashPassword(newPerson, registerPersonRequest.Password);
-            newPerson.Password = hashedPassword;
+            if (registerPersonRequest.Password is not null)
+            {
+                var hashedPassword = _passwordHasher.HashPassword(newPerson, registerPersonRequest.Password);
+                newPerson.Password = hashedPassword;
+            }
 
             //adding person 
             _context.Person.Add(newPerson);
@@ -102,6 +107,7 @@ namespace AnimalShelter.Services
 
             if (registerPersonRequest.RoleId is not null)
             {
+
                 //adding roles to newly created person
                 var newGrantedRole = new GrantedRole()
                 {
@@ -115,14 +121,16 @@ namespace AnimalShelter.Services
                 _context.SaveChanges();
 
                 CreateEntitiesBasedOnPersonRoles(newPerson, newGrantedRole, registerPersonRequest);
-            }
+                }
 
+            transaction.Commit();
             return newPerson.Id;
 
         }
 
         private void CreateEntitiesBasedOnPersonRoles(Person newPerson, GrantedRole newGrantedRole, RegisterPersonRequest registerPersonRequest)
         {
+
             switch (newGrantedRole.RoleId)
             {
                 case 1: //Volunteer
@@ -132,6 +140,8 @@ namespace AnimalShelter.Services
                     _context.SaveChanges();
                     break;
                 case 5: //Vet
+
+                  
                     var newEmp = _mapper.Map<Employee>(registerPersonRequest);
                     newEmp.Id = newPerson.Id;
                     newEmp.IsRoleActive = false;
@@ -140,6 +150,32 @@ namespace AnimalShelter.Services
                     var newVet = _mapper.Map<Vet>(registerPersonRequest);
                     newVet.Id = newPerson.Id;
                     _context.Vet.Add(newVet);
+
+                    
+
+                  
+                    /*
+                    foreach (var specialty in registerPersonRequest.VetSpecialties)
+                    {
+                        var specialtyExistenceCheck = _context.Specialty.FirstOrDefault(p => p.Id == specialty.SpecialtyId);
+                        if (specialtyExistenceCheck is null)
+                            throw new BadRequestException("SPECIALTY_NOT_EXISTS");
+
+                        var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == specialty.SpecialtyId && vs.VetId == newPerson.Id);
+                        if (specialtyAddedExists is not null)
+                            specialtyAddedExists.ObtainingDate = specialty.ObtainingDate;
+                        else
+                        {
+                            var vet_specialty = new Vet_Specialty()
+                            {
+                                VetId = newPerson.Id,
+                                SpecialtyId = specialty.SpecialtyId,
+                                ObtainingDate = specialty.ObtainingDate
+                            };
+
+                            _context.Vet_Specialty.Add(vet_specialty);
+                        }
+                    } */
 
                     _context.SaveChanges();
                     break;

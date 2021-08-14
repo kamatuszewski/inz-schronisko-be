@@ -24,7 +24,7 @@ namespace AnimalShelter_WebAPI.Controllers
         public ActionResult AddRoleToPerson([FromRoute] int personId, AddRoleToPersonRequest request)
         {
             _rolesService.AddRoleToPerson(personId, request);
-            return Ok();
+            return Ok(personId);
         }
         [HttpDelete]
         public ActionResult RomoveRoleFromPerson([FromRoute] int personId, RemoveRoleFromPersonRequest request)

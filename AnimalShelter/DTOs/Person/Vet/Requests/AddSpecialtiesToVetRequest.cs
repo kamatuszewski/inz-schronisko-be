@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.Person.Vet.Requests
 {
-    public class AddSpecialtyToVetRequest
+    public class AddSpecialtiesToVetRequest
     {
         [Required]
         public int SpecialtyId { get; set; }
