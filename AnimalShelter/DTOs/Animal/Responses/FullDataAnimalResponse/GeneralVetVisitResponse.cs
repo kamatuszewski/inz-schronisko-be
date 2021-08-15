@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AnimalShelter_WebAPI.DTOs.Person.Vet.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.Animal.Responses

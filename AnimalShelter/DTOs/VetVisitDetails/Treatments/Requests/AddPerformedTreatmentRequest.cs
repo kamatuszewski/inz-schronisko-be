@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
 {
-    public class CreateTreatmentRequest
+    public class AddPerformedTreatmentRequest
     {
-       
         [Required]
-        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

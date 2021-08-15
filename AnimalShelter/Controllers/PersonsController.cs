@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace AnimalShelter.Controllers
 {
 
-    //  [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PersonsController : ControllerBase
@@ -55,17 +55,12 @@ namespace AnimalShelter.Controllers
         [HttpPost("register")]
         public IActionResult CreatePerson([FromBody] RegisterPersonRequest createPersonRequest)
         {
-            _personsDbService.RegisterPerson(createPersonRequest);
-            return Ok();
+            var personId = _personsDbService.RegisterPerson(createPersonRequest);
+            return Ok(personId);
 
         }
 
     
-
-
-
-
-
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
@@ -82,7 +77,7 @@ namespace AnimalShelter.Controllers
             return Ok(_personsDbService.GetRoles());
         }
 
-    /*
+    
         [Route("adopters")]
         [HttpPost]
         public IActionResult CreateAdopter([FromBody] CreateAdopterRequest createAdopterRequest)
@@ -92,8 +87,14 @@ namespace AnimalShelter.Controllers
 
         }
 
-        */
+        [HttpPut("{id}")]
+        public IActionResult EditPerson([FromRoute] int id, [FromBody] EditPersonRequest editPersonRequest)
+        {
 
-       
+            _personsDbService.EditPerson(id, editPersonRequest);
+            return Ok();
+
+        }
+
     }
 }

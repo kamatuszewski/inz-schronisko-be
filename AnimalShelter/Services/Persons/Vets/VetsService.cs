@@ -41,39 +41,65 @@ namespace AnimalShelter_WebAPI.Services
             return _mapper.Map<DetailedVetResponse>(vet);
         }
 
-        public void AddSpecialtyToVet(int VetId, AddSpecialtyToVetRequest addSpecialtyToVetRequest)
+        public void AddSpecialtiesToVet(int VetId, IEnumerable<AddSpecialtiesToVetRequest> addSpecialtiesToVetRequest)
         {
             var vet = _context.Vet.FirstOrDefault(p => p.Id == VetId);
             if (vet is null)
                 throw new BadRequestException("VET_NOT_EXISTS");
-
-            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == addSpecialtyToVetRequest.SpecialtyId);
+/*
+            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == addSpecialtiesToVetRequest.SpecialtyId);
             if (specialty is null)
                 throw new BadRequestException("SPECIALTY_NOT_EXISTS");
 
-            var existingMatchCheck = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == addSpecialtyToVetRequest.SpecialtyId);
+            var existingMatchCheck = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == addSpecialtiesToVetRequest.SpecialtyId);
             if (existingMatchCheck is not null)
                 throw new BadRequestException("ALREADY_GRANTED");
 
-            var vet_specialty = _mapper.Map<Vet_Specialty>(addSpecialtyToVetRequest);
+            var vet_specialty = _mapper.Map<Vet_Specialty>(addSpecialtiesToVetRequest);
             vet_specialty.VetId = VetId;
 
             _context.Vet_Specialty.Add(vet_specialty);
             _context.SaveChanges();
+*/
+
+            //---
+            
+            foreach (var specialty in addSpecialtiesToVetRequest)
+            {
+                var specialtyExistenceCheck = _context.Specialty.FirstOrDefault(p => p.Id == specialty.SpecialtyId);
+                if (specialtyExistenceCheck is null)
+                    throw new BadRequestException("SPECIALTY_NOT_EXISTS");
+
+                var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == specialty.SpecialtyId && vs.VetId == VetId);
+                if (specialtyAddedExists is not null)
+                    specialtyAddedExists.ObtainingDate = specialty.ObtainingDate;
+                else
+                {
+                    var vet_specialty = new Vet_Specialty()
+                    {
+                        VetId = VetId,
+                        SpecialtyId = specialty.SpecialtyId,
+                        ObtainingDate = specialty.ObtainingDate
+                    };
+
+                    _context.Vet_Specialty.Add(vet_specialty);
+                }
+            } 
+
 
         }
 
-        public void RemoveSpecialtyFromVet(int VetId, RemoveSpecialtyFromVetRequest removeSpecialtyFromVetRequest)
+        public void RemoveSpecialtyFromVet(int VetId, int SpecialtyId)
         {
             var vet = _context.Vet.FirstOrDefault(p => p.Id == VetId);
             if (vet is null)
                 throw new BadRequestException("VET_NOT_EXISTS");
 
-            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == removeSpecialtyFromVetRequest.SpecialtyId);
+            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == SpecialtyId);
             if (specialty is null)
                 throw new BadRequestException("SPECIALTY_NOT_EXISTS");
 
-            var vet_spec = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == removeSpecialtyFromVetRequest.SpecialtyId);
+            var vet_spec = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == SpecialtyId);
             if (vet_spec is null)
                 throw new BadRequestException("NOT_GRANTED");
 

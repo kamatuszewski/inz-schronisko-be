@@ -31,8 +31,8 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
                 .ForMember(m => m.Status, c => c.MapFrom(s => s.Status.Name));
             CreateMap<Animal, DetailedAnimalResponse>()
-               .ForMember(m => m.Species, c => c.MapFrom(s => s.Species.Name))
-               .ForMember(m => m.Status, c => c.MapFrom(s => s.Status.Name));
+               .ForMember(m => m.Species, c => c.MapFrom(s => s.Species))
+               .ForMember(m => m.Status, c => c.MapFrom(s => s.Status));
             CreateMap<Animal, FullDataAnimalResponse>()
                 .ForMember(m => m.DetailedAnimalResponse, c => c.MapFrom(s => s))
                 .ForMember(m => m.VetVisitResponses, c => c.MapFrom(s => s.VetVisits))
@@ -43,6 +43,7 @@ namespace AnimalShelter.MappingProfiles
 
             //FullDataAnimal mappings
             CreateMap<VetVisit, GeneralVetVisitResponse>();
+            
             CreateMap<Adoption, AdoptionResponse>()
                 .ForMember(m => m.AdopterResponse, c => c.MapFrom(s => s.Adopter))
                 .ForMember(m => m.EmployeeResponse, c => c.MapFrom(ad => ad.Employee));
@@ -56,6 +57,8 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.AdopterResponse, c => c.MapFrom(s => s.Adopter))
                 .ForMember(m => m.EmployeeResponse, c => c.MapFrom(ad => ad.Employee))
                 .ForMember(m => m.GeneralAnimalResponse, c => c.MapFrom(ad => ad.Animal));
+            
+            CreateMap<CreateAdoptionRequest, Adoption>();
 
             //VetVisit mappings
 
@@ -77,9 +80,9 @@ namespace AnimalShelter.MappingProfiles
 
             CreateMap<CreateMedicineRequest, Medicine>();
             CreateMap<CreateTreatmentRequest, Treatment>();
-            CreateMap<CreateVetVisitRequest, VetVisit>();
-
-
+          //  CreateMap<CreateVetVisitRequest, VetVisit>();
+              
+            
 
 
             //Employee mappings
@@ -128,7 +131,7 @@ namespace AnimalShelter.MappingProfiles
                 .ForMember(m => m.EmailAddress, c => c.MapFrom(emp => emp.Employee.Person.EmailAddress))
                 .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Vet_Specialties));
             CreateMap<CreateSpecialtyRequest, Specialty>();
-            CreateMap<AddSpecialtyToVetRequest, Vet_Specialty>();
+            CreateMap<AddSpecialtiesToVetRequest, Vet_Specialty>();
 
             //Volunteer mappings
             CreateMap<Volunteer, GeneralVolunteerResponse>()
@@ -151,8 +154,8 @@ namespace AnimalShelter.MappingProfiles
 
             //People mapping
             CreateMap<CreatePersonRequest, Person>();
+            CreateMap<CreateAdopterRequest, Person>();
 
-           
             CreateMap<RegisterPersonRequest, Volunteer>();
             CreateMap<RegisterPersonRequest, Employee>();
             CreateMap<RegisterPersonRequest, Vet>();

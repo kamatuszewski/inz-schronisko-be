@@ -63,12 +63,7 @@ namespace AnimalShelter_WebAPI.Seeders
                     _dbContext.SaveChanges();
                 }
 
-                if (!_dbContext.Specialty.Any())
-                {
-                    var specialties = GetSpecialties();
-                    _dbContext.Specialty.AddRange(specialties);
-                    _dbContext.SaveChanges();
-                }
+              
 
                 if (!_dbContext.Vet_Specialty.Any())
                 {
@@ -337,37 +332,7 @@ namespace AnimalShelter_WebAPI.Seeders
         }
 
 
-        private IEnumerable<Specialty> GetSpecialties()
-        {
-            var specialties = new List<Specialty>()
-            {
-                new Specialty()
-                {
-                   Name = "internista"
-                },
-
-                new Specialty()
-                {
-                   Name = "ortopeda"
-                },
-
-                new Specialty()
-                {
-                   Name = "nefrolog"
-                },
-
-                new Specialty()
-                {
-                   Name = "behawiorysta"
-                },
-
-                new Specialty()
-                {
-                   Name = "kardiolog"
-                },
-            };
-            return specialties;
-        }
+       
         private IEnumerable<Vet_Specialty> GetVetSpecs()
         {
             var vetSpecs = new List<Vet_Specialty>()

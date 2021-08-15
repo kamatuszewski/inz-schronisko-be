@@ -47,5 +47,14 @@ namespace AnimalShelter_WebAPI.Controllers
             else
                 return Ok(volunteer);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult EditEmployee([FromRoute] int id, [FromBody] EditEmployeeRequest editEmployeeRequest)
+        {
+
+            _employeesDbService.EditEmployee(id, editEmployeeRequest);
+            return Ok();
+
+        }
     }
 }

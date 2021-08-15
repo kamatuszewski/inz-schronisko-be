@@ -53,6 +53,10 @@ namespace AnimalShelter.Services
             var person = _context.Person.Where(a => a.Id == Id)
                 .Include(req => req.GrantedRoles).ThenInclude(req => req.Role)
                .FirstOrDefault();
+
+            if (person is null)
+                throw new NotFoundException("PERSON_NOT_FOUND");
+
             return _mapper.Map<PersonResponse>(person);
         }
 
@@ -63,33 +67,23 @@ namespace AnimalShelter.Services
             return _mapper.Map<IEnumerable<RoleResponse>>(roles);
         }
 
-        //// ta metoa jest raczej do wyrzucenia - CreatePerson = RegisterUser moim zdaniem 
-        //public Person CreatePerson(CreatePersonRequest createPersonRequest)
-        //{
-        //    var person = _mapper.Map<Person>(createPersonRequest);
-        //    _context.Person.Add(person);
-        //    _context.SaveChanges();
 
-        //    return person;
-        //}
+        //Adopter to osoba, ale bez hasła  - bedzie tworzone poprzez createperson
 
-
-
-        //Adopter usunięty - to będzie po prostu osoba
-        /*
-
-                public Adopter CreateAdopter(CreateAdopterRequest createAdopterRequest)
-                {
-                    var adopter = _mapper.Map<Adopter>(createAdopterRequest);
-                    _context.Adopter.Add(adopter);
-                    _context.SaveChanges();
-
-                    return adopter;
-                }
-        */
-
-        public void RegisterPerson(RegisterPersonRequest registerPersonRequest)
+        public Person CreateAdopter(CreateAdopterRequest createAdopterRequest)
         {
+            var adopter = _mapper.Map<Person>(createAdopterRequest);
+            _context.Person.Add(adopter);
+            _context.SaveChanges();
+
+            return adopter;
+        }
+
+
+        public int RegisterPerson(RegisterPersonRequest registerPersonRequest)
+        {
+            using var transaction = _context.Database.BeginTransaction(); //dane nie zapiszą się, jeśli którykolwiek element będzie niepoprawny
+
             var newPerson = new Person()
             {
                 EmailAddress = registerPersonRequest.EmailAddress,
@@ -101,29 +95,42 @@ namespace AnimalShelter.Services
                 Address = registerPersonRequest.Address
             };
 
-            var hashedPassword = _passwordHasher.HashPassword(newPerson, registerPersonRequest.Password);
-            newPerson.Password = hashedPassword;
+            if (registerPersonRequest.Password is not null)
+            {
+                var hashedPassword = _passwordHasher.HashPassword(newPerson, registerPersonRequest.Password);
+                newPerson.Password = hashedPassword;
+            }
 
             //adding person 
             _context.Person.Add(newPerson);
             _context.SaveChanges();
 
-            //adding roles to newly created person
-            var newGrantedRole = new GrantedRole()
+            if (registerPersonRequest.RoleId is not null)
             {
-                PersonId = newPerson.Id,
-                RoleId = registerPersonRequest.RoleId
-            };
 
-            _context.GrantedRole.Add(newGrantedRole);
-            _context.SaveChanges();
+                //adding roles to newly created person
+                var newGrantedRole = new GrantedRole()
+                {
+                    PersonId = newPerson.Id,
+                    RoleId = (int)registerPersonRequest.RoleId
+                };
 
-            CreateEntitiesBasedOnPersonRoles(newPerson, newGrantedRole, registerPersonRequest);
+
+                _context.GrantedRole.Add(newGrantedRole);
+
+                _context.SaveChanges();
+
+                CreateEntitiesBasedOnPersonRoles(newPerson, newGrantedRole, registerPersonRequest);
+                }
+
+            transaction.Commit();
+            return newPerson.Id;
 
         }
 
         private void CreateEntitiesBasedOnPersonRoles(Person newPerson, GrantedRole newGrantedRole, RegisterPersonRequest registerPersonRequest)
         {
+
             switch (newGrantedRole.RoleId)
             {
                 case 1: //Volunteer
@@ -133,6 +140,8 @@ namespace AnimalShelter.Services
                     _context.SaveChanges();
                     break;
                 case 5: //Vet
+
+                  
                     var newEmp = _mapper.Map<Employee>(registerPersonRequest);
                     newEmp.Id = newPerson.Id;
                     newEmp.IsRoleActive = false;
@@ -141,6 +150,32 @@ namespace AnimalShelter.Services
                     var newVet = _mapper.Map<Vet>(registerPersonRequest);
                     newVet.Id = newPerson.Id;
                     _context.Vet.Add(newVet);
+
+                    
+
+                  
+                    /*
+                    foreach (var specialty in registerPersonRequest.VetSpecialties)
+                    {
+                        var specialtyExistenceCheck = _context.Specialty.FirstOrDefault(p => p.Id == specialty.SpecialtyId);
+                        if (specialtyExistenceCheck is null)
+                            throw new BadRequestException("SPECIALTY_NOT_EXISTS");
+
+                        var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == specialty.SpecialtyId && vs.VetId == newPerson.Id);
+                        if (specialtyAddedExists is not null)
+                            specialtyAddedExists.ObtainingDate = specialty.ObtainingDate;
+                        else
+                        {
+                            var vet_specialty = new Vet_Specialty()
+                            {
+                                VetId = newPerson.Id,
+                                SpecialtyId = specialty.SpecialtyId,
+                                ObtainingDate = specialty.ObtainingDate
+                            };
+
+                            _context.Vet_Specialty.Add(vet_specialty);
+                        }
+                    } */
 
                     _context.SaveChanges();
                     break;
@@ -167,14 +202,14 @@ namespace AnimalShelter.Services
 
             if (person is null)
             {
-                throw new BadRequestException("Login or password incorrect.");
+                throw new UnauthorizedException("WRONG_LOGIN_OR_PASSWORD");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(person, person.Password, request.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new BadRequestException("Login or password incorrect.");
+                throw new UnauthorizedException("WRONG_LOGIN_OR_PASSWORD");
             }
 
             var roles = person.GrantedRoles;
@@ -201,7 +236,7 @@ namespace AnimalShelter.Services
 
 
                 claims.Add(new Claim(ClaimTypes.Role, grantedRole.Role.Name));
-                claims.Add(new Claim("role", $"{grantedRole.Role.Name}"));
+              //  claims.Add(new Claim("role", $"{grantedRole.Role.Name}"));
 
             }
             string rolesJson = JsonConvert.SerializeObject(rolesArray);
@@ -221,53 +256,29 @@ namespace AnimalShelter.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            
-
 
             return new TokenResponse { AccessToken = tokenHandler.WriteToken(token), TokenType = "Bearer" };
 
-/*            //   Student s = _studentDbService.CheckPass(request.Login, request.Haslo);
+        }
+
+        public void EditPerson(int id, EditPersonRequest editPersonRequest)
+        {
+            var preson = _context.Person.Where(a => a.Id == id)
+             .FirstOrDefault();
+
+            if (preson is null)
+                throw new NotFoundException("PERSON_NOT_FOUND");
 
 
-            if (s == null)
-            {
-                return NotFound("Zly login lub haslo");
-            }
+            preson.FirstName = editPersonRequest.FirstName;
+            preson.LastName = editPersonRequest.LastName;
+            preson.PESEL = editPersonRequest.PESEL;
+            preson.PhoneNumber = editPersonRequest.PhoneNumber;
+            preson.Address = editPersonRequest.Address;
+            preson.Sex = editPersonRequest.Sex;
 
 
-            //nie kumaaaam, czemu to jest na sztywno, skad mma wiedziec ile rol etc.
-            var userclaim = new[]
-                {
-                new Claim(ClaimTypes.Name, "mj"),
-                new Claim(ClaimTypes.Role, "user1"),
-                new Claim(ClaimTypes.Role, "admin"),
-                };
-
-
-
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
-            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken token = new JwtSecurityToken
-            (
-                issuer: "http://localhost:5001",
-                audience: "http://localhost:5001",
-                claims: userclaim,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds
-            );
-
-            var refreshToken = Guid.NewGuid();
-            //  s.refToken = refreshToken.ToString();
-            //  _studentDbService.setToken(s, refreshToken);
-
-            return Ok(new
-            {
-                accessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                refreshToken
-            });*/
-
-
+            _context.SaveChanges();
         }
     }
 }

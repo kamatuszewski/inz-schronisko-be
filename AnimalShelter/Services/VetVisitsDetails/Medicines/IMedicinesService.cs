@@ -12,6 +12,7 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
     {
         public IEnumerable<MedicinesResponse> GetMedicines();
         public Medicine CreateMedicine(CreateMedicineRequest createMedicineRequest);
+        public void RemoveMedicine(int id);
 
     }
 }

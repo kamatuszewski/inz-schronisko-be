@@ -24,8 +24,18 @@ namespace AnimalShelter_WebAPI.Middleware
             }
             catch (BadRequestException badRequestException)
             {
-                context.Response.StatusCode = 404;
+                context.Response.StatusCode = 400;
                 await context.Response.WriteAsync(badRequestException.Message);
+            }
+            catch (UnauthorizedException unauthorizedException)
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync(unauthorizedException.Message);
+            }
+            catch (NotFoundException notFoundException)
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(notFoundException.Message);
             }
             catch (Exception e)
             {

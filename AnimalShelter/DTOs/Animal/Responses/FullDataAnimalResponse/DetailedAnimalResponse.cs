@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimalShelter.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,9 @@ namespace AnimalShelter_WebAPI.DTOs.Animal.Responses
         public string FoundPlace { get; set; }
         public DateTime? DeathDate { get; set; }
 
-        //  public int StatusId { get; set; }
+        // public int StatusId { get; set; }
         // public int SpeciesId { get; set; }
-        public string Status { get; set; }
-        public string Species { get; set; }
+        public StatusesResponse Status { get; set; }
+        public SpeciesResponse Species { get; set; }
     }
 }

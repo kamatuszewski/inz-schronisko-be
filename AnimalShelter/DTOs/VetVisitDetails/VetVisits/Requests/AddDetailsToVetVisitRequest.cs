@@ -11,26 +11,13 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.VetVisitDetails
 {
-    public class CreateVetVisitRequest
+    public class AddDetailsToVetVisitRequest
     {
-       
-        [Required]
-        public int VetId { get; set; }
-        [Required]
-        public int AnimalId { get; set; }
-        [Required]
-        public DateTime VisitDate { get; set; }
-        [Required]
-        public string Description { get; set; }
+      
 
         [JsonPropertyName("medicines")]
         public IEnumerable<PrescribeMedicineRequest> PrescribedMedicines { get; set; }
         [JsonPropertyName("treatments")]
         public IEnumerable<AddPerformedTreatmentRequest> PerformedTreatments { get; set; }
-
-        //    [JsonPropertyName("medicines")]
-        //    public IEnumerable<PrescribeMedicineRequest> PrescribedMedicines { get; set; }
-        //    [JsonPropertyName("treatments")]
-        //   public IEnumerable<int> PerformedTreatmentIds { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
+using AnimalShelter_WebAPI.DTOs.VetVisitDetails.VetVisits.Requests;
 using AnimalShelter_WebAPI.Services.Animals;
 using AnimalShelter_WebAPI.Services.VetVisitsDetails;
 using AutoMapper.Configuration;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    [Route("api/animals/{animalId}/vetvisit")]
+    [Route("api/[controller]")]
     [ApiController]
     public class VetVisitsController : ControllerBase
     {
@@ -24,23 +25,64 @@ namespace AnimalShelter_WebAPI.Controllers
             _vetVisitsDbService = vetVisitsDbService;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetVetVisit([FromRoute] int id)
+        {
+            var vetvisit = _vetVisitsDbService.GetVetVisit(id);
+            return Ok(vetvisit);
+
+        }
+
         [HttpPost]
-        public ActionResult CreateVetVisit([FromRoute] int animalId, [FromBody] CreateVetVisitRequest createVetVisitRequest)
+        public ActionResult CreateVetVisit([FromBody] CreateVetVisitRequest createVetVisitRequest)
         {
-            var newVetVisit = _vetVisitsDbService.CreateVetVisit(createVetVisitRequest);
-            return Created($"api/{animalId}/vetvisits/{newVetVisit.Id}", null);
+          var vetVisit = _vetVisitsDbService.CreateVetVisit(createVetVisitRequest);
+            return Ok(vetVisit.Id);
 
         }
 
-        [HttpGet("{visitId}")]
-        public ActionResult GetVetVisit([FromRoute] int animalId, [FromRoute] int visitId)
+        [HttpPut("{id}")]
+        public IActionResult UpdateVetVisit([FromRoute] int id, [FromBody] UpdateVetVisitRequest updateVetVisitRequest)
         {
-            var vetvisit = _vetVisitsDbService.GetVetVisit(animalId, visitId);
-            if (vetvisit is null)
-                return NotFound();
-            else
-                return Ok(vetvisit);
+
+            _vetVisitsDbService.UpdateVetVisit(id, updateVetVisitRequest);
+            return Ok();
 
         }
+
+        /*
+        [HttpPost("{id})")]
+        public ActionResult AddDetailsToVetVisit([FromRoute] int id, [FromBody] AddDetailsToVetVisitRequest addDetailsToVetVisitRequest)
+        {
+            _vetVisitsDbService.AddDetailsToVetVisit(id, addDetailsToVetVisitRequest);
+            return Ok();
+
+        }
+        */
+
+        [HttpDelete("{Id}")]
+        public IActionResult RemoveVetVisit(int Id)
+        {
+            _vetVisitsDbService.RemoveVetVisit(Id);
+            return Accepted();
+        }
+
+
+        [Route("{visitId}/medicines/{medicineId}")]
+        [HttpDelete]
+        public ActionResult RemoveMedicineFromVisit([FromRoute] int visitId, [FromRoute] int medicineId)
+        {
+            _vetVisitsDbService.RemoveMedicineFromVisit(visitId, medicineId);
+            return Accepted();
+        }
+
+        [Route("{visitId}/treatments/{treatmentId}")]
+        [HttpDelete]
+        public ActionResult RemoveTreatmentFromVisit([FromRoute] int visitId, [FromRoute] int treatmentId)
+        {
+            _vetVisitsDbService.RemoveTreatmentFromVisit(visitId, treatmentId);
+            return Accepted();
+        }
+
     }
 }
