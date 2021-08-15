@@ -114,11 +114,13 @@ namespace AnimalShelter
 
             if (env.IsDevelopment())
             {
-                testDataSeeder.SeedTestData();  //data added for testing purposes
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter v1"));
+
             }
+
+            testDataSeeder.SeedTestData();  //data added for testing purposes
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AnimalShelter v1"));
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
