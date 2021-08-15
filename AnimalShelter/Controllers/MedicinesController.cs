@@ -1,6 +1,7 @@
 ﻿using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
 using AnimalShelter_WebAPI.Services.VetVisitsDetails;
 using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
+    [Authorize(Roles = "Vet")]
     [Route("api/[controller]")] 
     [ApiController]
     public class MedicinesController : ControllerBase
@@ -22,14 +24,14 @@ namespace AnimalShelter_WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTreatments()
+        public IActionResult GetMedicines()
         {
             return Ok(_medicinesDbService.GetMedicines());
         }
 
-
+       
         [HttpPost]
-        public IActionResult CreateTreatment([FromBody] CreateMedicineRequest createMedicineRequest)
+        public IActionResult CreateMedicine([FromBody] CreateMedicineRequest createMedicineRequest)
         {
             _medicinesDbService.CreateMedicine(createMedicineRequest);
             return Ok();

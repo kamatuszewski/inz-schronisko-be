@@ -2,6 +2,7 @@
 using AnimalShelter_WebAPI.DTOs.VetVisitDetails;
 using AnimalShelter_WebAPI.Services.VetVisitsDetails;
 using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
+    [Authorize(Roles = "Vet")]
     [Route("api/[controller]")] 
     [ApiController]
     public class TreatmentsController : ControllerBase

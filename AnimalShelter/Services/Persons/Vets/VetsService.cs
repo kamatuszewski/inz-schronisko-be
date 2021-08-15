@@ -38,6 +38,10 @@ namespace AnimalShelter_WebAPI.Services
                 .Include(req => req.Employee).ThenInclude(req => req.Person)
                 .Include(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
                 .FirstOrDefault();
+
+            if (vet is null)
+                throw new NotFoundException("VET_NOT_FOUND");
+
             return _mapper.Map<DetailedVetResponse>(vet);
         }
 

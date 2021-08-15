@@ -3,6 +3,7 @@ using AnimalShelter_WebAPI.DTOs.VetVisitDetails.VetVisits.Requests;
 using AnimalShelter_WebAPI.Services.Animals;
 using AnimalShelter_WebAPI.Services.VetVisitsDetails;
 using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class VetVisitsController : ControllerBase
@@ -33,6 +35,7 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Vet")]
         [HttpPost]
         public ActionResult CreateVetVisit([FromBody] CreateVetVisitRequest createVetVisitRequest)
         {
@@ -41,6 +44,7 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Vet")]
         [HttpPut("{id}")]
         public IActionResult UpdateVetVisit([FromRoute] int id, [FromBody] UpdateVetVisitRequest updateVetVisitRequest)
         {
@@ -60,6 +64,7 @@ namespace AnimalShelter_WebAPI.Controllers
         }
         */
 
+        [Authorize(Roles = "Vet")]
         [HttpDelete("{Id}")]
         public IActionResult RemoveVetVisit(int Id)
         {
@@ -67,7 +72,7 @@ namespace AnimalShelter_WebAPI.Controllers
             return Accepted();
         }
 
-
+        [Authorize(Roles = "Vet")]
         [Route("{visitId}/medicines/{medicineId}")]
         [HttpDelete]
         public ActionResult RemoveMedicineFromVisit([FromRoute] int visitId, [FromRoute] int medicineId)
@@ -76,6 +81,7 @@ namespace AnimalShelter_WebAPI.Controllers
             return Accepted();
         }
 
+        [Authorize(Roles = "Vet")]
         [Route("{visitId}/treatments/{treatmentId}")]
         [HttpDelete]
         public ActionResult RemoveTreatmentFromVisit([FromRoute] int visitId, [FromRoute] int treatmentId)
