@@ -186,7 +186,7 @@ namespace AnimalShelter_WebAPI.Services.Roles
                     {
                         empExists2.IsRoleActive = true;
                         empExists2.HireDate = (DateTime)request.HireDate;
-                        empExists2.Salary = request.Salary;
+                        empExists2.Salary = (int)request.Salary;
                         empExists2.QuitDate = null;
                         _context.Employee.Update(empExists2);
                         _context.SaveChanges();

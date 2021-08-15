@@ -40,8 +40,7 @@ namespace AnimalShelter_WebAPI.Middleware
             catch (Exception e)
             {
                 context.Response.StatusCode = 500;
-                context.Response.WriteAsync(e.Message); //do zamiany na produkcji na linijke nizej
-        //        context.Response.WriteAsync("Something went wrong.");
+                context.Response.WriteAsync("Something went wrong.");
             }
 
         }

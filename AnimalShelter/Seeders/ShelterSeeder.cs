@@ -181,17 +181,14 @@ namespace AnimalShelter_WebAPI
                 {
                    Name = "Internista"
                 },
-
                 new Specialty()
                 {
                    Name = "Ortopeda"
                 },
-
                 new Specialty()
                 {
                    Name = "Nefrolog"
                 },
-
                 new Specialty()
                 {
                    Name = "Behawiorysta"
@@ -318,11 +315,11 @@ namespace AnimalShelter_WebAPI
                 },
                 new Medicine()
                 {
-                   Name = "Zabieg okulistyczne"
+                   Name = "Dolfos UrinaryMet mini 60tab"
                 },
                 new Medicine()
                 {
-                   Name = "Chirurgiczne leczenie przepukliny"
+                   Name = "VETOQUINOL Kerabol 20ml"
                 },
                 new Medicine()
                 {
@@ -375,7 +372,49 @@ namespace AnimalShelter_WebAPI
                  new Medicine()
                 {
                    Name = "Vetaprofen 100ml"
+                } ,
+                 new Medicine()
+                {
+                   Name = "Zoobiotic Globulit 150 mg"
+                },
+                 new Medicine()
+                {
+                   Name = "Witamina AD3E 80/40/20 pro.inj."
+                },
+                 new Medicine()
+                {
+                   Name = "TilmiScan 250 mg/ml"
+                },
+                 new Medicine()
+                {
+                   Name = "Aspiryna 100mg"
+                },
+                 new Medicine()
+                {
+                   Name = "Espuminsan 30tabletek, 5mg"
+                },
+                 new Medicine()
+                {
+                   Name = "Calmvet 30jednostek"
+                },
+                 new Medicine()
+                {
+                   Name = "Zylkene 225mg, 30caps"
+                },
+                 new Medicine()
+                {
+                   Name = "Pyralgivet, 500 mg/ml,"
+                },
+                 new Medicine()
+                {
+                   Name = "VETFOOD FLORA Balance 120 caps"
+                },
+                 new Medicine()
+                {
+                   Name = "GEULINCX DiaDog'N'Cat 6tabl."
                 }
+
+
             };
             return medicines;
         }
