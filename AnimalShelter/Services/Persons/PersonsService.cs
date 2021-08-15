@@ -236,7 +236,7 @@ namespace AnimalShelter.Services
 
 
                 claims.Add(new Claim(ClaimTypes.Role, grantedRole.Role.Name));
-                claims.Add(new Claim("role", $"{grantedRole.Role.Name}"));
+              //  claims.Add(new Claim("role", $"{grantedRole.Role.Name}"));
 
             }
             string rolesJson = JsonConvert.SerializeObject(rolesArray);
