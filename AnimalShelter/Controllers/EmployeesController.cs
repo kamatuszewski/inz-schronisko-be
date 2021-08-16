@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("api/persons/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
@@ -28,7 +28,7 @@ namespace AnimalShelter_WebAPI.Controllers
             _employeesDbService = employeesDbService;
         }
 
-
+        [Authorize(Roles = "Director, Admin")]
         [HttpGet]
         public IActionResult GetEmployees()
         {
@@ -36,6 +36,7 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Director, Admin")]
         [HttpGet("{id}")]
         public IActionResult GetEmployee(int id)
         {
@@ -48,6 +49,7 @@ namespace AnimalShelter_WebAPI.Controllers
                 return Ok(volunteer);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult EditEmployee([FromRoute] int id, [FromBody] EditEmployeeRequest editEmployeeRequest)
         {

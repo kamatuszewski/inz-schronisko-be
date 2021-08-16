@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    // [Authorize]
+     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AdoptionsController : ControllerBase
@@ -25,7 +25,7 @@ namespace AnimalShelter_WebAPI.Controllers
             _adoptionsService = adoptionsService;
         }
 
-
+        [Authorize(Roles = "Employee")]
         [HttpPost]
         public IActionResult AddAdoption([FromBody] CreateAdoptionRequest createAdoptionRequest)
         {
@@ -41,6 +41,7 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Employee")]
         [HttpDelete("{Id}")]
         public IActionResult RemoveAdoption(int Id)
         {

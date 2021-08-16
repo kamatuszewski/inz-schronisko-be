@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace AnimalShelter.Controllers
 {
 
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PersonsController : ControllerBase
@@ -32,7 +32,7 @@ namespace AnimalShelter.Controllers
             _personsDbService = personsDbService;
         }
 
-
+        [Authorize(Roles = "Admin, Employee")]
         [HttpGet]
         public IActionResult GetPersons()
         {
@@ -40,18 +40,15 @@ namespace AnimalShelter.Controllers
          
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public IActionResult GetPerson(int id)
         {
             var person = _personsDbService.GetPerson(id);
-            if (person is null)
-            {
-                return NotFound();
-            }
-            else
-                return Ok(person);
+            return Ok(person);
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         [HttpPost("register")]
         public IActionResult CreatePerson([FromBody] RegisterPersonRequest createPersonRequest)
         {
@@ -87,6 +84,7 @@ namespace AnimalShelter.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult EditPerson([FromRoute] int id, [FromBody] EditPersonRequest editPersonRequest)
         {

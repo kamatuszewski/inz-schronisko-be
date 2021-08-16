@@ -1,5 +1,6 @@
 ﻿using AnimalShelter_WebAPI.DTOs.Person.Vet.Requests;
 using AnimalShelter_WebAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/persons/[controller]")]
     [ApiController]
     public class VetsController : ControllerBase
@@ -19,22 +21,22 @@ namespace AnimalShelter_WebAPI.Controllers
             _vetsDbService = vetsDbService;
         }
 
+        [Authorize(Roles = "Admin, Director, Vet")]
         [HttpGet]
         public IActionResult GetVets()
         {
             return Ok(_vetsDbService.GetVets());
         }
 
+        [Authorize(Roles = "Admin, Director")]
         [HttpGet("{Id}")]
         public IActionResult GetVet(int Id)
         {
             var vet = _vetsDbService.GetVet(Id);
-            if (vet is null)
-                return NotFound();
-            else
                 return Ok(vet);
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("{vetId}/specialty")]
         [HttpPost]
         public ActionResult AddSpecialtyToVet([FromRoute] int vetId, [FromBody] IEnumerable<AddSpecialtiesToVetRequest> addSpecialtyToVetRequest)
@@ -43,6 +45,7 @@ namespace AnimalShelter_WebAPI.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("{vetId}/{specialtyId}")]
         [HttpDelete]
         public ActionResult RemoveSpecialtyFromVet([FromRoute] int vetId, [FromRoute] int specialtyId)
@@ -54,6 +57,7 @@ namespace AnimalShelter_WebAPI.Controllers
 
         //specialties controllers
 
+       
         [Route("Specialties")]
         [HttpGet]
         public IActionResult GetSpecialties()
@@ -61,6 +65,7 @@ namespace AnimalShelter_WebAPI.Controllers
             return Ok(_vetsDbService.GetSpecialties());
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("Specialties")]
         [HttpPost]
         public IActionResult CreateSpecialty([FromBody] CreateSpecialtyRequest createSpecialtyRequest)
@@ -70,6 +75,7 @@ namespace AnimalShelter_WebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("Specialties/{Id}")]
         public IActionResult RemoveSpecialty(int Id)
         {
