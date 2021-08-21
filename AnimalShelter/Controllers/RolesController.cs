@@ -33,9 +33,12 @@ namespace AnimalShelter_WebAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete]
-        public ActionResult RomoveRoleFromPerson([FromRoute] int personId, RemoveRoleFromPersonRequest request)
+        [Route("")]
+        [Route("{roleId}/{quitDate}")]
+        public ActionResult RomoveRoleFromPerson([FromRoute] int personId, [FromRoute] int roleId, [FromRoute] DateTime? quitDate)
         {
-            _rolesService.RemoveRoleFromPerson(personId, request);
+  
+        _rolesService.RemoveRoleFromPerson(personId, roleId, quitDate);
             return Ok();
         }
     }
