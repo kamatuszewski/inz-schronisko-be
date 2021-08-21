@@ -14,7 +14,7 @@ namespace AnimalShelter_WebAPI.Services.Roles
     public interface IRolesService
     {
         void AddRoleToPerson(int PersonId, AddRoleToPersonRequest request);
-        void RemoveRoleFromPerson(int PersonId, RemoveRoleFromPersonRequest request);
+        void RemoveRoleFromPerson(int PersonId, int RoleId, DateTime? QuitDate);
     }
     public class RolesService: IRolesService
     {
@@ -60,7 +60,7 @@ namespace AnimalShelter_WebAPI.Services.Roles
 
         }
 
-        public void RemoveRoleFromPerson(int PersonId, RemoveRoleFromPersonRequest request)
+        public void RemoveRoleFromPerson(int PersonId, int RoleId, DateTime? quitDate)
         {
             var person = _context.Person.FirstOrDefault(p => p.Id == PersonId);
 
@@ -69,27 +69,27 @@ namespace AnimalShelter_WebAPI.Services.Roles
                 throw new NotFoundException("PERSON_NOT_FOUND");
             }
 
-            var role = _context.Role.FirstOrDefault(r => r.Id == request.RoleId);
+            var role = _context.Role.FirstOrDefault(r => r.Id == RoleId);
             if (role is null)
             {
                 throw new NotFoundException("ROLE_NOT_FOUND");
             }
 
-            var grantetRoleToRemoveExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == request.RoleId);
+            var grantetRoleToRemoveExists = _context.GrantedRole.FirstOrDefault(gr => gr.PersonId == PersonId && gr.RoleId == RoleId);
             if (grantetRoleToRemoveExists is null)
             {
                 throw new NotFoundException("USER_ROLE_DONT_EXIST");
             }
 
-            SoftDeleteEntitiesBasedOnPersonRole(grantetRoleToRemoveExists, request);
+            SoftDeleteEntitiesBasedOnPersonRole(grantetRoleToRemoveExists, RoleId, quitDate);
 
             _context.GrantedRole.Remove(grantetRoleToRemoveExists);
             _context.SaveChanges();
         }
 
-        private void SoftDeleteEntitiesBasedOnPersonRole(GrantedRole grantedRoleToRemove, RemoveRoleFromPersonRequest request)
+        private void SoftDeleteEntitiesBasedOnPersonRole(GrantedRole grantedRoleToRemove, int RoleId ,DateTime? quitDate)
         {
-            switch (request.RoleId)
+            switch (RoleId)
             {
                 case 1: //Volunteer
 
@@ -103,6 +103,13 @@ namespace AnimalShelter_WebAPI.Services.Roles
                     var vetToSoftDelete = _context.Vet.FirstOrDefault(v => v.Id == grantedRoleToRemove.PersonId);
                     vetToSoftDelete.IsRoleActive = false;
 
+                    var empToSoftDeleteFromVet = _context.Employee.FirstOrDefault(v => v.Id == grantedRoleToRemove.PersonId);
+                    empToSoftDeleteFromVet.IsRoleActive = false;
+                    empToSoftDeleteFromVet.QuitDate = quitDate;
+
+                    _context.Employee.Update(empToSoftDeleteFromVet);
+                    _context.SaveChanges();
+
 
                     _context.Vet.Update(vetToSoftDelete);
                     _context.SaveChanges();
@@ -110,7 +117,7 @@ namespace AnimalShelter_WebAPI.Services.Roles
                 case 2: //Emp
                     var empToSoftDelete = _context.Employee.FirstOrDefault(v => v.Id == grantedRoleToRemove.PersonId);
                     empToSoftDelete.IsRoleActive = false;
-                    empToSoftDelete.QuitDate = request.QuitDate;
+                    empToSoftDelete.QuitDate = quitDate;
 
                     _context.Employee.Update(empToSoftDelete);
                     _context.SaveChanges();
@@ -147,25 +154,34 @@ namespace AnimalShelter_WebAPI.Services.Roles
                 case 5: //Vet
 
                     var empExists = _context.Employee.FirstOrDefault(gr => gr.Id == grantedRoleEntity.PersonId);
-                    if (empExists is not null)
+                    if (empExists is not null)  // Employee exists
                     {
                         var vetExists = _context.Vet.FirstOrDefault(gr => gr.Id == grantedRoleEntity.PersonId);
-                        if (vetExists is not null)
+                        if (vetExists is not null) //Vet exists and Emp Exists
                         {
                             vetExists.IsRoleActive = true;
                             vetExists.PWZNumber = request.PWZNumber;
                             _context.Vet.Update(vetExists);
                             _context.SaveChanges();
 
-                        } else
+                            empExists.IsRoleActive = true;
+                            _context.Employee.Update(empExists);
+                            _context.SaveChanges();
+
+
+                        } else //Vet doesnt exists and emp does
                         {
                             var newVet = _mapper.Map<Vet>(request);
                             newVet.Id = grantedRoleEntity.PersonId;
                             _context.Vet.Add(newVet);
                             _context.SaveChanges();
+
+                            empExists.IsRoleActive = true;
+                            _context.Employee.Update(empExists);
+                            _context.SaveChanges();
                         }
 
-                    } else  
+                    } else  // Vet and Emp doesnt exist
                     {
                         var newEmp = _mapper.Map<Employee>(request);
                         newEmp.Id = grantedRoleEntity.PersonId;
