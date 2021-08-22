@@ -79,12 +79,12 @@ namespace AnimalShelter_WebAPI.Seeders
                     _dbContext.SaveChanges();
                 }
 
-                if (!_dbContext.Medicine.Any())
+               /* if (!_dbContext.Medicine.Any())
                 {
                     var medicines = GetMedicines();
                     _dbContext.Medicine.AddRange(medicines);
                     _dbContext.SaveChanges();
-                }
+                }*/
 
                 if (!_dbContext.PrescribedMedicine.Any())
                 {
@@ -93,13 +93,13 @@ namespace AnimalShelter_WebAPI.Seeders
                     _dbContext.SaveChanges();
                 }
 
-                if (!_dbContext.Treatment.Any())
-                {
-                    var treatment = GetTreatment();
-                    _dbContext.Treatment.AddRange(treatment);
-                    _dbContext.SaveChanges();
-                }
-
+                /*  if (!_dbContext.Treatment.Any())
+                  {
+                      var treatment = GetTreatment();
+                      _dbContext.Treatment.AddRange(treatment);
+                      _dbContext.SaveChanges();
+                  }
+  */
                 if (!_dbContext.PerformedTreatment.Any())
                 {
                     var performedTreatment = GetPerformedTreatment();
@@ -150,7 +150,7 @@ namespace AnimalShelter_WebAPI.Seeders
 
                  new Animal()
                 {
-                     
+                    Name = "Pasio",
                     ChipNumber = 1,
                     BirthDate = new DateTime(2008, 10, 10, 0, 0, 0),
                     Sex = "M",
@@ -178,7 +178,7 @@ namespace AnimalShelter_WebAPI.Seeders
                     Sex = "F",
                     Address = "Weterynaryjna 8, Warszawa",
                     PhoneNumber = "101101101",
-                    EmailAddress = "vetkaanna@schronisko.pl",
+                    EmailAddress = "weterynarz@schronisko.pl",
                     Password = "AQAAAAEAACcQAAAAEAYq+o7N+Rme4n1yxX8yZG/vodgSBkjL/scZ0Vczxt8sj7lD1O3TZevwULlm8f9MqQ==" //haslo: haslo1
                 },
 
@@ -192,7 +192,8 @@ namespace AnimalShelter_WebAPI.Seeders
                     Sex = "M",
                     Address = "Pracownikowo 7/11, Warszawa",
                     PhoneNumber = "222222222",
-                    EmailAddress = "km@op.pl"
+                    EmailAddress = "pracownik@schronisko.pl",
+                    Password = "AQAAAAEAACcQAAAAEAYq+o7N+Rme4n1yxX8yZG/vodgSBkjL/scZ0Vczxt8sj7lD1O3TZevwULlm8f9MqQ==" //haslo: haslo1
                 },
 
                 //wolontariusz
@@ -200,12 +201,13 @@ namespace AnimalShelter_WebAPI.Seeders
                 {
                      //id = 5
                     FirstName = "Michal",
-                    LastName = "Michalczyk",
+                    LastName = "Wolo",
                     PESEL = "22222233222",
                     Sex = "M",
                     Address = "Wakowiocza 7/20, Warszawa",
                     PhoneNumber = "222211222",
-                    EmailAddress = "k2m@op.pl"
+                    EmailAddress = "wolontariusz@schronisko.pl",
+                     Password = "AQAAAAEAACcQAAAAEAYq+o7N+Rme4n1yxX8yZG/vodgSBkjL/scZ0Vczxt8sj7lD1O3TZevwULlm8f9MqQ==" //haslo: haslo1
                 },
 
                  //adoptujacy
@@ -213,12 +215,12 @@ namespace AnimalShelter_WebAPI.Seeders
                 {
                        //id = 4
                     FirstName = "Magdalena",
-                    LastName = "Krzak",
+                    LastName = "Adoptujaca",
                     PESEL = "22201233222",
                     Sex = "F",
                     Address = "Kasprzaka 9/20, Warszawa",
                     PhoneNumber = "999888777",
-                    EmailAddress = "mkk@gmail.com"
+                    EmailAddress = "adoptujacy@gmail.com"
                 },
 
                   //admin
@@ -253,12 +255,13 @@ namespace AnimalShelter_WebAPI.Seeders
                 {
                         //Id = 1
                     FirstName = "Patrycja",
-                    LastName = "Dwurolna",
+                    LastName = "Testowa",
                     PESEL = "67898765432",
                     Sex = "F",
                     Address = "Aleja Dwoch Rol 56, Chorzow",
                     PhoneNumber = "234334344",
-                    EmailAddress = "dwierole@pjwstk.edu.pl"
+                    EmailAddress = "test@schronisko.pl",
+                     Password = "AQAAAAEAACcQAAAAEAYq+o7N+Rme4n1yxX8yZG/vodgSBkjL/scZ0Vczxt8sj7lD1O3TZevwULlm8f9MqQ==" //haslo: haslo1
                 }
             };
             return persons;
@@ -323,8 +326,14 @@ namespace AnimalShelter_WebAPI.Seeders
                   new GrantedRole()
                 {
                    PersonId = 2,    //Dyrektorski
-                   RoleId = 3       //Ddirector
+                   RoleId = 3       //Director
+                },
+                   new GrantedRole()
+                {
+                   PersonId = 5,    //Wolo
+                   RoleId = 1       //Volunteer
                 }
+
 
 
             };
@@ -347,7 +356,7 @@ namespace AnimalShelter_WebAPI.Seeders
                 {
                    VetId = 7,
                    SpecialtyId = 2,
-                   ObtainingDate = new DateTime(1999, 01, 10, 0, 0, 0)
+                   ObtainingDate = new DateTime(2001, 01, 10, 0, 0, 0)
                 },
 
             };
@@ -376,7 +385,7 @@ namespace AnimalShelter_WebAPI.Seeders
             };
             return vetVisits;
         }
-        private IEnumerable<Medicine> GetMedicines()
+      /*  private IEnumerable<Medicine> GetMedicines()
         {
             var medicines = new List<Medicine>()
             {
@@ -395,20 +404,20 @@ namespace AnimalShelter_WebAPI.Seeders
 
             };
             return medicines;
-        }
+        }*/
         private IEnumerable<PrescribedMedicine> GetPrescribedMedicine()
         {
             var prescribedMedicines = new List<PrescribedMedicine>()
             {
                 new PrescribedMedicine()
                 {
-                    MedicineId = 3,
+                    MedicineId = 6,
                     VisitId = 1,
                     Amount = 1
                 },
                  new PrescribedMedicine()
                 {
-                    MedicineId = 2,
+                    MedicineId = 16,
                     VisitId = 1,
                     Amount = 2
                 }
@@ -416,7 +425,8 @@ namespace AnimalShelter_WebAPI.Seeders
             };
             return prescribedMedicines;
         }
-        private IEnumerable<Treatment> GetTreatment()
+
+        /*private IEnumerable<Treatment> GetTreatment()
         {
             var treatments = new List<Treatment>()
             {
@@ -435,7 +445,8 @@ namespace AnimalShelter_WebAPI.Seeders
 
             };
             return treatments;
-        }
+        }*/
+
         private IEnumerable<PerformedTreatment> GetPerformedTreatment()
         {
             var treatments = new List<PerformedTreatment>()
