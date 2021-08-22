@@ -32,7 +32,7 @@ namespace AnimalShelter.Controllers
             _personsDbService = personsDbService;
         }
 
-        [Authorize(Roles = "Admin, Employee")]
+        [Authorize(Roles = "Admin, Employee, Vet")]
         [HttpGet]
         public IActionResult GetPersons()
         {
