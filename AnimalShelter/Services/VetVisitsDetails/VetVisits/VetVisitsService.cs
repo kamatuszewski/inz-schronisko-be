@@ -94,6 +94,8 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
             var oldTreatments = _context.PerformedTreatment.Where(a => a.VisitId == id).ToList();
             _context.PerformedTreatment.RemoveRange(oldTreatments);
 
+            _context.SaveChanges();
+
             AddDetailsToVetVisit(id, updateVetVisitRequest.PrescribedMedicines, updateVetVisitRequest.PerformedTreatments);
             transaction.Commit();
 
@@ -127,21 +129,22 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
                 if (medicineExistenceCheck is null)
                     throw new BadRequestException("MEDICINE_NOT_EXISTS");
 
-                var prescribedMedicineExists = _context.PrescribedMedicine.FirstOrDefault(gr => gr.VisitId == id && gr.MedicineId == medicine.Id);
-                if (prescribedMedicineExists is not null)
-                    prescribedMedicineExists.Amount = medicine.Amount;
-                else
+                var prescribedMedicine = _context.PrescribedMedicine.FirstOrDefault(gr => gr.VisitId == id && gr.MedicineId == medicine.Id);
+                if (prescribedMedicine is not null)
+                    prescribedMedicine.Amount = medicine.Amount;
+                else 
                 {
-                    var prescribedMedicine = new PrescribedMedicine()
+                    prescribedMedicine = new PrescribedMedicine()
                     {
                         MedicineId = medicine.Id,
                         VisitId = id,
                         Amount = medicine.Amount
                     };
                     _context.PrescribedMedicine.Add(prescribedMedicine);
+                    _context.SaveChanges();
                 }
                 
-                _context.SaveChanges();
+               
             }
 
             foreach (var treatment in PerformedTreatments)
@@ -152,7 +155,7 @@ namespace AnimalShelter_WebAPI.Services.VetVisitsDetails
 
                 var performedTreatment = _context.PerformedTreatment.FirstOrDefault(gr => gr.VisitId == id && gr.TreatmentId == treatment.Id);
                 if (performedTreatment is null) //w przeciwnym razie nic nie robimy, juz istnieje takie polaczenie
-                {
+                { 
                     performedTreatment = new PerformedTreatment()
                     {
                         TreatmentId = treatment.Id,
