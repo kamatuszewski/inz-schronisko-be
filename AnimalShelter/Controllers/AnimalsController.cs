@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Controllers
 {
-    [Authorize]
+  //  [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AnimalsController : ControllerBase
@@ -25,9 +25,9 @@ namespace AnimalShelter.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAnimals([FromQuery] string species, [FromQuery] int? chipNr, [FromQuery] string status)
+        public IActionResult GetAnimals([FromQuery]GetAnimalsRequest getAnimalsRequest)
         {
-            return Ok(_animalsDbService.GetAnimals(species, chipNr, status));
+            return Ok(_animalsDbService.GetAnimals(getAnimalsRequest));
         }
 
         [HttpGet("{Id}")]
@@ -37,7 +37,7 @@ namespace AnimalShelter.Controllers
                 return Ok(animal);
         }
 
-        [Authorize(Roles = "Employee")]
+     //   [Authorize(Roles = "Employee")]
         [HttpPost]
         public IActionResult CreateAnimal([FromBody] CreateAnimalRequest createAnimalRequest)
         {

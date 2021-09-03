@@ -1,5 +1,6 @@
 ﻿using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs;
 using AnimalShelter_WebAPI.DTOs.Animal.Requests;
 using AnimalShelter_WebAPI.DTOs.Animal.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
@@ -12,7 +13,7 @@ namespace AnimalShelter_WebAPI.Services.Animals
 {
     public interface IAnimalsService
     {
-        public IEnumerable<GeneralAnimalResponse> GetAnimals(string species, int? chipNr, string status);
+        public PageResponse<GeneralAnimalResponse> GetAnimals(GetAnimalsRequest getAnimalsRequest);
         public FullDataAnimalResponse GetAnimal(int id);
         public void RemoveAnimal(int id);
         public void CreateAnimal(CreateAnimalRequest createAnimalRequest);
