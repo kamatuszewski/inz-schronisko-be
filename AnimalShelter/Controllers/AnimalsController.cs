@@ -25,9 +25,9 @@ namespace AnimalShelter.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAnimals()
+        public IActionResult GetAnimals([FromQuery] string species, [FromQuery] int? chipNr, [FromQuery] string status)
         {
-            return Ok(_animalsDbService.GetAnimals());
+            return Ok(_animalsDbService.GetAnimals(species, chipNr, status));
         }
 
         [HttpGet("{Id}")]

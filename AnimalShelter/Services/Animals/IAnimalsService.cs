@@ -12,7 +12,7 @@ namespace AnimalShelter_WebAPI.Services.Animals
 {
     public interface IAnimalsService
     {
-        public IEnumerable<GeneralAnimalResponse> GetAnimals();
+        public IEnumerable<GeneralAnimalResponse> GetAnimals(string species, int? chipNr, string status);
         public FullDataAnimalResponse GetAnimal(int id);
         public void RemoveAnimal(int id);
         public void CreateAnimal(CreateAnimalRequest createAnimalRequest);

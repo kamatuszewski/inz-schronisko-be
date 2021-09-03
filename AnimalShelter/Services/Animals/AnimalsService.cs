@@ -23,11 +23,14 @@ namespace AnimalShelter_WebAPI.Services.Animals
             _mapper = mapper;
         }
 
-        public IEnumerable<GeneralAnimalResponse> GetAnimals()
+        public IEnumerable<GeneralAnimalResponse> GetAnimals(string species, int? chipNr, string status)
         {
             var animals = _context.Animal
                 .Include(req => req.Species)
                 .Include(req => req.Status)
+                .Where(r => species == null || r.Species.Name.ToLower().Contains(species.ToLower()))
+                .Where(r => chipNr == null || r.ChipNumber.Equals(chipNr))
+                .Where(r => status == null || r.Status.Name.ToLower().Contains(status.ToLower()))
                 .ToList();
 
              return _mapper.Map<IEnumerable<GeneralAnimalResponse>>(animals);
