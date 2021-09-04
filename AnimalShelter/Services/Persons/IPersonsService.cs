@@ -19,7 +19,7 @@ namespace AnimalShelter.Services
     {
 
         public PersonResponse GetPerson(int id);
-        public IEnumerable<GeneralPersonResponse> GetPersons();
+        public IEnumerable<GeneralPersonResponse> GetPersons(string SortBy, SortDirection sortDirection);
         public IEnumerable<RoleResponse> GetRoles();
         public int RegisterPerson(RegisterPersonRequest registerPersonRequest);
         public Person CreateAdopter(CreateAdopterRequest createAdopterRequest);

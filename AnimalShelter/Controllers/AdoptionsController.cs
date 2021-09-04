@@ -50,19 +50,5 @@ namespace AnimalShelter_WebAPI.Controllers
         }
 
 
-        //do konkretnej adopcji dostajemy sie poprzez sciezke zwierzecia
-        /*
-        [HttpGet("{id}")]
-        public IActionResult GetAdoption(int id)
-        {
-            var adoption = _adoptionsService.GetAdoption(id);
-            if (adoption is null)
-            {
-                return NotFound();
-            }
-            else
-                return Ok(adoption);
-        }
-        */
     }
 }

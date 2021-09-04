@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,15 +25,32 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
         }
 
 
-        public IEnumerable<GeneralEmployeeResponse> GetEmplyees()
+        public IEnumerable<GeneralEmployeeResponse> GetEmplyees(string SortBy, SortDirection sortDirection)
         {
-            var employees = _context.Employee
+            var baseEmployees = _context.Employee
                 .Include(req => req.Person).ThenInclude(req => req.GrantedRoles).ThenInclude(req => req.Role)
                 .Include(req => req.Vet).ThenInclude(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
-                .Where(req => req.IsRoleActive == true || req.Vet.IsRoleActive==true)
-                .ToList();
+                .Where(req => req.IsRoleActive == true || req.Vet.IsRoleActive == true);
+              //  .ToList();
 
-           var response =  _mapper.Map<IEnumerable<GeneralEmployeeResponse>>(employees);
+            if (!string.IsNullOrEmpty(SortBy))
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<Employee, object>>>
+                    (StringComparer.InvariantCultureIgnoreCase)
+                {
+                    { nameof(Employee.Person.FirstName), r => r.Person.FirstName},
+                    { nameof(Employee.Person.LastName), r => r.Person.LastName},
+                    { nameof(Employee.Person.Sex), r => r.Person.Sex}
+
+                };
+                var selectedColumn = columnsSelector[SortBy];
+
+                baseEmployees = sortDirection == SortDirection.ASC
+                    ? baseEmployees.OrderBy(selectedColumn)
+                    : baseEmployees.OrderByDescending(selectedColumn);
+            }
+            var employees = baseEmployees.ToList();
+            var response =  _mapper.Map<IEnumerable<GeneralEmployeeResponse>>(employees);
 
           //  var IEnumerable<GeneralEmployeeResponse> eee = _mapper.Map<IEnumerable<GeneralEmployeeResponse>>(employees);
 

@@ -37,8 +37,13 @@ namespace AnimalShelter_WebAPI.Services.Animals
             if (!string.IsNullOrEmpty(getAnimalsRequest.SortBy))
             {
                 var columnsSelector = new Dictionary<string, Expression<Func<Animal, object>>>
+                 (StringComparer.InvariantCultureIgnoreCase)
                 {
                     { nameof(Animal.ChipNumber), r => r.ChipNumber},
+                    { nameof(Animal.Name), r => r.Name},
+                    { nameof(Animal.Sex), r => r.Sex},
+                    { nameof(Animal.Species), r => r.Species},
+                    { nameof(Animal.BirthDate), r => r.BirthDate},
                     { nameof(Animal.FoundDate), r => r.FoundDate},
                     { nameof(Animal.Status), r => r.Status}
 

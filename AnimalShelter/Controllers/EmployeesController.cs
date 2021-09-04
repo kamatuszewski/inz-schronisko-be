@@ -1,4 +1,5 @@
-﻿using AnimalShelter.Services;
+﻿using AnimalShelter.Models;
+using AnimalShelter.Services;
 using AnimalShelter_WebAPI.DTOs.Animal.Requests;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Services.Animals;
@@ -30,9 +31,9 @@ namespace AnimalShelter_WebAPI.Controllers
 
         [Authorize(Roles = "Director, Admin")]
         [HttpGet]
-        public IActionResult GetEmployees()
+        public IActionResult GetEmployees([FromQuery] string SortBy, [FromQuery] SortDirection SortDirection)
         {
-            return Ok(_employeesDbService.GetEmplyees());
+            return Ok(_employeesDbService.GetEmplyees(SortBy, SortDirection));
 
         }
 

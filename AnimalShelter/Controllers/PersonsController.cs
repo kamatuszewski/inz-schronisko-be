@@ -34,9 +34,9 @@ namespace AnimalShelter.Controllers
 
         [Authorize(Roles = "Admin, Employee, Vet")]
         [HttpGet]
-        public IActionResult GetPersons()
+        public IActionResult GetPersons([FromQuery] string SortBy, [FromQuery] SortDirection SortDirection)
         {
-              return Ok(_personsDbService.GetPersons());
+              return Ok(_personsDbService.GetPersons( SortBy, SortDirection));
          
         }
 

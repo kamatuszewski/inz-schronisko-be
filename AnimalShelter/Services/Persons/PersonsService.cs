@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,11 +41,33 @@ namespace AnimalShelter.Services
 
 
 
-        public IEnumerable<GeneralPersonResponse> GetPersons()
+        public IEnumerable<GeneralPersonResponse> GetPersons(string SortBy, SortDirection sortDirection)
         {
-            var persons = _context.Person
-                 .Include(req => req.GrantedRoles).ThenInclude(req => req.Role)
-                 .ToList();
+            IQueryable<Person> basePersons = _context.Person
+                 .Include(req => req.GrantedRoles).ThenInclude(req => req.Role);
+                // .ToList();
+
+            if (!string.IsNullOrEmpty(SortBy))
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<Person, object>>>
+                    (StringComparer.InvariantCultureIgnoreCase)
+                {
+                    { nameof(Person.FirstName), r => r.FirstName},
+                    { nameof(Person.LastName), r => r.LastName},
+                    { nameof(Person.Sex), r => r.Sex}
+
+                };
+                var selectedColumn = columnsSelector[SortBy];
+
+                basePersons = sortDirection == SortDirection.ASC
+                    ? basePersons.OrderBy(selectedColumn)
+                    : basePersons.OrderByDescending(selectedColumn);
+            }
+            var persons = basePersons.ToList();
+
+
+
+
             return _mapper.Map<IEnumerable<GeneralPersonResponse>>(persons);
         }
 

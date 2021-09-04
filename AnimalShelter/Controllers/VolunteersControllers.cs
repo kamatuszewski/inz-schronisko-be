@@ -1,4 +1,5 @@
-﻿using AnimalShelter.Services;
+﻿using AnimalShelter.Models;
+using AnimalShelter.Services;
 using AnimalShelter_WebAPI.DTOs.Animal.Requests;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Services.Animals;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-    [Authorize]
+  //  [Authorize]
     [Route("api/persons/[controller]")]
     [ApiController]
     public class VolunteersController : ControllerBase
@@ -28,11 +29,11 @@ namespace AnimalShelter_WebAPI.Controllers
             _volunteersDbService = volunteersDbService;
         }
 
-        [Authorize(Roles = "Admin, Director")]
+   //     [Authorize(Roles = "Admin, Director")]
         [HttpGet]
-        public IActionResult GetVolunteers()
+        public IActionResult GetVolunteers([FromQuery] string SortBy, [FromQuery] SortDirection SortDirection)
         {
-            return Ok(_volunteersDbService.GetVolunteers());
+            return Ok(_volunteersDbService.GetVolunteers(SortBy, SortDirection));
 
         }
 

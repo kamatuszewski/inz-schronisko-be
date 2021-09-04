@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,11 +23,34 @@ namespace AnimalShelter_WebAPI.Services.Persons.Volunteers
         }
 
 
-       public IEnumerable<GeneralVolunteerResponse> GetVolunteers()
+       public IEnumerable<GeneralVolunteerResponse> GetVolunteers(string SortBy, SortDirection sortDirection)
         {
-            var volunteers = _context.Volunteer
-                .Include(req => req.Person)
-                .ToList();
+            IQueryable<Volunteer> baseVolunteers = _context.Volunteer
+                .Include(req => req.Person);
+
+            if (!string.IsNullOrEmpty(SortBy))
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<Volunteer, object>>>
+                 (StringComparer.InvariantCultureIgnoreCase)
+                {
+                    { nameof(Volunteer.Person.FirstName), r => r.Person.FirstName},
+                    { nameof(Volunteer.Person.LastName), r => r.Person.LastName},
+                    { nameof(Volunteer.Person.Sex), r => r.Person.Sex},
+                    { nameof(Volunteer.JoiningDate), r => r.JoiningDate}
+
+                };
+
+                var selectedColumn = columnsSelector[SortBy];
+
+                baseVolunteers = sortDirection == SortDirection.ASC
+                    ? baseVolunteers.OrderBy(selectedColumn)
+                    : baseVolunteers.OrderByDescending(selectedColumn);
+            }
+            var volunteers = baseVolunteers.ToList();
+
+
+
+            
             return _mapper.Map<IEnumerable<GeneralVolunteerResponse>>(volunteers);
         }
 
