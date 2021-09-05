@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-  //  [Authorize]
+    [Authorize]
     [Route("api/persons/[controller]")]
     [ApiController]
     public class VetsController : ControllerBase
@@ -21,14 +21,14 @@ namespace AnimalShelter_WebAPI.Controllers
             _vetsDbService = vetsDbService;
         }
 
-     //   [Authorize(Roles = "Admin, Director, Vet")]
+        [Authorize(Roles = "Admin, Director, Vet")]
         [HttpGet]
         public IActionResult GetVets()
         {
             return Ok(_vetsDbService.GetVets());
         }
 
-    //    [Authorize(Roles = "Admin, Director")]
+        [Authorize(Roles = "Admin, Director")]
         [HttpGet("{Id}")]
         public IActionResult GetVet(int Id)
         {
@@ -36,7 +36,7 @@ namespace AnimalShelter_WebAPI.Controllers
                 return Ok(vet);
         }
 
-   //     [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [Route("{vetId}/specialty")]
         [HttpPost]
         public ActionResult AddSpecialtyToVet([FromRoute] int vetId, [FromBody] AddSpecialtiesToVetRequest addSpecialtyToVetRequest)
