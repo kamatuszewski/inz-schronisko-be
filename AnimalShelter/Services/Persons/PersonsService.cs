@@ -20,7 +20,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AnimalShelter.Services
 {
@@ -83,7 +82,8 @@ namespace AnimalShelter.Services
         {
             var person = _context.Person.Where(a => a.Id == Id)
                 .Include(req => req.GrantedRoles).ThenInclude(req => req.Role)
-               .FirstOrDefault();
+                 .Include(req => req.Employee).ThenInclude(req => req.Vet).ThenInclude(req => req.Vet_Specialties).ThenInclude(req => req.Specialty)
+                 .FirstOrDefault();
 
             if (person is null)
                 throw new NotFoundException("PERSON_NOT_FOUND");
@@ -295,6 +295,7 @@ namespace AnimalShelter.Services
         public void EditPerson(int id, EditPersonRequest editPersonRequest)
         {
             var preson = _context.Person.Where(a => a.Id == id)
+
              .FirstOrDefault();
 
             if (preson is null)

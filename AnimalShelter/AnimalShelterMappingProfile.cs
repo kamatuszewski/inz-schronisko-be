@@ -162,7 +162,8 @@ namespace AnimalShelter.MappingProfiles
 
             //Roles
             CreateMap<Person, PersonResponse>()
-               .ForMember(m => m.Roles, c => c.MapFrom(s => s.GrantedRoles));
+               .ForMember(m => m.Roles, c => c.MapFrom(s => s.GrantedRoles))
+            .ForMember(m => m.SpecialtyResponses, c => c.MapFrom(e => e.Employee.Vet.Vet_Specialties));
             CreateMap<Person, GeneralPersonResponse>()
               .ForMember(m => m.Roles, c => c.MapFrom(s => s.GrantedRoles));
             CreateMap<GrantedRole, RoleResponse>()

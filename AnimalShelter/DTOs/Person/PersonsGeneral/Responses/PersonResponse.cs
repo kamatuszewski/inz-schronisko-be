@@ -1,4 +1,5 @@
-﻿using AnimalShelter_WebAPI.DTOs.Role.Responses;
+﻿using AnimalShelter_WebAPI.DTOs.Person.Vet.Responses;
+using AnimalShelter_WebAPI.DTOs.Role.Responses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,5 +23,7 @@ namespace AnimalShelter.DTOs.Responses
 
         [JsonPropertyName("roles")]
         public IEnumerable<RoleResponse> Roles { get; set; }
+        [JsonPropertyName("specialties")]
+        public IEnumerable<ObtainedSpecialtyResponse> SpecialtyResponses { get; set; }
     }
 }
