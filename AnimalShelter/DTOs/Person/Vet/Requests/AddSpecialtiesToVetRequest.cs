@@ -10,9 +10,8 @@ namespace AnimalShelter_WebAPI.DTOs.Person.Vet.Requests
 {
     public class AddSpecialtiesToVetRequest
     {
-        [Required]
-        [JsonPropertyName("id")]
-        public int SpecialtyId { get; set; }
+        
+        public int Id { get; set; }
         [Required]
         public DateTime ObtainingDate { get; set; }
     }

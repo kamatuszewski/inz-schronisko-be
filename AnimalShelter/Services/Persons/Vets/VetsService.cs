@@ -45,50 +45,30 @@ namespace AnimalShelter_WebAPI.Services
             return _mapper.Map<DetailedVetResponse>(vet);
         }
 
-        public void AddSpecialtiesToVet(int VetId, IEnumerable<AddSpecialtiesToVetRequest> addSpecialtiesToVetRequest)
+        public void AddSpecialtiesToVet(int VetId, AddSpecialtiesToVetRequest addSpecialtiesToVetRequest)
         {
             var vet = _context.Vet.FirstOrDefault(p => p.Id == VetId);
             if (vet is null)
                 throw new BadRequestException("VET_NOT_EXISTS");
-/*
-            var specialty = _context.Specialty.FirstOrDefault(r => r.Id == addSpecialtiesToVetRequest.SpecialtyId);
-            if (specialty is null)
-                throw new BadRequestException("SPECIALTY_NOT_EXISTS");
 
-            var existingMatchCheck = _context.Vet_Specialty.FirstOrDefault(gr => gr.VetId == VetId && gr.SpecialtyId == addSpecialtiesToVetRequest.SpecialtyId);
-            if (existingMatchCheck is not null)
-                throw new BadRequestException("ALREADY_GRANTED");
-
-            var vet_specialty = _mapper.Map<Vet_Specialty>(addSpecialtiesToVetRequest);
-            vet_specialty.VetId = VetId;
-
-            _context.Vet_Specialty.Add(vet_specialty);
-            _context.SaveChanges();
-*/
-
-            //---
-            
-            foreach (var specialty in addSpecialtiesToVetRequest)
-            {
-                var specialtyExistenceCheck = _context.Specialty.FirstOrDefault(p => p.Id == specialty.SpecialtyId);
-                if (specialtyExistenceCheck is null)
-                    throw new BadRequestException("SPECIALTY_NOT_EXISTS");
-
-                var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == specialty.SpecialtyId && vs.VetId == VetId);
+                var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == addSpecialtiesToVetRequest.Id && vs.VetId == VetId);
                 if (specialtyAddedExists is not null)
-                    specialtyAddedExists.ObtainingDate = specialty.ObtainingDate;
+                    specialtyAddedExists.ObtainingDate = addSpecialtiesToVetRequest.ObtainingDate;
                 else
                 {
                     var vet_specialty = new Vet_Specialty()
                     {
                         VetId = VetId,
-                        SpecialtyId = specialty.SpecialtyId,
-                        ObtainingDate = specialty.ObtainingDate
+                        SpecialtyId = addSpecialtiesToVetRequest.Id,
+                        ObtainingDate = addSpecialtiesToVetRequest.ObtainingDate
                     };
 
-                    _context.Vet_Specialty.Add(vet_specialty);
-                }
-            } 
+                _context.Vet_Specialty.Add(vet_specialty);
+
+               
+                  }
+            _context.SaveChanges();
+            
 
 
         }
