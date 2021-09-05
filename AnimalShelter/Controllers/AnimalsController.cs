@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter.Controllers
 {
- //   [Authorize]
+   // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AnimalsController : ControllerBase

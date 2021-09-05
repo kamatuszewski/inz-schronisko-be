@@ -33,7 +33,7 @@ namespace AnimalShelter_WebAPI.Services.Animals
                 .Where(r => getAnimalsRequest.StatusId == null || r.StatusId.Equals(getAnimalsRequest.StatusId))
                 .Where(r => getAnimalsRequest.SpeciesId == null || r.SpeciesId.Equals(getAnimalsRequest.SpeciesId))
                 .Where(r => getAnimalsRequest.Sex == null || r.Sex.Equals(getAnimalsRequest.Sex))
-                .Where(r => getAnimalsRequest.Name == null || r.ChipNumber.Equals(getAnimalsRequest.Name));
+                .Where(r => getAnimalsRequest.Name == null || r.Name.Equals(getAnimalsRequest.Name));
 
             if (!string.IsNullOrEmpty(getAnimalsRequest.SortBy))
             {
