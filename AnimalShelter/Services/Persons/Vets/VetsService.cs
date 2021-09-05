@@ -51,7 +51,7 @@ namespace AnimalShelter_WebAPI.Services
             if (vet is null)
                 throw new BadRequestException("VET_NOT_EXISTS");
 
-                var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == addSpecialtiesToVetRequest.Id && vs.VetId == VetId);
+                var specialtyAddedExists = _context.Vet_Specialty.FirstOrDefault(vs => vs.SpecialtyId == addSpecialtiesToVetRequest.SpecialtyId && vs.VetId == VetId);
                 if (specialtyAddedExists is not null)
                     specialtyAddedExists.ObtainingDate = addSpecialtiesToVetRequest.ObtainingDate;
                 else
@@ -59,7 +59,7 @@ namespace AnimalShelter_WebAPI.Services
                     var vet_specialty = new Vet_Specialty()
                     {
                         VetId = VetId,
-                        SpecialtyId = addSpecialtiesToVetRequest.Id,
+                        SpecialtyId = addSpecialtiesToVetRequest.SpecialtyId,
                         ObtainingDate = addSpecialtiesToVetRequest.ObtainingDate
                     };
 
