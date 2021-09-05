@@ -34,8 +34,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\Person\Volunteer\Requests\" />
-  </ItemGroup>
-
 </Project>

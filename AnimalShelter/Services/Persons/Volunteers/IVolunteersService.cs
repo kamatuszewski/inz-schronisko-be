@@ -1,5 +1,7 @@
 ﻿using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs;
 using AnimalShelter_WebAPI.DTOs.Person;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace AnimalShelter_WebAPI.Services.Persons.Volunteers
 {
     public interface IVolunteersService
     {
-        public IEnumerable<GeneralVolunteerResponse> GetVolunteers(string SortBy, SortDirection sortDirection);
+        public PageResponse<GeneralVolunteerResponse> GetVolunteers(GetVolunteersRequest getVolunteersRequest);
         public DetailedVolunteerResponse GetVolunteer(int id);
     }
 }

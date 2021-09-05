@@ -1,5 +1,7 @@
 ﻿using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs;
 using AnimalShelter_WebAPI.DTOs.Person;
+using AnimalShelter_WebAPI.DTOs.Requests;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,12 +25,12 @@ namespace AnimalShelter_WebAPI.Services.Persons.Volunteers
         }
 
 
-       public IEnumerable<GeneralVolunteerResponse> GetVolunteers(string SortBy, SortDirection sortDirection)
+       public PageResponse<GeneralVolunteerResponse> GetVolunteers(GetVolunteersRequest getVolunteersRequest)
         {
             IQueryable<Volunteer> baseVolunteers = _context.Volunteer
                 .Include(req => req.Person);
 
-            if (!string.IsNullOrEmpty(SortBy))
+            if (!string.IsNullOrEmpty(getVolunteersRequest.SortBy))
             {
                 var columnsSelector = new Dictionary<string, Expression<Func<Volunteer, object>>>
                  (StringComparer.InvariantCultureIgnoreCase)
@@ -40,18 +42,27 @@ namespace AnimalShelter_WebAPI.Services.Persons.Volunteers
 
                 };
 
-                var selectedColumn = columnsSelector[SortBy];
+                var selectedColumn = columnsSelector[getVolunteersRequest.SortBy];
 
-                baseVolunteers = sortDirection == SortDirection.ASC
+                baseVolunteers = getVolunteersRequest.SortDirection == SortDirection.ASC
                     ? baseVolunteers.OrderBy(selectedColumn)
                     : baseVolunteers.OrderByDescending(selectedColumn);
             }
             var volunteers = baseVolunteers.ToList();
 
 
+            var returnVolunteers = baseVolunteers
+               .Skip(getVolunteersRequest.pageSize * (getVolunteersRequest.pageNumber - 1))
+               .Take(getVolunteersRequest.pageSize)
+               .ToList();
 
-            
-            return _mapper.Map<IEnumerable<GeneralVolunteerResponse>>(volunteers);
+            var totalItemsCount = baseVolunteers.Count();
+
+            var volunteersList = _mapper.Map<IEnumerable<GeneralVolunteerResponse>>(returnVolunteers);
+            var result = new PageResponse<GeneralVolunteerResponse>(volunteersList, totalItemsCount, getVolunteersRequest.pageSize, getVolunteersRequest.pageNumber);
+            return result;
+
+         //    return _mapper.Map<IEnumerable<GeneralVolunteerResponse>>(volunteers);
         }
 
         public DetailedVolunteerResponse GetVolunteer(int id)

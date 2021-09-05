@@ -29,11 +29,11 @@ namespace AnimalShelter_WebAPI.Controllers
             _volunteersDbService = volunteersDbService;
         }
 
-   //     [Authorize(Roles = "Admin, Director")]
+    //    [Authorize(Roles = "Admin, Director")]
         [HttpGet]
-        public IActionResult GetVolunteers([FromQuery] string SortBy, [FromQuery] SortDirection SortDirection)
+        public IActionResult GetVolunteers([FromQuery] GetVolunteersRequest getVolunteersRequest)
         {
-            return Ok(_volunteersDbService.GetVolunteers(SortBy, SortDirection));
+            return Ok(_volunteersDbService.GetVolunteers(getVolunteersRequest));
 
         }
 

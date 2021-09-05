@@ -30,9 +30,10 @@ namespace AnimalShelter_WebAPI.Services.Animals
             var baseAnimals = _context.Animal
                 .Include(req => req.Species)
                 .Include(req => req.Status)
-                .Where(r => getAnimalsRequest.Species == null || r.Species.Name.ToLower().Contains(getAnimalsRequest.Species.ToLower()))
-                .Where(r => getAnimalsRequest.ChipNumber == null || r.ChipNumber.Equals(getAnimalsRequest.ChipNumber))
-                .Where(r => getAnimalsRequest.Status == null || r.Status.Name.ToLower().Contains(getAnimalsRequest.Status));
+                .Where(r => getAnimalsRequest.StatusId == null || r.StatusId.Equals(getAnimalsRequest.StatusId))
+                .Where(r => getAnimalsRequest.SpeciesId == null || r.SpeciesId.Equals(getAnimalsRequest.SpeciesId))
+                .Where(r => getAnimalsRequest.Sex == null || r.Sex.Equals(getAnimalsRequest.Sex))
+                .Where(r => getAnimalsRequest.Name == null || r.ChipNumber.Equals(getAnimalsRequest.Name));
 
             if (!string.IsNullOrEmpty(getAnimalsRequest.SortBy))
             {

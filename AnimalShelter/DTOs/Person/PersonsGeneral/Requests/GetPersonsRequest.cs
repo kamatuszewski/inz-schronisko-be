@@ -9,13 +9,10 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.DTOs.Requests
 {
-    public class GetAnimalsRequest
+    public class GetPersonsRequest
     {
        
-        public string Sex { get; set; }
-        public int? SpeciesId { get; set; }
-        public string Name { get; set; }
-        public int? StatusId { get; set; }
+      
         [Required]
         public int pageNumber { get; set; }
         [Required]

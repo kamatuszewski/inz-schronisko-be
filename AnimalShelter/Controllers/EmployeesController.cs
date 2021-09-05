@@ -31,9 +31,9 @@ namespace AnimalShelter_WebAPI.Controllers
 
         [Authorize(Roles = "Director, Admin")]
         [HttpGet]
-        public IActionResult GetEmployees([FromQuery] string SortBy, [FromQuery] SortDirection SortDirection)
+        public IActionResult GetEmployees([FromQuery] GetEmployeesRequest getEmployeesRequest)
         {
-            return Ok(_employeesDbService.GetEmplyees(SortBy, SortDirection));
+            return Ok(_employeesDbService.GetEmplyees(getEmployeesRequest));
 
         }
 

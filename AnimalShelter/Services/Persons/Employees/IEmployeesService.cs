@@ -1,4 +1,5 @@
 ﻿using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs;
 using AnimalShelter_WebAPI.DTOs.Person.Employee.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using System;
@@ -11,7 +12,7 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
 {
     public interface IEmployeesService
     {
-        public IEnumerable<GeneralEmployeeResponse> GetEmplyees(string SortBy, SortDirection sortDirection);
+        public PageResponse<GeneralEmployeeResponse> GetEmplyees(GetEmployeesRequest getEmployeesRequest);
         public DetailedEmployeeResponse GetEmplyee(int id);
         public void EditEmployee(int id, EditEmployeeRequest editEmployeeRequest);
     }

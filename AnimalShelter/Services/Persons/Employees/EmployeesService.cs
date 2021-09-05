@@ -1,4 +1,5 @@
 ﻿using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs;
 using AnimalShelter_WebAPI.DTOs.Person.Employee.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
 using AnimalShelter_WebAPI.Exceptions;
@@ -25,7 +26,7 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
         }
 
 
-        public IEnumerable<GeneralEmployeeResponse> GetEmplyees(string SortBy, SortDirection sortDirection)
+        public PageResponse<GeneralEmployeeResponse> GetEmplyees(GetEmployeesRequest getEmployeesRequest)
         {
             var baseEmployees = _context.Employee
                 .Include(req => req.Person).ThenInclude(req => req.GrantedRoles).ThenInclude(req => req.Role)
@@ -33,7 +34,7 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
                 .Where(req => req.IsRoleActive == true || req.Vet.IsRoleActive == true);
               //  .ToList();
 
-            if (!string.IsNullOrEmpty(SortBy))
+            if (!string.IsNullOrEmpty(getEmployeesRequest.SortBy))
             {
                 var columnsSelector = new Dictionary<string, Expression<Func<Employee, object>>>
                     (StringComparer.InvariantCultureIgnoreCase)
@@ -43,24 +44,31 @@ namespace AnimalShelter_WebAPI.Services.Persons.Employees
                     { nameof(Employee.Person.Sex), r => r.Person.Sex}
 
                 };
-                var selectedColumn = columnsSelector[SortBy];
+                var selectedColumn = columnsSelector[getEmployeesRequest.SortBy];
 
-                baseEmployees = sortDirection == SortDirection.ASC
+                baseEmployees = getEmployeesRequest.SortDirection == SortDirection.ASC
                     ? baseEmployees.OrderBy(selectedColumn)
                     : baseEmployees.OrderByDescending(selectedColumn);
             }
-            var employees = baseEmployees.ToList();
-            var response =  _mapper.Map<IEnumerable<GeneralEmployeeResponse>>(employees);
+            var retrurnEmployees = baseEmployees
+             .Skip(getEmployeesRequest.pageSize * (getEmployeesRequest.pageNumber - 1))
+             .Take(getEmployeesRequest.pageSize)
+             .ToList();
 
+            var totalItemsCount = baseEmployees.Count();
+
+            var employeeResponse = _mapper.Map<IEnumerable<GeneralEmployeeResponse>>(retrurnEmployees);
+        
           //  var IEnumerable<GeneralEmployeeResponse> eee = _mapper.Map<IEnumerable<GeneralEmployeeResponse>>(employees);
 
-            foreach (GeneralEmployeeResponse emp in response) {
+            foreach (GeneralEmployeeResponse emp in employeeResponse) {
                 var isVetCheck = _context.Vet.FirstOrDefault(req => req.Id == emp.Id && req.IsRoleActive == true);
                 if (isVetCheck is null)
                     emp.isVet = false;
                 else
                     emp.isVet = true;
             }
+            var response = new PageResponse<GeneralEmployeeResponse>(employeeResponse, totalItemsCount, getEmployeesRequest.pageSize, getEmployeesRequest.pageNumber);
 
             return response;
         

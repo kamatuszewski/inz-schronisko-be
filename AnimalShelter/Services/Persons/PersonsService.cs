@@ -2,6 +2,7 @@
 using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
 using AnimalShelter_WebAPI;
+using AnimalShelter_WebAPI.DTOs;
 using AnimalShelter_WebAPI.DTOs.Person.PersonsGeneral.Responses;
 using AnimalShelter_WebAPI.DTOs.Person.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
@@ -41,13 +42,13 @@ namespace AnimalShelter.Services
 
 
 
-        public IEnumerable<GeneralPersonResponse> GetPersons(string SortBy, SortDirection sortDirection)
+        public PageResponse<GeneralPersonResponse> GetPersons(GetPersonsRequest getPersonsRequest)
         {
             IQueryable<Person> basePersons = _context.Person
                  .Include(req => req.GrantedRoles).ThenInclude(req => req.Role);
                 // .ToList();
 
-            if (!string.IsNullOrEmpty(SortBy))
+            if (!string.IsNullOrEmpty(getPersonsRequest.SortBy))
             {
                 var columnsSelector = new Dictionary<string, Expression<Func<Person, object>>>
                     (StringComparer.InvariantCultureIgnoreCase)
@@ -57,18 +58,25 @@ namespace AnimalShelter.Services
                     { nameof(Person.Sex), r => r.Sex}
 
                 };
-                var selectedColumn = columnsSelector[SortBy];
+                var selectedColumn = columnsSelector[getPersonsRequest.SortBy];
 
-                basePersons = sortDirection == SortDirection.ASC
+                basePersons = getPersonsRequest.SortDirection == SortDirection.ASC
                     ? basePersons.OrderBy(selectedColumn)
                     : basePersons.OrderByDescending(selectedColumn);
             }
-            var persons = basePersons.ToList();
 
+            var returnPersons = basePersons
+               .Skip(getPersonsRequest.pageSize * (getPersonsRequest.pageNumber - 1))
+               .Take(getPersonsRequest.pageSize)
+               .ToList();
 
+            var totalItemsCount = basePersons.Count();
 
+            var personsList = _mapper.Map<IEnumerable<GeneralPersonResponse>>(returnPersons);
+            var result = new PageResponse<GeneralPersonResponse>(personsList, totalItemsCount, getPersonsRequest.pageSize, getPersonsRequest.pageNumber);
+            return result;
 
-            return _mapper.Map<IEnumerable<GeneralPersonResponse>>(persons);
+          
         }
 
         public PersonResponse GetPerson(int Id)

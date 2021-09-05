@@ -2,6 +2,7 @@
 using AnimalShelter.DTOs;
 using AnimalShelter.DTOs.Responses;
 using AnimalShelter.Models;
+using AnimalShelter_WebAPI.DTOs;
 using AnimalShelter_WebAPI.DTOs.Person.PersonsGeneral.Responses;
 using AnimalShelter_WebAPI.DTOs.Person.Responses;
 using AnimalShelter_WebAPI.DTOs.Requests;
@@ -19,7 +20,7 @@ namespace AnimalShelter.Services
     {
 
         public PersonResponse GetPerson(int id);
-        public IEnumerable<GeneralPersonResponse> GetPersons(string SortBy, SortDirection sortDirection);
+        public PageResponse<GeneralPersonResponse> GetPersons(GetPersonsRequest getPersonsRequest);
         public IEnumerable<RoleResponse> GetRoles();
         public int RegisterPerson(RegisterPersonRequest registerPersonRequest);
         public Person CreateAdopter(CreateAdopterRequest createAdopterRequest);
