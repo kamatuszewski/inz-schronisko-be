@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace AnimalShelter_WebAPI.Controllers
 {
-  //  [Authorize]
+    [Authorize]
     [Route("api/persons/[controller]")]
     [ApiController]
     public class VolunteersController : ControllerBase
@@ -29,7 +29,7 @@ namespace AnimalShelter_WebAPI.Controllers
             _volunteersDbService = volunteersDbService;
         }
 
-    //    [Authorize(Roles = "Admin, Director")]
+        [Authorize(Roles = "Admin, Director")]
         [HttpGet]
         public IActionResult GetVolunteers([FromQuery] GetVolunteersRequest getVolunteersRequest)
         {
